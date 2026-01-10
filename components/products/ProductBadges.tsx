@@ -1,4 +1,4 @@
-import Badge from "@/components/ui/Badge"
+import {Badge} from "@/components/ui/badge"
 
 interface ProductBadgesProps {
   badges: string[]
@@ -10,7 +10,7 @@ export default function ProductBadges({ badges }: ProductBadgesProps) {
   return (
     <div className="flex flex-wrap gap-2">
       {badges.map((badge, idx) => (
-        <Badge key={idx} variant={badgeVariants[idx % 3]} size="sm">
+        <Badge key={idx} variant="info" size="sm">
           {badge}
         </Badge>
       ))}

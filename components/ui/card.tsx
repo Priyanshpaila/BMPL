@@ -3,7 +3,8 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
-  "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 transition",
+  // ✅ better defaults: padding on all sides + tighter gap + rounded + overflow
+  "relative overflow-hidden bg-card text-card-foreground flex flex-col gap-4 rounded-2xl border p-6 transition",
   {
     variants: {
       variant: {
@@ -29,6 +30,4 @@ function Card({ className, variant, ...props }: CardProps) {
   );
 }
 
-export {
-  Card
-}
+export { Card };

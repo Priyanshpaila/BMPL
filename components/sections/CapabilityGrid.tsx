@@ -91,16 +91,19 @@ export default function CapabilityGrid() {
             const Icon = cap.icon
             return (
               <motion.div key={idx} variants={itemVariants}>
-                <Card
-                  variant="default"
-                  className="h-full flex flex-col items-start hover:border-blue-500/50 group smooth-transition"
-                >
-                  <div className="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 group-hover:bg-blue-500/20 smooth-transition">
-                    <Icon className="w-6 h-6 text-blue-400" />
-                  </div>
-                  <h3 className="text-lg font-bold mb-2">{cap.title}</h3>
-                  <p className="text-slate-400 text-sm flex-grow">{cap.description}</p>
-                </Card>
+<Card
+  variant="glass"
+  className="h-full items-start gap-3 border-white/10 bg-white/[0.03] hover:bg-white/[0.05] hover:border-blue-400/30 transition-colors"
+>
+  <div className="w-11 h-11 rounded-xl bg-blue-500/10 flex items-center justify-center ring-1 ring-white/10">
+    <Icon className="w-5 h-5 text-blue-300" />
+  </div>
+
+  <div className="space-y-1">
+    <h3 className="text-lg font-semibold tracking-tight text-white">{cap.title}</h3>
+    <p className="text-sm text-slate-400 leading-relaxed">{cap.description}</p>
+  </div>
+</Card>
               </motion.div>
             )
           })}
