@@ -50,7 +50,7 @@ export default function ProductDetailPageClient({ params }: ProductDetailPagePro
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden bg-slate-800 border border-slate-700">
+                <div className="relative h-96 md:h-125 rounded-2xl overflow-hidden bg-slate-800 border border-slate-700">
                   <Image
                     src={product.image || "/placeholder.svg"}
                     alt={product.name}
@@ -90,19 +90,19 @@ export default function ProductDetailPageClient({ params }: ProductDetailPagePro
                 {/* Features */}
                 <div className="space-y-3 mb-8">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
                     <span className="text-slate-300">ISO certified manufacturing process</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
                     <span className="text-slate-300">Rigorous quality testing at every stage</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
                     <span className="text-slate-300">Fast dispatch & reliable delivery</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
                     <span className="text-slate-300">Custom sizes available on request</span>
                   </div>
                 </div>
@@ -115,7 +115,7 @@ export default function ProductDetailPageClient({ params }: ProductDetailPagePro
         </section>
 
         {/* Specifications */}
-        <section className="py-20 md:py-32 bg-gradient-to-b from-blue-600/5 to-transparent">
+        <section className="py-20 md:py-32 bg-linear-to-b from-blue-600/5 to-transparent">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -190,7 +190,7 @@ export default function ProductDetailPageClient({ params }: ProductDetailPagePro
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <section className="py-20 md:py-32 bg-gradient-to-b from-transparent to-blue-600/5 border-t border-white/10">
+          <section className="py-20 md:py-32 bg-linear-to-b from-transparent to-blue-600/5 border-t border-white/10">
             <Container>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -233,7 +233,7 @@ export default function ProductDetailPageClient({ params }: ProductDetailPagePro
         )}
 
         {/* Final CTA */}
-        <section className="py-20 md:py-32 bg-gradient-to-r from-blue-600/10 to-cyan-600/10 border-y border-white/10">
+        <section className="py-20 md:py-32 bg-linear-to-r from-blue-600/10 to-cyan-600/10 border-y border-white/10">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
