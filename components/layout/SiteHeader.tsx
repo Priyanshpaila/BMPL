@@ -1,43 +1,41 @@
-"use client"
+"use client";
 
-import { useEffect, useMemo, useState } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Menu, X, MessageCircle } from "lucide-react"
-import { NAV_ITEMS } from "@/content/nav"
-import {Button} from  "@/components/ui/button"
-import Container from "@/components/layout/Container"
-import { openWhatsAppChat } from "@/lib/whatsapp"
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, X, MessageCircle } from "lucide-react";
+import { NAV_ITEMS } from "@/content/nav";
+import { Button } from "@/components/ui/button";
+import Container from "@/components/layout/Container";
+import { openWhatsAppChat } from "@/lib/whatsapp";
 
 export default function SiteHeader() {
-  const pathname = usePathname()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleWhatsAppClick = () => {
-    openWhatsAppChat("Hello BMPL, I would like to know more about your products.")
-  }
+    openWhatsAppChat("Hello BMPL, I would like to know more about your products.");
+  };
 
-  // Close the mobile menu on route change
   useEffect(() => {
-    setMobileMenuOpen(false)
-  }, [pathname])
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
-  // Prevent background scroll when mobile menu is open
   useEffect(() => {
-    if (!mobileMenuOpen) return
-    const prevOverflow = document.body.style.overflow
-    document.body.style.overflow = "hidden"
+    if (!mobileMenuOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = prevOverflow
-    }
-  }, [mobileMenuOpen])
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [mobileMenuOpen]);
 
   const isActive = useMemo(() => {
     return (href: string) => {
-      if (href === "/") return pathname === "/"
-      return pathname === href || pathname.startsWith(`${href}/`)
-    }
-  }, [pathname])
+      if (href === "/") return pathname === "/";
+      return pathname === href || pathname.startsWith(`${href}/`);
+    };
+  }, [pathname]);
 
   return (
     <header className="sticky top-0 z-50 glass-effect border-b border-white/10">
@@ -64,7 +62,7 @@ export default function SiteHeader() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
             {NAV_ITEMS.map((item) => {
-              const active = isActive(item.href)
+              const active = isActive(item.href);
               return (
                 <Link
                   key={item.href}
@@ -77,19 +75,26 @@ export default function SiteHeader() {
                   }
                 >
                   {item.label}
-                  {active && <span className="absolute -bottom-2 left-0 h-[2px] w-full bg-gradient-to-r from-blue-400 to-cyan-400" />}
+                  {active && (
+                    <span className="absolute -bottom-2 left-0 h-[2px] w-full bg-gradient-to-r from-blue-400 to-cyan-400" />
+                  )}
                 </Link>
-              )
+              );
             })}
           </nav>
 
           {/* Desktop CTAs */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm" onClick={handleWhatsAppClick} className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleWhatsAppClick}
+              className="flex items-center gap-2 hover:bg-white/5 border border-transparent hover:border-white/10"
+            >
               <MessageCircle className="w-4 h-4" />
               Chat
             </Button>
-            <Button size="sm" asChild>
+            <Button size="sm" asChild className="rounded-xl">
               <Link href="/quote">Request Quote</Link>
             </Button>
           </div>
@@ -98,7 +103,7 @@ export default function SiteHeader() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen((v) => !v)}
-            className="md:hidden text-slate-300 hover:text-white smooth-transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded p-2"
+            className="md:hidden text-slate-300 hover:text-white smooth-transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-xl p-2 border border-white/10 bg-white/[0.03] hover:bg-white/[0.06]"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-nav"
@@ -111,47 +116,51 @@ export default function SiteHeader() {
         {mobileMenuOpen && (
           <nav
             id="mobile-nav"
-            className="relative z-50 md:hidden pb-4 flex flex-col gap-2"
+            className="relative z-50 md:hidden pb-4"
             aria-label="Mobile"
           >
-            {NAV_ITEMS.map((item) => {
-              const active = isActive(item.href)
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={active ? "page" : undefined}
-                  className={
-                    active
-                      ? "text-sm text-white bg-white/10 border border-white/10 rounded-xl px-3 py-2"
-                      : "text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-xl px-3 py-2 smooth-transition"
-                  }
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              )
-            })}
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur p-2 flex flex-col gap-1">
+              {NAV_ITEMS.map((item) => {
+                const active = isActive(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={
+                      active
+                        ? "text-sm text-white bg-white/10 border border-white/10 rounded-xl px-3 py-2"
+                        : "text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-xl px-3 py-2 smooth-transition"
+                    }
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
 
-            <div className="pt-3 flex gap-3 flex-col">
-              <Button
-                variant="secondary"
-                className="w-full flex items-center justify-center gap-2"
-                onClick={() => {
-                  handleWhatsAppClick()
-                  setMobileMenuOpen(false)
-                }}
-              >
-                <MessageCircle className="w-4 h-4" />
-                Chat on WhatsApp
-              </Button>
-              <Button variant="secondary" className="w-full" asChild>
-                <Link href="/quote">Request Quote</Link>
-              </Button>
+              <div className="pt-3 flex gap-2 flex-col">
+                <Button
+                  variant="secondary"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 flex items-center justify-center gap-2"
+                  onClick={() => {
+                    handleWhatsAppClick();
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Chat on WhatsApp
+                </Button>
+                <Button className="w-full rounded-xl" asChild>
+                  <Link href="/quote" onClick={() => setMobileMenuOpen(false)}>
+                    Request Quote
+                  </Link>
+                </Button>
+              </div>
             </div>
           </nav>
         )}
       </Container>
     </header>
-  )
+  );
 }
