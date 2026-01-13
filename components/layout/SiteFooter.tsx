@@ -103,7 +103,7 @@ export default function SiteFooter() {
           <p className="text-sm text-slate-500">
             © {currentYear} {COMPANY_INFO.name}. All rights reserved.
           </p>
-          <p className="text-sm text-slate-500">Manufactured with precision in Urla, Raipur</p>
+          <p className="text-sm text-slate-500">Powered by <a href="https://www.yuvaq.com/" target="_blank" className="text-blue-500 hover:underline"> YuvaQ </a></p>
         </div>
       </Container>
     </footer>

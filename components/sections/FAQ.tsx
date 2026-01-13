@@ -1,51 +1,56 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown } from "lucide-react"
-import { FAQS } from "@/content/faqs"
-import Container from "@/components/layout/Container"
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import { FAQS } from "@/content/faqs";
+import Container from "@/components/layout/Container";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export default function FAQ() {
-  const [openId, setOpenId] = useState<string | null>(null)
+  const [openId, setOpenId] = useState<string | null>(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.1,
-      },
+      transition: { staggerChildren: 0.06, delayChildren: 0.08 },
     },
-  }
+  };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 10 },
     show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-  }
+  };
 
   return (
-    <section className="py-20 md:py-32">
-      <Container>
+    <section className="relative py-20 md:py-32 overflow-hidden">
+      {/* background wash (soft, no harsh break) */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.10] [background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.16)_1px,transparent_0)] [background-size:28px_28px]" />
+
+      <Container className="relative">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="mx-auto mb-14 max-w-3xl text-center">
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold mb-4"
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.45 }}
+            className="text-4xl md:text-5xl font-bold"
           >
             Frequently Asked <span className="gradient-text">Questions</span>
           </motion.h2>
+
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-lg text-slate-400 text-balance"
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.45, delay: 0.05 }}
+            className="mt-4 text-lg text-slate-400 text-balance"
           >
-            Quick answers to common questions about our products and services
+            Quick answers to common questions about our products and services.
           </motion.p>
         </div>
 
@@ -54,43 +59,87 @@ export default function FAQ() {
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true }}
-          className="max-w-3xl mx-auto space-y-4"
+          viewport={{ once: true, amount: 0.25 }}
+          className="mx-auto max-w-3xl space-y-4"
         >
-          {FAQS.map((faq) => (
-            <motion.div key={faq.id} variants={itemVariants}>
-              <button
-                onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
-                className="w-full bg-slate-900/50 border border-slate-700 rounded-xl p-6 text-left hover:border-blue-500/50 smooth-transition"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-semibold text-lg leading-tight">{faq.question}</h3>
-                  <ChevronDown
-                    className={`w-5 h-5 text-blue-400 flex-shrink-0 smooth-transition ${
-                      openId === faq.id ? "rotate-180" : ""
-                    }`}
-                  />
-                </div>
+          {FAQS.map((faq) => {
+            const isOpen = openId === faq.id;
+            const contentId = `faq-${faq.id}`;
 
-                {/* Answer */}
-                <AnimatePresence>
-                  {openId === faq.id && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <p className="text-slate-400 pt-4 text-sm">{faq.answer}</p>
-                    </motion.div>
+            return (
+              <motion.div key={faq.id} variants={itemVariants}>
+                <Card
+                  variant="glass"
+                  className={cn(
+                    "group relative border-white/10 bg-white/[0.03] p-0",
+                    "hover:bg-white/[0.05] hover:border-blue-400/30 smooth-transition"
                   )}
-                </AnimatePresence>
-              </button>
-            </motion.div>
-          ))}
+                >
+                  {/* left accent */}
+                  <div className="pointer-events-none absolute left-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-blue-400/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                  {/* subtle glow on hover */}
+                  <div className="pointer-events-none absolute -inset-0.5 rounded-2xl opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-blue-500/10" />
+
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={contentId}
+                    onClick={() => setOpenId(isOpen ? null : faq.id)}
+                    className="relative w-full text-left"
+                  >
+                    <div className="flex items-start justify-between gap-5 px-6 py-6">
+                      <div className="min-w-0">
+                        <h3 className="text-base md:text-lg font-semibold leading-snug text-white">
+                          {faq.question}
+                        </h3>
+                        {/* tiny helper line (optional, improves scan) */}
+                        <p className="mt-1 text-xs text-slate-500">
+                          Click to {isOpen ? "collapse" : "expand"}
+                        </p>
+                      </div>
+
+                      <span
+                        className={cn(
+                          "mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl",
+                          "border border-white/10 bg-white/[0.03] backdrop-blur"
+                        )}
+                      >
+                        <ChevronDown
+                          className={cn(
+                            "h-5 w-5 text-blue-300 transition-transform duration-200",
+                            isOpen && "rotate-180"
+                          )}
+                        />
+                      </span>
+                    </div>
+
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          id={contentId}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.28, ease: "easeOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-6 pb-6 pt-0">
+                            <div className="mb-4 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                            <p className="text-sm leading-relaxed text-slate-300">
+                              {faq.answer}
+                            </p>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </button>
+                </Card>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </Container>
     </section>
-  )
+  );
 }
