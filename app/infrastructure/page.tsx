@@ -167,45 +167,44 @@ export default function InfrastructurePage() {
                   transition={{ delay: idx * 0.06, duration: 0.45 }}
                   className="h-full"
                 >
-<Card
-  variant="glass"
-  className="group h-full border-white/10 bg-white/[0.03] hover:bg-white/[0.05] hover:border-blue-400/30 transition-colors"
->
-  {/* Header */}
-  <div className="flex items-start justify-between gap-3">
-    <div className="flex items-start gap-4 min-w-0">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-white/10">
-        <Icon className="h-5 w-5 text-blue-300" />
-      </div>
+                  <Card
+                    variant="glass"
+                    className="group h-full border-white/10 bg-white/[0.03] hover:bg-white/[0.05] hover:border-blue-400/30 transition-colors"
+                  >
+                    {/* Header */}
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-4 min-w-0">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-white/10">
+                          <Icon className="h-5 w-5 text-blue-300" />
+                        </div>
 
-      <div className="min-w-0">
-        <h3 className="text-lg font-semibold text-white leading-snug">
-          {facility.title}
-        </h3>
-      </div>
-    </div>
+                        <div className="min-w-0">
+                          <h3 className="text-lg font-semibold text-white leading-snug">
+                            {facility.title}
+                          </h3>
+                        </div>
+                      </div>
 
-    {/* <span className="shrink-0 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] font-semibold tracking-widest text-slate-300">
+                      {/* <span className="shrink-0 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] font-semibold tracking-widest text-slate-300">
       BMPL
     </span> */}
-  </div>
+                    </div>
 
-  {/* Body (fills remaining height) */}
-  <div className="mt-3 flex-1">
-    <p className="text-sm text-slate-400 leading-relaxed">
-      {facility.description}
-    </p>
-  </div>
+                    {/* Body (fills remaining height) */}
+                    <div className="mt-3 flex-1">
+                      <p className="text-sm text-slate-400 leading-relaxed">
+                        {facility.description}
+                      </p>
+                    </div>
 
-  {/* Footer (always at bottom) */}
-  <div className="mt-auto pt-6">
-    <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-    <div className="mt-3 flex justify-center text-xs text-slate-500">
-      Operationally proven capability
-    </div>
-  </div>
-</Card>
-
+                    {/* Footer (always at bottom) */}
+                    <div className="mt-auto pt-6">
+                      <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                      <div className="mt-3 flex justify-center text-xs text-slate-500">
+                        Operationally proven capability
+                      </div>
+                    </div>
+                  </Card>
                 </motion.div>
               );
             })}
