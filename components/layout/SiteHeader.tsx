@@ -3,15 +3,28 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Menu, X, MessageCircle, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
+
 import { NAV_ITEMS } from "@/content/nav";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/layout/Container";
 import { openWhatsAppChat } from "@/lib/whatsapp";
+import BrandLogo from "@/components/layout/BrandLogo";
 
 export default function SiteHeader() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Theme (safe mount handling)
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const toggleTheme = () => {
+    const next = resolvedTheme === "dark" ? "light" : "dark";
+    setTheme(next);
+  };
 
   const handleWhatsAppClick = () => {
     openWhatsAppChat("Hello BMPL, I would like to know more about your products.");
@@ -39,7 +52,6 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 glass-effect border-b border-white/10">
-      {/* Backdrop overlay for mobile menu */}
       {mobileMenuOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
@@ -50,13 +62,13 @@ export default function SiteHeader() {
 
       <Container>
         <div className="relative z-50 flex items-center justify-between py-4">
-          {/* Brand */}
+          {/* Brand (Logo) */}
           <Link
             href="/"
-            className="text-xl font-bold gradient-text smooth-transition hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
+            className="flex items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             aria-label="BMPL Home"
           >
-            BMPL
+            <BrandLogo className="h-8 w-auto object-contain" height={32} alt="BMPL" />
           </Link>
 
           {/* Desktop Nav */}
@@ -83,7 +95,7 @@ export default function SiteHeader() {
             })}
           </nav>
 
-          {/* Desktop CTAs */}
+          {/* Desktop CTAs + Theme Toggle */}
           <div className="hidden md:flex items-center gap-3">
             <Button
               variant="ghost"
@@ -94,6 +106,26 @@ export default function SiteHeader() {
               <MessageCircle className="w-4 h-4" />
               Chat
             </Button>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              className="flex items-center justify-center hover:bg-white/5 border border-transparent hover:border-white/10"
+            >
+              {/* Avoid SSR mismatch: render icon only after mount */}
+              {mounted ? (
+                resolvedTheme === "dark" ? (
+                  <Sun className="w-4 h-4" />
+                ) : (
+                  <Moon className="w-4 h-4" />
+                )
+              ) : (
+                <span className="w-4 h-4" />
+              )}
+            </Button>
+
             <Button size="sm" asChild className="rounded-xl">
               <Link href="/quote">Request Quote</Link>
             </Button>
@@ -114,11 +146,7 @@ export default function SiteHeader() {
 
         {/* Mobile Nav */}
         {mobileMenuOpen && (
-          <nav
-            id="mobile-nav"
-            className="relative z-50 md:hidden pb-4"
-            aria-label="Mobile"
-          >
+          <nav id="mobile-nav" className="relative z-50 md:hidden pb-4" aria-label="Mobile">
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur p-2 flex flex-col gap-1">
               {NAV_ITEMS.map((item) => {
                 const active = isActive(item.href);
@@ -151,6 +179,25 @@ export default function SiteHeader() {
                   <MessageCircle className="w-4 h-4" />
                   Chat on WhatsApp
                 </Button>
+
+                <Button
+                  variant="secondary"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 flex items-center justify-center gap-2"
+                  onClick={toggleTheme}
+                  aria-label="Toggle theme"
+                >
+                  {mounted ? (
+                    resolvedTheme === "dark" ? (
+                      <Sun className="w-4 h-4" />
+                    ) : (
+                      <Moon className="w-4 h-4" />
+                    )
+                  ) : (
+                    <span className="w-4 h-4" />
+                  )}
+                  Theme
+                </Button>
+
                 <Button className="w-full rounded-xl" asChild>
                   <Link href="/quote" onClick={() => setMobileMenuOpen(false)}>
                     Request Quote
