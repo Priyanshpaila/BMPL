@@ -42,12 +42,12 @@ export default function AboutPage() {
     },
   ];
 
-  const milestones = [
-    { year: "2008", event: "BMPL Founded in Raipur" },
-    { year: "2012", event: "Expanded manufacturing capacity" },
-    { year: "2016", event: "ISO Certification achieved" },
-    { year: "2020", event: "Modernized equipment & processes" },
-  ];
+const milestones = [
+  { year: "2008", tag: "Foundation", event: "BMPL founded in Raipur", icon: Factory },
+  { year: "2012", tag: "Scale", event: "Expanded manufacturing capacity", icon: Target },
+  { year: "2016", tag: "Trust", event: "ISO certification achieved", icon: ShieldCheck },
+  { year: "2020", tag: "Modernize", event: "Upgraded equipment & processes", icon: Award },
+];
 
   const containerStagger = {
     hidden: { opacity: 0 },
@@ -289,61 +289,127 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Timeline */}
-      <section className="relative py-20 md:py-32">
-        <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.45 }}
-            className="mb-14 text-center"
-          >
-            <h2 className="text-4xl font-bold mb-4">Our Journey</h2>
-            <p className="text-lg text-slate-400">
-              Key milestones in BMPL’s growth and development.
-            </p>
-          </motion.div>
+{/* Timeline */}
+<section className="relative py-20 md:py-32 overflow-hidden">
+  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
+  <div className="pointer-events-none absolute inset-0 opacity-[0.10] [background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.14)_1px,transparent_0)] [background-size:28px_28px]" />
+  <div className="pointer-events-none absolute -top-28 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-blue-500/10 blur-3xl" />
 
-          <div className="mx-auto max-w-3xl">
-            <Card
-              variant="glass"
-              className="relative border-white/10 bg-white/[0.03] overflow-hidden"
-            >
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/25 to-transparent" />
+  <Container className="relative">
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.35 }}
+      transition={{ duration: 0.45 }}
+      className="mb-14 text-center"
+    >
+      <h2 className="text-4xl font-bold mb-4">Our Journey</h2>
+      <p className="text-lg text-slate-400">
+        A few defining moments that shaped how we work today.
+      </p>
+    </motion.div>
 
-              <div className="relative">
-                {/* vertical line */}
-                <div className="absolute left-7 top-4 bottom-4 w-px bg-white/10" />
+    <div className="mx-auto max-w-5xl">
+      <Card
+        variant="glass"
+        className="relative border-white/10 bg-white/[0.03] overflow-hidden"
+      >
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/25 to-transparent" />
 
-                <div className="space-y-8">
-                  {milestones.map((m, idx) => (
-                    <motion.div
-                      key={m.year}
-                      initial={{ opacity: 0, y: 12 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.4 }}
-                      transition={{ delay: idx * 0.06, duration: 0.45 }}
-                      className="relative pl-16"
-                    >
-                      {/* dot */}
-                      <div className="absolute left-[22px] top-1.5 h-4 w-4 rounded-full bg-blue-500/40 ring-2 ring-blue-400/30" />
-                      <div className="inline-flex items-center gap-2">
-                        <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-sm font-semibold text-blue-300">
-                          {m.year}
-                        </span>
+        <div className="relative px-5 py-8 sm:px-8 sm:py-10">
+          {/* Center spine */}
+          <div className="absolute left-6 top-6 bottom-6 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent md:left-1/2" />
+          <div className="pointer-events-none absolute left-6 top-6 bottom-6 w-px blur-[1px] bg-gradient-to-b from-transparent via-blue-400/20 to-transparent md:left-1/2" />
+
+          <div className="space-y-8 md:space-y-10">
+            {milestones.map((m, idx) => {
+              const Icon = m.icon;
+              const right = idx % 2 === 1;
+
+              return (
+                <motion.div
+                  key={m.year}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{ delay: idx * 0.06, duration: 0.45 }}
+                  className="relative"
+                >
+                  {/* Dot on spine */}
+                  {/* <div className="absolute left-[18px] top-6 h-4 w-4 rounded-full bg-blue-500/40 ring-2 ring-blue-400/30 md:left-1/2 md:-translate-x-1/2" /> */}
+
+                  {/* Row */}
+                  <div className="md:grid md:grid-cols-2 md:gap-10">
+                    {/* LEFT column (empty when item is on right) */}
+                    <div className={right ? "hidden md:block" : ""} />
+
+                    {/* Content card */}
+                    <div className={right ? "" : "md:col-start-1"}>
+                      <div
+                        className={[
+                          "relative ml-10 md:ml-0",
+                          right ? "md:col-start-2" : "md:col-start-1",
+                        ].join(" ")}
+                      >
+                        {/* Connector line to spine */}
+                        <div
+                          className={[
+                            "pointer-events-none absolute top-7 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent",
+                            "left-0 -translate-x-10 w-10 md:w-12",
+                            right ? "md:left-0 md:-translate-x-12" : "md:right-0 md:left-auto md:translate-x-12",
+                          ].join(" ")}
+                        />
+
+                        <Card
+                          variant="glass"
+                          className="group border-white/10 bg-white/[0.03] hover:bg-white/[0.05] hover:border-blue-400/30 transition-colors"
+                        >
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="min-w-0">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-sm font-semibold text-blue-300">
+                                  {m.year}
+                                </span>
+
+                                {m.tag && (
+                                  <span className="inline-flex rounded-full border border-white/10 bg-white/[0.02] px-3 py-1 text-[11px] font-semibold tracking-widest text-slate-300">
+                                    {m.tag}
+                                  </span>
+                                )}
+                              </div>
+
+                              <div className="mt-3 text-slate-200 text-base leading-relaxed">
+                                {m.event}
+                              </div>
+                            </div>
+
+                            {Icon ? (
+                              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-white/10">
+                                <Icon className="h-5 w-5 text-blue-300" />
+                              </div>
+                            ) : null}
+                          </div>
+
+                          <div className="mt-6">
+                            <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                            <div className="mt-3 text-xs text-center text-slate-500">
+                              A milestone that strengthened our standards.
+                            </div>
+                          </div>
+                        </Card>
                       </div>
-                      <div className="mt-3 text-slate-200 text-base leading-relaxed">
-                        {m.event}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </Card>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
-        </Container>
-      </section>
+        </div>
+      </Card>
+    </div>
+  </Container>
+</section>
+
 
       {/* CTA */}
       <section className="relative py-20 md:py-32 overflow-hidden border-t border-white/10">
