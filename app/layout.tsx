@@ -12,7 +12,7 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "BMPL - MS Billets, Angles & Channels | Raipur",
+  title: "BMPL - Bhawani Moulders Pvt. Ltd. | Raipur",
   description:
     "Premium MS Billets, Angles & Channels manufactured in Urla, Raipur. Fast quotation, bulk supply, custom sizes. ISO certified steel products.",
   keywords: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     url: "https://bmpl-raipur.com",
-    title: "BMPL - MS Billets, Angles & Channels",
+    title: "BMPL - Bhawani Moulders Pvt. Ltd.",
     description:
       "Premium quality steel products manufactured in Urla, Raipur. Fast quotation and reliable supply.",
     images: [
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "BMPL - MS Billets, Angles & Channels",
+    title: "BMPL - Bhawani Moulders Pvt. Ltd.",
     description: "Premium steel products from Raipur",
   },
   icons: {
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true },
   },
-  generator: "v0.app",
+  generator: "Priyansh",
 };
 
 export default function RootLayout({

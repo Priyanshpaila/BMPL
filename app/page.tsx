@@ -8,7 +8,7 @@ import FAQ from "@/components/sections/FAQ"
 import CTA from "@/components/sections/CTA"
 
 export const metadata = {
-  title: "BMPL - MS Billets, Angles & Channels | Raipur",
+  title: "BMPL - Bhawani Moulders Pvt. Ltd. | Raipur",
   description:
     "Premium MS Billets, Angles & Channels manufactured in Urla, Raipur. Fast quotation, bulk supply, custom sizes.",
 }
