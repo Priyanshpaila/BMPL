@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { CheckCircle2, AlertCircle } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import Container from "@/components/layout/Container";
 import { Card } from "@/components/ui/card";
 import ProductSpecTable from "@/components/products/ProductSpecTable";
@@ -21,14 +21,17 @@ export default function ProductDetailPageClient({
   return (
     <main>
       {/* Breadcrumb */}
-      <div className="border-b border-white/10 bg-slate-900/50">
+      <div className="border-b border-slate-200/70 bg-white/70 backdrop-blur dark:border-white/10 dark:bg-slate-900/50">
         <Container className="py-4">
-          <div className="flex items-center gap-2 text-sm text-slate-400">
-            <Link href="/products" className="hover:text-white smooth-transition">
+          <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+            <Link
+              href="/products"
+              className="text-slate-700 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white smooth-transition"
+            >
               Products
             </Link>
-            <span>/</span>
-            <span className="text-slate-200">{product.name}</span>
+            <span className="text-slate-400 dark:text-slate-500">/</span>
+            <span className="text-slate-900 dark:text-slate-200">{product.name}</span>
           </div>
         </Container>
       </div>
@@ -38,29 +41,63 @@ export default function ProductDetailPageClient({
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Image */}
-            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
-              <div className="relative h-96 md:h-125 rounded-2xl overflow-hidden bg-slate-800 border border-slate-700">
-                <Image src={product.image || "/placeholder.svg"} alt={product.name} fill className="object-cover" priority />
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="relative h-96 md:h-125 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 dark:bg-slate-800 dark:border-slate-700">
+                <Image
+                  src={product.image || "/placeholder.svg"}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                  priority
+                />
               </div>
             </motion.div>
 
             {/* Content */}
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} className="flex flex-col justify-center">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="flex flex-col justify-center"
+            >
               <div className="mb-6">
                 <ProductBadges badges={[product.category, product.availability, "In Stock"]} />
               </div>
 
-              <h1 className="text-5xl font-bold mb-4">{product.name}</h1>
-              <p className="text-xl text-slate-300 mb-8">{product.longDescription}</p>
+              <h1 className="text-5xl font-bold mb-4 text-slate-900 dark:text-white">
+                {product.name}
+              </h1>
+              <p className="text-xl text-slate-700 dark:text-slate-300 mb-8">
+                {product.longDescription}
+              </p>
 
               <div className="grid grid-cols-2 gap-4 mb-8">
-                <Card variant="glass" className="p-4">
-                  <div className="text-sm text-slate-400 mb-1">Minimum Order</div>
-                  <div className="text-xl font-bold">{product.minQty}</div>
+                <Card
+                  variant="glass"
+                  className="p-4 border-slate-200/70 bg-white/70 dark:border-white/10 dark:bg-white/[0.03]"
+                >
+                  <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">
+                    Minimum Order
+                  </div>
+                  <div className="text-xl font-bold text-slate-900 dark:text-white">
+                    {product.minQty}
+                  </div>
                 </Card>
-                <Card variant="glass" className="p-4">
-                  <div className="text-sm text-slate-400 mb-1">Availability</div>
-                  <div className="text-xl font-bold text-green-400">{product.availability}</div>
+
+                <Card
+                  variant="glass"
+                  className="p-4 border-slate-200/70 bg-white/70 dark:border-white/10 dark:bg-white/[0.03]"
+                >
+                  <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">
+                    Availability
+                  </div>
+                  <div className="text-xl font-bold text-emerald-600 dark:text-green-400">
+                    {product.availability}
+                  </div>
                 </Card>
               </div>
 
@@ -72,8 +109,8 @@ export default function ProductDetailPageClient({
                   "Custom sizes available on request",
                 ].map((t) => (
                   <div key={t} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
-                    <span className="text-slate-300">{t}</span>
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-green-400 shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300">{t}</span>
                   </div>
                 ))}
               </div>
@@ -85,14 +122,28 @@ export default function ProductDetailPageClient({
       </section>
 
       {/* Specifications */}
-      <section className="py-20 md:py-32 bg-linear-to-b from-blue-600/5 to-transparent">
+      <section className="py-20 md:py-32 bg-gradient-to-b from-blue-600/5 to-transparent">
         <Container>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
-            <h2 className="text-4xl font-bold mb-2">Technical Specifications</h2>
-            <p className="text-lg text-slate-400">Detailed product specifications and features</p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-12"
+          >
+            <h2 className="text-4xl font-bold mb-2 text-slate-900 dark:text-white">
+              Technical Specifications
+            </h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400">
+              Detailed product specifications and features
+            </p>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
             <ProductSpecTable specs={product.specs} />
           </motion.div>
         </Container>
@@ -100,11 +151,20 @@ export default function ProductDetailPageClient({
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (
-        <section className="py-20 md:py-32 bg-linear-to-b from-transparent to-blue-600/5 border-t border-white/10">
+        <section className="py-20 md:py-32 bg-gradient-to-b from-transparent to-blue-600/5 border-t border-slate-200/70 dark:border-white/10">
           <Container>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
-              <h2 className="text-4xl font-bold mb-2">Related Products</h2>
-              <p className="text-lg text-slate-400">Other products in the {product.category} category</p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-12"
+            >
+              <h2 className="text-4xl font-bold mb-2 text-slate-900 dark:text-white">
+                Related Products
+              </h2>
+              <p className="text-lg text-slate-600 dark:text-slate-400">
+                Other products in the {product.category} category
+              </p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -117,12 +177,23 @@ export default function ProductDetailPageClient({
                   transition={{ delay: idx * 0.1 }}
                 >
                   <Link href={`/products/${encodeURIComponent(related.slug)}`} className="group block">
-                    <Card className="h-full overflow-hidden hover:border-blue-500/50 smooth-transition">
-                      <div className="relative h-40 rounded-lg mb-4 bg-slate-800 overflow-hidden">
-                        <Image src={related.image || "/placeholder.svg"} alt={related.name} fill className="object-cover group-hover:scale-110 smooth-transition" />
+                    <Card
+                      className="h-full overflow-hidden border border-slate-200/70 bg-white/70 backdrop-blur hover:border-blue-600/25 transition-colors dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-blue-500/50"
+                    >
+                      <div className="relative h-40 rounded-lg mb-4 bg-slate-100 overflow-hidden dark:bg-slate-800">
+                        <Image
+                          src={related.image || "/placeholder.svg"}
+                          alt={related.name}
+                          fill
+                          className="object-cover group-hover:scale-110 smooth-transition"
+                        />
                       </div>
-                      <h4 className="font-bold mb-2">{related.name}</h4>
-                      <p className="text-sm text-slate-400">{related.description}</p>
+                      <h4 className="font-bold mb-2 text-slate-900 dark:text-white">
+                        {related.name}
+                      </h4>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        {related.description}
+                      </p>
                     </Card>
                   </Link>
                 </motion.div>
