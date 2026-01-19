@@ -1,18 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, ShieldCheck, Truck, Factory } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import Container from "@/components/layout/Container";
 
-type Chip = {
-  text: string;
-};
-
-type ProofChip = {
-  icon: any;
-  label: string;
-  value: string;
-};
+type Chip = { text: string };
 
 function MarqueeRow({
   items,
@@ -30,9 +22,19 @@ function MarqueeRow({
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
-      {/* Edge fades to blend into same page background */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-slate-950 to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-slate-950 to-transparent" />
+      {/* Edge fades: match page background in light + dark */}
+      <div
+        className="
+          pointer-events-none absolute inset-y-0 left-0 w-20
+          bg-gradient-to-r from-background via-background/70 to-transparent
+        "
+      />
+      <div
+        className="
+          pointer-events-none absolute inset-y-0 right-0 w-20
+          bg-gradient-to-l from-background via-background/70 to-transparent
+        "
+      />
 
       <motion.div
         className="flex w-max items-center gap-3 py-2"
@@ -60,60 +62,26 @@ export default function TrustBar() {
     { text: "Competitive Pricing" },
   ];
 
-  const proof: ProofChip[] = [
-    { icon: Factory, label: "Capacity", value: "10,000+ MT/Year" },
-    { icon: Truck, label: "Dispatch", value: "Pan-India" },
-    { icon: ShieldCheck, label: "Quality", value: "Batch Tested" },
-  ];
-
   const trustNodes = trustItems.map((item) => (
     <div
       key={item.text}
-      className="group flex items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-slate-200 hover:bg-white/[0.05] hover:border-blue-400/30 transition-colors whitespace-nowrap"
+      className="
+        group flex items-center gap-2 whitespace-nowrap rounded-2xl border px-4 py-2 text-sm transition-colors
+        border-slate-200/70 bg-white/70 text-slate-700 hover:bg-white/90 hover:border-blue-500/25
+        dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-200 dark:hover:bg-white/[0.05] dark:hover:border-blue-400/30
+      "
     >
-      <CheckCircle2 className="h-4 w-4 text-blue-300 flex-shrink-0" />
+      <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-blue-600 dark:text-blue-300" />
       <span className="leading-snug">{item.text}</span>
     </div>
   ));
-
-  // const proofNodes = proof.map((p) => {
-  //   const Icon = p.icon;
-  //   return (
-  //     <div
-  //       key={p.label}
-  //       className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-2 hover:bg-white/[0.05] hover:border-blue-400/30 transition-colors whitespace-nowrap"
-  //     >
-  //       <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-white/10">
-  //         <Icon className="h-4 w-4 text-blue-300" />
-  //       </div>
-  //       <div className="leading-tight">
-  //         <div className="text-[10px] uppercase tracking-wide text-slate-400">
-  //           {p.label}
-  //         </div>
-  //         <div className="text-sm font-semibold text-white">{p.value}</div>
-  //       </div>
-  //     </div>
-  //   );
-  // });
 
   return (
     // IMPORTANT: no background, no border band, minimal padding
     <section className="relative py-6">
       <Container>
         <div className="space-y-3">
-          {/* Row 1: trust items (infinite marquee) */}
-          <MarqueeRow
-            items={trustNodes}
-            speed={22}
-            className="rounded-2xl"
-          />
-
-          {/* Row 2: proof items (infinite marquee)
-          <MarqueeRow
-            items={proofNodes}
-            speed={28}
-            className="rounded-2xl"
-          /> */}
+          <MarqueeRow items={trustNodes} speed={22} className="rounded-2xl" />
         </div>
       </Container>
     </section>

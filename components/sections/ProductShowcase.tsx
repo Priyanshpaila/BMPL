@@ -24,8 +24,8 @@ export default function ProductShowcase() {
 
   return (
     <section className="relative py-20 md:py-32">
-      {/* subtle background wash */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-600/0 via-blue-600/5 to-transparent" />
+      {/* subtle background wash (theme-aware) */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-600/0 via-blue-600/5 to-transparent dark:via-blue-600/5" />
 
       <Container className="relative">
         {/* Header */}
@@ -35,7 +35,7 @@ export default function ProductShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.45 }}
-            className="text-4xl font-bold md:text-5xl"
+            className="text-4xl font-bold md:text-5xl text-foreground"
           >
             Our <span className="gradient-text">Product Range</span>
           </motion.h2>
@@ -45,9 +45,10 @@ export default function ProductShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.45, delay: 0.05 }}
-            className="mt-4 text-lg text-slate-400 text-balance"
+            className="mt-4 text-lg text-muted-foreground text-balance"
           >
-            Premium quality steel products manufactured with precision for your industrial needs.
+            Premium quality steel products manufactured with precision for your
+            industrial needs.
           </motion.p>
         </div>
 
@@ -83,7 +84,11 @@ export default function ProductShowcase() {
           <Button
             variant="secondary"
             size="lg"
-            className="rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10"
+            className="
+              rounded-2xl
+              border border-slate-900/10 bg-slate-900/5 hover:bg-slate-900/10
+              dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10
+            "
             asChild
           >
             <Link href="/products" className="inline-flex items-center gap-2">

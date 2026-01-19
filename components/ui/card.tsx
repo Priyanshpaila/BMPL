@@ -3,15 +3,32 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
-  // ✅ better defaults: padding on all sides + tighter gap + rounded + overflow
-  "relative overflow-hidden bg-card text-card-foreground flex flex-col gap-4 rounded-2xl border p-6 transition",
+  // Base: uses your CSS variables (bg-card/text-card-foreground/border-border)
+  "relative overflow-hidden bg-card text-card-foreground flex flex-col gap-4 rounded-2xl border border-border p-6 transition-colors",
   {
     variants: {
       variant: {
-        default: "shadow-sm",
-        elevated: "shadow-lg shadow-black/20 hover:shadow-black/30",
-        glass: "border-white/10 bg-white/[0.04] backdrop-blur shadow-sm",
-        outline: "bg-transparent shadow-none",
+        // Neutral card, works automatically via tokens
+        default:
+          "shadow-sm shadow-black/5 " +
+          "dark:shadow-black/20",
+
+        // Elevated: softer in light, deeper in dark
+        elevated:
+          "shadow-lg shadow-black/10 hover:shadow-black/15 " +
+          "dark:shadow-black/30 dark:hover:shadow-black/40",
+
+        // Glass: light needs darker border + subtle white wash,
+        // dark needs your current white wash + border
+        glass:
+          "backdrop-blur " +
+          "border-slate-200/70 bg-white/70 shadow-sm " +
+          "dark:border-white/10 dark:bg-white/[0.04] dark:shadow-black/20",
+
+        // Outline: transparent background, but keep border correct in both
+        outline:
+          "bg-transparent shadow-none " +
+          "border-slate-200/70 dark:border-white/10",
       },
     },
     defaultVariants: { variant: "default" },

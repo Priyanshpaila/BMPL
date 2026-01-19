@@ -27,7 +27,9 @@ export default function SiteHeader() {
   };
 
   const handleWhatsAppClick = () => {
-    openWhatsAppChat("Hello BMPL, I would like to know more about your products.");
+    openWhatsAppChat(
+      "Hello BMPL, I would like to know more about your products.",
+    );
   };
 
   useEffect(() => {
@@ -51,10 +53,11 @@ export default function SiteHeader() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 glass-effect border-b border-white/10">
+    <header className="sticky top-0 z-50 glass-effect border-b border-border">
+      {/* Backdrop overlay for mobile menu */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-40 bg-black/40 dark:bg-black/60 backdrop-blur-sm md:hidden"
           onClick={() => setMobileMenuOpen(false)}
           aria-hidden="true"
         />
@@ -65,14 +68,21 @@ export default function SiteHeader() {
           {/* Brand (Logo) */}
           <Link
             href="/"
-            className="flex items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="flex items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             aria-label="BMPL Home"
           >
-            <BrandLogo className="h-8 w-auto object-contain" height={32} alt="BMPL" />
+            <BrandLogo
+              className="h-12 w-auto object-contain"
+              height={32}
+              alt="BMPL"
+            />
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
+          <nav
+            className="hidden md:flex items-center gap-8"
+            aria-label="Primary"
+          >
             {NAV_ITEMS.map((item) => {
               const active = isActive(item.href);
               return (
@@ -82,13 +92,13 @@ export default function SiteHeader() {
                   aria-current={active ? "page" : undefined}
                   className={
                     active
-                      ? "text-sm text-white smooth-transition relative"
-                      : "text-sm text-slate-300 hover:text-white smooth-transition"
+                      ? "text-sm text-foreground smooth-transition relative"
+                      : "text-sm text-muted-foreground hover:text-foreground smooth-transition"
                   }
                 >
                   {item.label}
                   {active && (
-                    <span className="absolute -bottom-2 left-0 h-[2px] w-full bg-gradient-to-r from-blue-400 to-cyan-400" />
+                    <span className="absolute -bottom-2 left-0 h-[2px] w-full bg-primary" />
                   )}
                 </Link>
               );
@@ -101,7 +111,12 @@ export default function SiteHeader() {
               variant="ghost"
               size="sm"
               onClick={handleWhatsAppClick}
-              className="flex items-center gap-2 hover:bg-white/5 border border-transparent hover:border-white/10"
+              className="flex items-center gap-2 rounded-xl px-3
+             text-muted-foreground hover:text-foreground
+             bg-transparent hover:bg-muted/40
+             border border-transparent hover:border-border/60
+             shadow-none hover:shadow-none
+             focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               <MessageCircle className="w-4 h-4" />
               Chat
@@ -112,9 +127,13 @@ export default function SiteHeader() {
               size="sm"
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              className="flex items-center justify-center hover:bg-white/5 border border-transparent hover:border-white/10"
+              className="inline-flex items-center justify-center rounded-xl px-3
+             text-muted-foreground hover:text-foreground
+             bg-transparent hover:bg-muted/40
+             border border-transparent hover:border-border/60
+             shadow-none hover:shadow-none
+             focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              {/* Avoid SSR mismatch: render icon only after mount */}
               {mounted ? (
                 resolvedTheme === "dark" ? (
                   <Sun className="w-4 h-4" />
@@ -135,19 +154,27 @@ export default function SiteHeader() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen((v) => !v)}
-            className="md:hidden text-slate-300 hover:text-white smooth-transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-xl p-2 border border-white/10 bg-white/[0.03] hover:bg-white/[0.06]"
+            className="md:hidden text-muted-foreground hover:text-foreground smooth-transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xl p-2 border border-border bg-background/60 hover:bg-muted/40"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-nav"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
 
         {/* Mobile Nav */}
         {mobileMenuOpen && (
-          <nav id="mobile-nav" className="relative z-50 md:hidden pb-4" aria-label="Mobile">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur p-2 flex flex-col gap-1">
+          <nav
+            id="mobile-nav"
+            className="relative z-50 md:hidden pb-4"
+            aria-label="Mobile"
+          >
+            <div className="rounded-2xl border border-border bg-background/70 backdrop-blur p-2 flex flex-col gap-1">
               {NAV_ITEMS.map((item) => {
                 const active = isActive(item.href);
                 return (
@@ -157,8 +184,8 @@ export default function SiteHeader() {
                     aria-current={active ? "page" : undefined}
                     className={
                       active
-                        ? "text-sm text-white bg-white/10 border border-white/10 rounded-xl px-3 py-2"
-                        : "text-sm text-slate-300 hover:text-white hover:bg-white/5 rounded-xl px-3 py-2 smooth-transition"
+                        ? "text-sm text-foreground bg-muted/50 border border-border rounded-xl px-3 py-2"
+                        : "text-sm text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-xl px-3 py-2 smooth-transition"
                     }
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -170,7 +197,7 @@ export default function SiteHeader() {
               <div className="pt-3 flex gap-2 flex-col">
                 <Button
                   variant="secondary"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 flex items-center justify-center gap-2"
+                  className="w-full rounded-xl border border-border bg-muted/30 hover:bg-muted/45 flex items-center justify-center gap-2"
                   onClick={() => {
                     handleWhatsAppClick();
                     setMobileMenuOpen(false);
@@ -182,7 +209,7 @@ export default function SiteHeader() {
 
                 <Button
                   variant="secondary"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 flex items-center justify-center gap-2"
+                  className="w-full rounded-xl border border-border bg-muted/30 hover:bg-muted/45 flex items-center justify-center gap-2"
                   onClick={toggleTheme}
                   aria-label="Toggle theme"
                 >

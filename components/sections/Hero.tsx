@@ -65,11 +65,19 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden pt-24 pb-14 md:pt-28 md:pb-20">
-      {/* Background */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-600/12 via-transparent to-transparent" />
-      <div className="pointer-events-none absolute -top-24 right-[-120px] h-[420px] w-[420px] rounded-full bg-blue-500/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-28 left-[-140px] h-[520px] w-[520px] rounded-full bg-cyan-500/8 blur-3xl" />
-      <div className="pointer-events-none absolute inset-0 opacity-[0.15] [background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.2)_1px,transparent_0)] [background-size:28px_28px]" />
+      {/* Background (theme-aware) */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-600/10 via-transparent to-transparent dark:from-blue-600/12" />
+
+      {/* Soft blobs */}
+      <div className="pointer-events-none absolute -top-24 right-[-120px] h-[420px] w-[420px] rounded-full bg-blue-500/12 blur-3xl dark:bg-blue-500/10" />
+      <div className="pointer-events-none absolute -bottom-28 left-[-140px] h-[520px] w-[520px] rounded-full bg-cyan-500/10 blur-3xl dark:bg-cyan-500/8" />
+
+      {/* Dot grid: subtle in light, brighter in dark */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.08] dark:opacity-[0.15] 
+        [background-size:28px_28px]
+        [background-image:radial-gradient(circle_at_1px_1px,rgba(15,23,42,0.14)_1px,transparent_0)]
+        dark:[background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.2)_1px,transparent_0)]
+      " />
 
       <Container className="relative z-10">
         <motion.div
@@ -78,11 +86,17 @@ export default function Hero() {
           animate="show"
           className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8 items-center"
         >
-          {/* LEFT: Copy + CTAs */}
+          {/* LEFT */}
           <motion.div variants={item} className="lg:col-span-7">
             {/* Top badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">
-              <span className="inline-flex h-2 w-2 rounded-full bg-blue-400" />
+            <div
+              className="
+                inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm
+                border-blue-600/25 bg-blue-600/10 text-blue-700
+                dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-200
+              "
+            >
+              <span className="inline-flex h-2 w-2 rounded-full bg-blue-500 dark:bg-blue-400" />
               Leading Steel Manufacturer in Raipur • Urla
             </div>
 
@@ -90,43 +104,47 @@ export default function Hero() {
               variants={item}
               className="mt-6 text-5xl font-bold leading-[1.05] md:text-6xl lg:text-7xl"
             >
-              <span className="gradient-text">{headline}</span>
+              {/* Stronger gradient for light mode, unchanged for dark */}
+              <span className="bg-gradient-to-r from-blue-700 via-sky-600 to-cyan-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-emerald-300 dark:to-cyan-400">
+                {headline}
+              </span>
             </motion.h1>
 
             <motion.p
               variants={item}
-              className="mt-5 max-w-2xl text-lg text-slate-300 md:text-xl text-balance"
+              className="mt-5 max-w-2xl text-lg md:text-xl text-balance text-slate-700 dark:text-slate-300"
             >
               {COMPANY_INFO.tagline}
             </motion.p>
 
             {/* Chips */}
-            <motion.div
-              variants={item}
-              className="mt-6 flex flex-wrap gap-2"
-            >
+            <motion.div variants={item} className="mt-6 flex flex-wrap gap-2">
               {chips.map((c) => {
                 const Icon = c.icon;
                 return (
                   <span
                     key={c.text}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm text-slate-200"
+                    className="
+                      inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm
+                      border-slate-200/70 bg-white/70 text-slate-700
+                      dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200
+                    "
                   >
-                    <Icon className="h-4 w-4 text-blue-300" />
+                    <Icon className="h-4 w-4 text-blue-600 dark:text-blue-300" />
                     {c.text}
                   </span>
                 );
               })}
             </motion.div>
 
-            {/* Trust bullets (keep your existing data) */}
+            {/* Trust bullets */}
             <motion.div
               variants={item}
-              className="mt-6 flex flex-col gap-3 text-sm text-slate-400 md:flex-row md:flex-wrap md:gap-x-6"
+              className="mt-6 flex flex-col gap-3 text-sm md:flex-row md:flex-wrap md:gap-x-6 text-slate-600 dark:text-slate-400"
             >
               {COMPANY_INFO.trust.map((t, idx) => (
                 <div key={idx} className="flex items-center gap-2">
-                  <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+                  <div className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-blue-400" />
                   {t}
                 </div>
               ))}
@@ -147,7 +165,11 @@ export default function Hero() {
               <Button
                 size="lg"
                 variant="secondary"
-                className="rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10"
+                className="
+                  rounded-2xl border
+                  border-slate-200 bg-white hover:bg-slate-50 text-slate-900
+                  dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 dark:text-white
+                "
                 onClick={() =>
                   openWhatsAppChat(
                     "Hello BMPL, I would like to request a quotation for your products."
@@ -158,11 +180,14 @@ export default function Hero() {
                 Chat on WhatsApp
               </Button>
 
-              {/* Optional quick call button (good for conversions) */}
               <Button
                 size="lg"
                 variant="outline"
-                className="rounded-2xl bg-transparent"
+                className="
+                  rounded-2xl bg-transparent border
+                  border-slate-200 text-slate-900 hover:bg-slate-50
+                  dark:border-white/10 dark:text-white dark:hover:bg-white/5
+                "
                 asChild
               >
                 <a href={`tel:${COMPANY_INFO.contact.phone}`}>
@@ -175,7 +200,7 @@ export default function Hero() {
             {/* Micro info row */}
             <motion.div
               variants={item}
-              className="mt-6 flex flex-col gap-2 text-sm text-slate-500 sm:flex-row sm:items-center sm:gap-6"
+              className="mt-6 flex flex-col gap-2 text-sm sm:flex-row sm:items-center sm:gap-6 text-slate-500 dark:text-slate-500"
             >
               <span className="inline-flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-slate-500" />
@@ -188,7 +213,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* RIGHT: Proof + Quick Quote */}
+          {/* RIGHT */}
           <motion.div variants={item} className="lg:col-span-5">
             <div className="space-y-6">
               {/* Metrics */}
@@ -199,17 +224,23 @@ export default function Hero() {
                     <Card
                       key={m.label}
                       variant="glass"
-                      className="border-white/10 bg-white/[0.03] hover:bg-white/[0.05] hover:border-blue-400/30 transition-colors"
+                      className="transition-colors hover:border-blue-500/25 dark:hover:border-blue-400/30"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-white/10">
-                          <Icon className="h-5 w-5 text-blue-300" />
+                        <div
+                          className="
+                            flex h-10 w-10 items-center justify-center rounded-2xl ring-1
+                            bg-blue-600/10 ring-blue-600/15
+                            dark:bg-blue-500/10 dark:ring-white/10
+                          "
+                        >
+                          <Icon className="h-5 w-5 text-blue-700 dark:text-blue-300" />
                         </div>
                         <div>
-                          <div className="text-xs uppercase tracking-wide text-slate-400">
+                          <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
                             {m.label}
                           </div>
-                          <div className="text-lg font-semibold text-white">
+                          <div className="text-lg font-semibold text-slate-900 dark:text-white">
                             {m.value}
                           </div>
                         </div>
@@ -219,32 +250,42 @@ export default function Hero() {
                 })}
               </div>
 
-              {/* Quick Quote Card */}
-              <Card
-                variant="glass"
-                className="border-white/10 bg-white/[0.03]"
-              >
+              {/* Quick Quote */}
+              <Card variant="glass">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-sm font-semibold text-white">
+                    <div className="text-sm font-semibold text-slate-900 dark:text-white">
                       Quick Quote (WhatsApp)
                     </div>
-                    <div className="text-xs text-slate-400">
+                    <div className="text-xs text-slate-500 dark:text-slate-400">
                       Send your requirement in 10 seconds
                     </div>
                   </div>
-                  <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-2.5 py-1 text-xs text-blue-200">
+                  <span
+                    className="
+                      rounded-full border px-2.5 py-1 text-xs
+                      border-blue-600/25 bg-blue-600/10 text-blue-700
+                      dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-200
+                    "
+                  >
                     Fast Response
                   </span>
                 </div>
 
                 <div className="mt-4 grid grid-cols-1 gap-3">
                   <div className="space-y-1">
-                    <label className="text-xs text-slate-400">Product</label>
+                    <label className="text-xs text-slate-600 dark:text-slate-400">
+                      Product
+                    </label>
                     <select
                       value={product}
                       onChange={(e) => setProduct(e.target.value)}
-                      className="w-full rounded-xl border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-slate-100 outline-none focus:ring-2 focus:ring-blue-500/30"
+                      className="
+                        w-full rounded-xl border px-3 py-2 text-sm outline-none
+                        border-slate-200/70 bg-white/80 text-slate-900
+                        focus:ring-2 focus:ring-blue-500/20
+                        dark:border-white/10 dark:bg-slate-950/40 dark:text-slate-100 dark:focus:ring-blue-500/30
+                      "
                     >
                       <option>MS Billets</option>
                       <option>MS Angles</option>
@@ -254,35 +295,45 @@ export default function Hero() {
 
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <div className="space-y-1">
-                      <label className="text-xs text-slate-400">Quantity</label>
+                      <label className="text-xs text-slate-600 dark:text-slate-400">
+                        Quantity
+                      </label>
                       <input
                         value={qty}
                         onChange={(e) => setQty(e.target.value)}
                         placeholder="e.g. 10 MT"
-                        className="w-full rounded-xl border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-slate-100 outline-none focus:ring-2 focus:ring-blue-500/30"
+                        className="
+                          w-full rounded-xl border px-3 py-2 text-sm outline-none
+                          border-slate-200/70 bg-white/80 text-slate-900 placeholder:text-slate-400
+                          focus:ring-2 focus:ring-blue-500/20
+                          dark:border-white/10 dark:bg-slate-950/40 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:ring-blue-500/30
+                        "
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs text-slate-400">Location</label>
+                      <label className="text-xs text-slate-600 dark:text-slate-400">
+                        Location
+                      </label>
                       <input
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
                         placeholder="City, State"
-                        className="w-full rounded-xl border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-slate-100 outline-none focus:ring-2 focus:ring-blue-500/30"
+                        className="
+                          w-full rounded-xl border px-3 py-2 text-sm outline-none
+                          border-slate-200/70 bg-white/80 text-slate-900 placeholder:text-slate-400
+                          focus:ring-2 focus:ring-blue-500/20
+                          dark:border-white/10 dark:bg-slate-950/40 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:ring-blue-500/30
+                        "
                       />
                     </div>
                   </div>
 
-                  <Button
-                    size="lg"
-                    className="rounded-2xl w-full"
-                    onClick={handleWhatsApp}
-                  >
+                  <Button size="lg" className="rounded-2xl w-full" onClick={handleWhatsApp}>
                     <MessageCircle className="h-4 w-4" />
                     Send on WhatsApp
                   </Button>
 
-                  <p className="text-[12px] text-slate-500">
+                  <p className="text-[12px] text-slate-500 dark:text-slate-500">
                     By sending, you agree to be contacted for quote follow-up.
                   </p>
                 </div>
@@ -300,11 +351,21 @@ export default function Hero() {
         >
           <a
             href="#products"
-            className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-slate-300 hover:bg-white/[0.06] transition-colors"
+            className="
+              group inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-colors
+              border-slate-200/70 bg-white/70 text-slate-700 hover:bg-white/90
+              dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-300 dark:hover:bg-white/[0.06]
+            "
           >
             Explore Products
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
-              <ArrowRight className="h-4 w-4 text-blue-300" />
+            <span
+              className="
+                inline-flex h-6 w-6 items-center justify-center rounded-full transition-colors
+                bg-blue-600/10 group-hover:bg-blue-600/15
+                dark:bg-blue-500/10 dark:group-hover:bg-blue-500/20
+              "
+            >
+              <ArrowRight className="h-4 w-4 text-blue-700 dark:text-blue-300" />
             </span>
           </a>
         </motion.div>

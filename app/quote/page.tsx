@@ -66,12 +66,30 @@ export default function QuotePage() {
     );
   };
 
+  // Light-safe grid (dark keeps your current look)
+  const gridPattern =
+    "pointer-events-none absolute inset-0 opacity-[0.07] dark:opacity-[0.10] " +
+    "[background-image:radial-gradient(circle_at_1px_1px,rgba(15,23,42,0.14)_1px,transparent_0)] " +
+    "dark:[background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.14)_1px,transparent_0)] " +
+    "[background-size:28px_28px]";
+
+  // Light-safe divider (dark keeps your via-white/10)
+  const divider =
+    "h-px w-full bg-gradient-to-r from-transparent via-slate-900/10 to-transparent dark:via-white/10";
+
+  // Light-safe “glass” (dark keeps your border-white/10 bg-white/[0.03] etc.)
+  const glassCard =
+    "backdrop-blur border border-slate-200/70 bg-white/70 " +
+    "hover:bg-white/80 hover:border-blue-600/25 " +
+    "dark:border-white/10 dark:bg-white/[0.03] dark:hover:bg-white/[0.05] dark:hover:border-blue-400/30 " +
+    "transition-colors";
+
   return (
     <main>
       {/* Hero */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-600/10 via-transparent to-transparent" />
-        <div className="pointer-events-none absolute inset-0 opacity-[0.10] [background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.14)_1px,transparent_0)] [background-size:28px_28px]" />
+        <div className={gridPattern} />
         <div className="pointer-events-none absolute -top-24 right-0 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 left-0 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl" />
 
@@ -82,10 +100,10 @@ export default function QuotePage() {
             transition={{ duration: 0.55 }}
             className="mx-auto mb-12 max-w-3xl text-center"
           >
-            <h1 className="mb-6 text-5xl font-bold md:text-6xl">
+            <h1 className="mb-6 text-5xl font-bold md:text-6xl text-slate-900 dark:text-white">
               Request a <span className="gradient-text">Quote</span>
             </h1>
-            <p className="text-xl text-slate-300 text-balance">
+            <p className="text-xl text-slate-600 dark:text-slate-300 text-balance">
               Get a customized quotation for MS Billets, Angles, and Channels.
               Quick response guaranteed.
             </p>
@@ -101,22 +119,23 @@ export default function QuotePage() {
             {benefits.map((benefit) => {
               const Icon = benefit.icon;
               return (
-                <motion.div key={benefit.title} variants={fadeUp} className="h-full">
-                  <Card
-                    variant="glass"
-                    className="group h-full border-white/10 bg-white/[0.03] hover:bg-white/[0.05] hover:border-blue-400/30 transition-colors"
-                  >
+                <motion.div
+                  key={benefit.title}
+                  variants={fadeUp}
+                  className="h-full"
+                >
+                  <Card variant="glass" className={`group h-full ${glassCard}`}>
                     {/* header */}
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-start gap-4 min-w-0">
-                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-white/10">
-                          <Icon className="h-5 w-5 text-blue-300" />
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-slate-200 dark:ring-white/10">
+                          <Icon className="h-5 w-5 text-blue-600 dark:text-blue-300" />
                         </div>
                         <div className="min-w-0">
-                          <h3 className="font-semibold text-white leading-snug">
+                          <h3 className="font-semibold text-slate-900 dark:text-white leading-snug">
                             {benefit.title}
                           </h3>
-                          <p className="mt-1 text-sm text-slate-400 leading-relaxed">
+                          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             {benefit.description}
                           </p>
                         </div>
@@ -125,8 +144,8 @@ export default function QuotePage() {
 
                     {/* footer pinned */}
                     <div className="mt-auto pt-6">
-                      <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                      <div className="mt-3 text-xs text-slate-500 text-center">
+                      <div className={divider} />
+                      <div className="mt-3 text-xs text-slate-500 dark:text-slate-500 text-center">
                         Designed for fast procurement cycles
                       </div>
                     </div>
@@ -143,11 +162,7 @@ export default function QuotePage() {
             transition={{ delay: 0.2, duration: 0.45 }}
             className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3"
           >
-            <Button
-              size="lg"
-              className="rounded-2xl"
-              asChild
-            >
+            <Button size="lg" className="rounded-2xl" asChild>
               <Link href="#quote-form" className="inline-flex items-center gap-2">
                 Fill Quote Form <ArrowRight className="h-4 w-4" />
               </Link>
@@ -156,7 +171,10 @@ export default function QuotePage() {
             <Button
               size="lg"
               variant="secondary"
-              className="rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10"
+              className={
+                "rounded-2xl border border-slate-200 bg-white/70 text-slate-900 hover:bg-white " +
+                "dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+              }
               onClick={handleWhatsApp}
             >
               Chat on WhatsApp <ArrowRight className="ml-2 h-4 w-4 opacity-80" />
@@ -176,22 +194,24 @@ export default function QuotePage() {
             transition={{ duration: 0.45 }}
           >
             {/* Wrap form in a glass card for consistency */}
-            <Card variant="glass" className="border-white/10 bg-white/[0.03]">
+            <Card variant="glass" className={glassCard}>
               <div className="mb-6">
-                <h2 className="text-3xl text-center font-bold text-white">
+                <h2 className="text-3xl text-center font-bold text-slate-900 dark:text-white">
                   Share your <span className="gradient-text">Requirement</span>
                 </h2>
-                <p className="mt-2 text-center text-slate-400">
-                  Mention product, sizes, quantity, delivery location, and any special notes.
+                <p className="mt-2 text-center text-slate-600 dark:text-slate-400">
+                  Mention product, sizes, quantity, delivery location, and any
+                  special notes.
                 </p>
               </div>
 
               <QuoteForm />
 
               <div className="mt-8">
-                <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                <p className="mt-3 text-xs text-slate-500">
-                  By submitting, you agree that BMPL may contact you via phone/email/WhatsApp to share the quotation.
+                <div className={divider} />
+                <p className="mt-3 text-xs text-slate-500 dark:text-slate-500">
+                  By submitting, you agree that BMPL may contact you via
+                  phone/email/WhatsApp to share the quotation.
                 </p>
               </div>
             </Card>
@@ -200,9 +220,9 @@ export default function QuotePage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="relative py-20 md:py-32 border-t border-white/10 overflow-hidden">
+      <section className="relative py-20 md:py-32 border-t border-slate-200/70 dark:border-white/10 overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-600/10 via-transparent to-transparent" />
-        <div className="pointer-events-none absolute inset-0 opacity-[0.10] [background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.14)_1px,transparent_0)] [background-size:28px_28px]" />
+        <div className={gridPattern} />
 
         <Container className="relative">
           <motion.div
@@ -212,10 +232,10 @@ export default function QuotePage() {
             transition={{ duration: 0.45 }}
             className="mb-12 text-center"
           >
-            <h2 className="mb-4 text-4xl font-bold">
+            <h2 className="mb-4 text-4xl font-bold text-slate-900 dark:text-white">
               Quote Process <span className="gradient-text">FAQs</span>
             </h2>
-            <p className="text-lg text-slate-400">
+            <p className="text-lg text-slate-600 dark:text-slate-400">
               Common questions about our quotation process.
             </p>
           </motion.div>
@@ -229,20 +249,17 @@ export default function QuotePage() {
           >
             {faqs.map((faq) => (
               <motion.div key={faq.q} variants={fadeUp} className="h-full">
-                <Card
-                  variant="glass"
-                  className="h-full border-white/10 bg-white/[0.03] hover:bg-white/[0.05] hover:border-blue-400/30 transition-colors"
-                >
+                <Card variant="glass" className={`h-full ${glassCard}`}>
                   {/* header */}
                   <div className="flex items-start gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-white/10">
-                      <CheckCircle2 className="h-5 w-5 text-blue-300" />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-slate-200 dark:ring-white/10">
+                      <CheckCircle2 className="h-5 w-5 text-blue-600 dark:text-blue-300" />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="font-semibold text-blue-300 leading-snug">
+                      <h3 className="font-semibold text-blue-700 dark:text-blue-300 leading-snug">
                         {faq.q}
                       </h3>
-                      <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+                      <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         {faq.a}
                       </p>
                     </div>
@@ -250,8 +267,8 @@ export default function QuotePage() {
 
                   {/* footer pinned */}
                   <div className="mt-auto pt-6">
-                    <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                    <div className="mt-3 text-xs text-slate-500 text-center">
+                    <div className={divider} />
+                    <div className="mt-3 text-xs text-slate-500 dark:text-slate-500 text-center">
                       Clear, upfront communication
                     </div>
                   </div>
@@ -273,10 +290,14 @@ export default function QuotePage() {
                 Browse Products <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
+
             <Button
               size="lg"
               variant="secondary"
-              className="rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10"
+              className={
+                "rounded-2xl border border-slate-200 bg-white/70 text-slate-900 hover:bg-white " +
+                "dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+              }
               onClick={handleWhatsApp}
             >
               Chat on WhatsApp <ArrowRight className="ml-2 h-4 w-4 opacity-80" />

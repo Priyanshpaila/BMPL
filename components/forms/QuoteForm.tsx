@@ -59,25 +59,30 @@ export default function QuoteForm() {
 
     if (!formData.quantity.trim()) {
       newErrors.quantity = "Quantity is required";
-    } else if (isNaN(Number.parseFloat(formData.quantity))) {
+    } else if (Number.isNaN(Number.parseFloat(formData.quantity))) {
       newErrors.quantity = "Please enter a valid quantity";
     }
 
-    if (!formData.location.trim()) newErrors.location = "Delivery location is required";
+    if (!formData.location.trim())
+      newErrors.location = "Delivery location is required";
 
     if (formData.phone) {
       const digits = formData.phone.replace(/\s/g, "");
-      if (!/^[0-9\-+]{10,}$/.test(digits)) newErrors.phone = "Please enter a valid phone number";
+      if (!/^[0-9\-+]{10,}$/.test(digits))
+        newErrors.phone = "Please enter a valid phone number";
     }
 
-    if (!formData.consent) newErrors.consent = "Please agree to communication preferences";
+    if (!formData.consent)
+      newErrors.consent = "Please agree to communication preferences";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
 
@@ -125,6 +130,10 @@ export default function QuoteForm() {
     }
   };
 
+  const glass =
+    "border-border/60 bg-background/50 backdrop-blur supports-[backdrop-filter]:bg-background/40 shadow-sm";
+  const divider = "h-px w-full bg-gradient-to-r from-transparent via-border/60 to-transparent";
+
   return (
     <div className="max-w-2xl mx-auto">
       {/* Success */}
@@ -136,15 +145,21 @@ export default function QuoteForm() {
             exit={{ opacity: 0, y: -14 }}
             className="mb-6"
           >
-            <Card className="border border-emerald-500/30 bg-emerald-500/10">
+            <Card
+              className={[
+                "border border-emerald-500/30 bg-emerald-500/10",
+                "text-foreground",
+              ].join(" ")}
+            >
               <div className="flex items-start gap-3">
-                <CheckCircle2 className="mt-0.5 h-6 w-6 flex-shrink-0 text-emerald-300" />
+                <CheckCircle2 className="mt-0.5 h-6 w-6 flex-shrink-0 text-emerald-600 dark:text-emerald-300" />
                 <div>
-                  <h3 className="mb-1 font-semibold text-emerald-200">
+                  <h3 className="mb-1 font-semibold text-emerald-800 dark:text-emerald-200">
                     Quote request sent
                   </h3>
-                  <p className="text-sm text-emerald-200/80">
-                    Your request was sent via WhatsApp. Our team will respond shortly.
+                  <p className="text-sm text-emerald-800/80 dark:text-emerald-200/80">
+                    Your request was sent via WhatsApp. Our team will respond
+                    shortly.
                   </p>
                 </div>
               </div>
@@ -155,11 +170,7 @@ export default function QuoteForm() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Name */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+        <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <Input
             label="Your Name *"
             name="name"
@@ -190,7 +201,7 @@ export default function QuoteForm() {
           />
         </motion.div>
 
-        {/* Product Select (glass + matches theme) */}
+        {/* Product Select */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -199,22 +210,23 @@ export default function QuoteForm() {
         >
           <Card
             variant="glass"
-            className={`border-white/10 bg-white/[0.03] ${
-              errors.product ? "ring-1 ring-red-500/30" : ""
-            }`}
+            className={[
+              glass,
+              errors.product ? "ring-1 ring-destructive/30" : "",
+            ].join(" ")}
           >
             <div className="flex items-center justify-between gap-3">
-              <label htmlFor="product" className="text-sm font-medium text-slate-300">
+              <label htmlFor="product" className="text-sm font-medium text-foreground">
                 Product *
               </label>
 
               {selectedProduct?.minQty ? (
-                <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11px] text-slate-200">
-                  <Sparkles className="h-3.5 w-3.5 text-blue-300" />
+                <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-background/40 px-2.5 py-1 text-[11px] text-foreground">
+                  <Sparkles className="h-3.5 w-3.5 text-blue-700 dark:text-blue-300" />
                   Min: {selectedProduct.minQty}
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 text-xs text-slate-500">
+                <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                   Select one <ChevronDown className="h-4 w-4" />
                 </span>
               )}
@@ -227,40 +239,47 @@ export default function QuoteForm() {
                 value={formData.product}
                 onChange={handleChange}
                 required
-                className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-slate-50 outline-none smooth-transition focus:border-blue-400/40 focus:ring-2 focus:ring-blue-500/20"
+                className={[
+                  "w-full rounded-2xl border px-4 py-3 outline-none smooth-transition",
+                  "bg-background text-foreground border-border/60",
+                  "focus:border-blue-500/40 focus:ring-2 focus:ring-blue-500/20",
+                ].join(" ")}
               >
-                <option value="" className="bg-slate-900">
+                <option value="">
                   Select a product
                 </option>
                 {PRODUCTS.map((product) => (
-                  <option key={product.slug} value={product.slug} className="bg-slate-900">
+                  <option key={product.slug} value={product.slug}>
                     {product.name} — {product.minQty}
                   </option>
                 ))}
               </select>
 
-              {errors.product && <p className="mt-2 text-sm text-red-400">{errors.product}</p>}
+              {errors.product && (
+                <p className="mt-2 text-sm text-destructive">{errors.product}</p>
+              )}
             </div>
 
-            {/* Product details block (consistent + pinned footer) */}
+            {/* Product details */}
             {selectedProduct && (
               <div className="mt-5">
-                <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                <div className={divider} />
 
                 <div className="mt-4 flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-white/10">
-                    <CheckCircle2 className="h-5 w-5 text-blue-300" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-border/60 dark:ring-white/10">
+                    <CheckCircle2 className="h-5 w-5 text-blue-700 dark:text-blue-300" />
                   </div>
 
                   <div className="min-w-0">
-                    <p className="text-sm text-slate-300">
-                      <span className="font-semibold text-slate-200">{selectedProduct.name}</span>
+                    <p className="text-sm text-foreground">
+                      <span className="font-semibold">{selectedProduct.name}</span>
                     </p>
-                    <p className="mt-1 text-xs text-slate-400 leading-relaxed">
+                    <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
                       {selectedProduct.description}
                     </p>
-                    <p className="mt-2 text-xs text-slate-500">
-                      Minimum order: <span className="text-slate-300">{selectedProduct.minQty}</span>
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      Minimum order:{" "}
+                      <span className="text-foreground">{selectedProduct.minQty}</span>
                     </p>
                   </div>
                 </div>
@@ -323,7 +342,7 @@ export default function QuoteForm() {
           />
         </motion.div>
 
-        {/* Consent (match theme + error) */}
+        {/* Consent */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -332,9 +351,10 @@ export default function QuoteForm() {
         >
           <Card
             variant="glass"
-            className={`border-white/10 bg-white/[0.03] ${
-              errors.consent ? "ring-1 ring-red-500/30" : ""
-            }`}
+            className={[
+              glass,
+              errors.consent ? "ring-1 ring-destructive/30" : "",
+            ].join(" ")}
           >
             <div className="flex items-start gap-3">
               <input
@@ -343,20 +363,27 @@ export default function QuoteForm() {
                 name="consent"
                 checked={formData.consent}
                 onChange={handleChange}
-                className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-blue-600 focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                className={[
+                  "mt-1 h-4 w-4 rounded border",
+                  "border-border/60 bg-background",
+                  "text-blue-600 focus:ring-2 focus:ring-blue-500/20 cursor-pointer",
+                ].join(" ")}
               />
-              <label htmlFor="consent" className="text-sm text-slate-300 cursor-pointer flex-1">
-                I agree to be contacted via WhatsApp, phone, or email for quote follow-up and business communication.
+              <label
+                htmlFor="consent"
+                className="text-sm text-foreground cursor-pointer flex-1"
+              >
+                I agree to be contacted via WhatsApp, phone, or email for quote
+                follow-up and business communication.
               </label>
             </div>
+
             {errors.consent && (
-              <p className="mt-2 text-sm text-red-400">
-                {errors.consent}
-              </p>
+              <p className="mt-2 text-sm text-destructive">{errors.consent}</p>
             )}
 
-            <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <p className="mt-3 text-xs text-slate-500 text-center">
+            <div className={`mt-5 ${divider}`} />
+            <p className="mt-3 text-xs text-muted-foreground text-center">
               We respect your privacy. No spam—only quote-related communication.
             </p>
           </Card>
@@ -385,23 +412,21 @@ export default function QuoteForm() {
           </Button>
         </motion.div>
 
-        {/* Info message (glass) */}
+        {/* Info */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.24 }}
         >
-          <Card
-            variant="glass"
-            className="border-white/10 bg-white/[0.03]"
-          >
+          <Card variant="glass" className={glass}>
             <div className="flex gap-3">
-              <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-white/10">
-                <AlertCircle className="h-4 w-4 text-blue-300" />
+              <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-border/60 dark:ring-white/10">
+                <AlertCircle className="h-4 w-4 text-blue-700 dark:text-blue-300" />
               </div>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                Your quote request will be sent directly to our WhatsApp Business account. We typically respond within 24 hours.
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Your quote request will be sent directly to our WhatsApp Business
+                account. We typically respond within 24 hours.
               </p>
             </div>
           </Card>
