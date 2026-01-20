@@ -16,7 +16,7 @@ export const COMPANY_INFO = {
   contact: {
     phone: "+91 98765 43210",
     email: "info@bmpl.in",
-    whatsapp: "919876543210", // without +
+    whatsapp: "918770047163", // without +
   },
 
   hours: {
