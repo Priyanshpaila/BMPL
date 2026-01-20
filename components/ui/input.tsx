@@ -28,6 +28,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           id={inputId}
+          name={name}
           type={type}
           data-slot="input"
           aria-invalid={!!error}
