@@ -209,7 +209,7 @@ export default function QuotePage() {
 
               <div className="mt-8">
                 <div className={divider} />
-                <p className="mt-3 text-xs text-slate-500 dark:text-slate-500">
+                <p className="mt-3 text-center text-xs text-slate-500 dark:text-slate-500">
                   By submitting, you agree that BMPL may contact you via
                   phone/email/WhatsApp to share the quotation.
                 </p>

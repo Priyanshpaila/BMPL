@@ -15,10 +15,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { submitQuoteFuture } from "@/lib/whatsapp";
+import { submitQuoteAndNotify } from "@/lib/whatsapp";
 
 interface FormData {
   name: string;
+  email: string; // ✅ added (required)
   phone: string;
   product: string; // slug
   quantity: string;
@@ -34,6 +35,7 @@ interface FormErrors {
 export default function QuoteForm() {
   const [formData, setFormData] = useState<FormData>({
     name: "",
+    email: "", // ✅ added
     phone: "",
     product: "",
     quantity: "",
@@ -55,6 +57,14 @@ export default function QuoteForm() {
     const newErrors: FormErrors = {};
 
     if (!formData.name.trim()) newErrors.name = "Name is required";
+
+    // ✅ Email required + basic validation
+    const email = (formData.email || "").trim().toLowerCase();
+    if (!email) newErrors.email = "Email is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
     if (!formData.product) newErrors.product = "Please select a product";
 
     if (!formData.quantity.trim()) {
@@ -102,18 +112,21 @@ export default function QuoteForm() {
 
     setLoading(true);
     try {
-      await submitQuoteFuture({
+      await submitQuoteAndNotify({
         name: formData.name,
+        email: formData.email, // ✅ added
         phone: formData.phone,
         product: formData.product,
         quantity: formData.quantity,
         location: formData.location,
         notes: formData.notes,
+        consent: formData.consent,
       });
 
       setSubmitted(true);
       setFormData({
         name: "",
+        email: "", // ✅ added reset
         phone: "",
         product: "",
         quantity: "",
@@ -132,7 +145,8 @@ export default function QuoteForm() {
 
   const glass =
     "border-border/60 bg-background/50 backdrop-blur supports-[backdrop-filter]:bg-background/40 shadow-sm";
-  const divider = "h-px w-full bg-gradient-to-r from-transparent via-border/60 to-transparent";
+  const divider =
+    "h-px w-full bg-gradient-to-r from-transparent via-border/60 to-transparent";
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -170,7 +184,11 @@ export default function QuoteForm() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Name */}
-        <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
           <Input
             label="Your Name *"
             name="name"
@@ -183,6 +201,25 @@ export default function QuoteForm() {
           />
         </motion.div>
 
+        {/* Email ✅ */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.02 }}
+        >
+          <Input
+            label="Email Address *"
+            name="email"
+            type="email"
+            placeholder="Enter your email address"
+            value={formData.email}
+            onChange={handleChange}
+            error={errors.email}
+            required
+          />
+        </motion.div>
+
         {/* Phone */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -191,13 +228,14 @@ export default function QuoteForm() {
           transition={{ delay: 0.03 }}
         >
           <Input
-            label="Phone Number (optional)"
+            label="Phone Number *"
             name="phone"
             type="tel"
             placeholder="Enter your phone number"
             value={formData.phone}
             onChange={handleChange}
             error={errors.phone}
+            required
           />
         </motion.div>
 
@@ -216,7 +254,10 @@ export default function QuoteForm() {
             ].join(" ")}
           >
             <div className="flex items-center justify-between gap-3">
-              <label htmlFor="product" className="text-sm font-medium text-foreground">
+              <label
+                htmlFor="product"
+                className="text-sm font-medium text-foreground"
+              >
                 Product *
               </label>
 
@@ -245,9 +286,7 @@ export default function QuoteForm() {
                   "focus:border-blue-500/40 focus:ring-2 focus:ring-blue-500/20",
                 ].join(" ")}
               >
-                <option value="">
-                  Select a product
-                </option>
+                <option value="">Select a product</option>
                 {PRODUCTS.map((product) => (
                   <option key={product.slug} value={product.slug}>
                     {product.name} — {product.minQty}
@@ -256,7 +295,9 @@ export default function QuoteForm() {
               </select>
 
               {errors.product && (
-                <p className="mt-2 text-sm text-destructive">{errors.product}</p>
+                <p className="mt-2 text-sm text-destructive">
+                  {errors.product}
+                </p>
               )}
             </div>
 
@@ -272,14 +313,18 @@ export default function QuoteForm() {
 
                   <div className="min-w-0">
                     <p className="text-sm text-foreground">
-                      <span className="font-semibold">{selectedProduct.name}</span>
+                      <span className="font-semibold">
+                        {selectedProduct.name}
+                      </span>
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
                       {selectedProduct.description}
                     </p>
                     <p className="mt-2 text-xs text-muted-foreground">
                       Minimum order:{" "}
-                      <span className="text-foreground">{selectedProduct.minQty}</span>
+                      <span className="text-foreground">
+                        {selectedProduct.minQty}
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -426,7 +471,8 @@ export default function QuoteForm() {
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Your quote request will be sent directly to our WhatsApp Business
-                account. We typically respond within 24 hours.
+                account, and you’ll receive a confirmation email. We typically
+                respond within 24 hours.
               </p>
             </div>
           </Card>

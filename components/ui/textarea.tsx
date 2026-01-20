@@ -28,6 +28,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         <textarea
           ref={ref}
           id={textareaId}
+          name={name}
           data-slot="textarea"
           aria-invalid={!!error}
           aria-describedby={describedBy}
