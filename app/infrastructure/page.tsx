@@ -30,24 +30,61 @@ export default function InfrastructurePage() {
     {
       icon: BarChart3,
       title: "Process Control",
-      description: "Automated monitoring systems ensuring consistent product specifications",
+      description:
+        "Automated monitoring systems ensuring consistent product specifications",
     },
   ];
 
   const capacity = [
-    { category: "Production Capacity", value: "10,000+ MT/Year", detail: "Annual output" },
-    { category: "Storage Facility", value: "2,000 MT", detail: "Warehouse capacity" },
-    { category: "Quality Tests", value: "100%", detail: "Batch testing coverage" },
+    {
+      category: "Production Capacity",
+      value: "10,000+ MT/Year",
+      detail: "Annual output",
+    },
+    {
+      category: "Storage Facility",
+      value: "2,000 MT",
+      detail: "Warehouse capacity",
+    },
+    {
+      category: "Quality Tests",
+      value: "100%",
+      detail: "Batch testing coverage",
+    },
     { category: "Dispatch Fleet", value: "24/7", detail: "Logistics ready" },
   ];
 
   const process = [
-    { step: "1", title: "Raw Material Selection", desc: "Premium iron scrap & additives sourced from certified suppliers" },
-    { step: "2", title: "Melting", desc: "Controlled melting in induction furnaces at precise temperatures" },
-    { step: "3", title: "Casting", desc: "Pouring molten steel into molds for initial shape formation" },
-    { step: "4", title: "Cooling", desc: "Controlled cooling to prevent defects and ensure structural integrity" },
-    { step: "5", title: "Rolling", desc: "Hot rolling to achieve desired dimensions and properties" },
-    { step: "6", title: "Quality Testing", desc: "Comprehensive testing before packaging and dispatch" },
+    {
+      step: "1",
+      title: "Raw Material Selection",
+      desc: "Premium iron scrap & additives sourced from certified suppliers",
+    },
+    {
+      step: "2",
+      title: "Melting",
+      desc: "Controlled melting in induction furnaces at precise temperatures",
+    },
+    {
+      step: "3",
+      title: "Casting",
+      desc: "Pouring molten steel into molds for initial shape formation",
+    },
+    {
+      step: "4",
+      title: "Cooling",
+      desc: "Controlled cooling to prevent defects and ensure structural integrity",
+    },
+    {
+      step: "5",
+      title: "Rolling",
+      desc: "Hot rolling to achieve desired dimensions and properties",
+    },
+    {
+      step: "6",
+      title: "Quality Testing",
+      desc: "Comprehensive testing before packaging and dispatch",
+    },
   ];
 
   const sectionFade = {
@@ -100,7 +137,8 @@ export default function InfrastructurePage() {
             </h1>
 
             <p className="text-xl text-muted-foreground text-balance">
-              World-class manufacturing facilities with cutting-edge technology and rigorous quality control.
+              World-class manufacturing facilities with cutting-edge technology
+              and rigorous quality control.
             </p>
 
             {/* subtle divider */}
@@ -120,9 +158,12 @@ export default function InfrastructurePage() {
             viewport={{ once: true, amount: 0.35 }}
             className="mb-14 text-center"
           >
-            <h2 className="text-4xl font-bold mb-4 text-foreground">Manufacturing Facilities</h2>
+            <h2 className="text-4xl font-bold mb-4 text-foreground">
+              Manufacturing Facilities
+            </h2>
             <p className="text-lg text-muted-foreground">
-              State-of-the-art equipment built for precision, scale, and consistency.
+              State-of-the-art equipment built for precision, scale, and
+              consistency.
             </p>
           </motion.div>
 
@@ -195,9 +236,12 @@ export default function InfrastructurePage() {
             viewport={{ once: true, amount: 0.35 }}
             className="mb-14 text-center"
           >
-            <h2 className="text-4xl font-bold mb-4 text-foreground">Production Capacity</h2>
+            <h2 className="text-4xl font-bold mb-4 text-foreground">
+              Production Capacity
+            </h2>
             <p className="text-lg text-muted-foreground">
-              Robust infrastructure designed to support bulk orders and timely dispatch.
+              Robust infrastructure designed to support bulk orders and timely
+              dispatch.
             </p>
           </motion.div>
 
@@ -224,7 +268,9 @@ export default function InfrastructurePage() {
                   >
                     <div className="flex h-full flex-col items-center">
                       <div className="w-full">
-                        <div className="text-sm text-muted-foreground">{item.category}</div>
+                        <div className="text-sm text-muted-foreground">
+                          {item.category}
+                        </div>
 
                         <div className="mt-6">
                           <div className="text-4xl font-bold gradient-text tracking-tight leading-none">
@@ -235,12 +281,16 @@ export default function InfrastructurePage() {
                           </div>
                         </div>
 
-                        <div className="mt-4 text-xs text-muted-foreground">{item.detail}</div>
+                        <div className="mt-4 text-xs text-muted-foreground">
+                          {item.detail}
+                        </div>
                       </div>
 
                       <div className="mt-auto w-full pt-6">
                         <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-900/10 to-transparent dark:via-white/10" />
-                        <div className="mt-3 text-xs text-muted-foreground">Scale-ready operations</div>
+                        <div className="mt-3 text-xs text-muted-foreground">
+                          Scale-ready operations
+                        </div>
                       </div>
                     </div>
                   </Card>
@@ -262,9 +312,12 @@ export default function InfrastructurePage() {
             viewport={{ once: true, amount: 0.35 }}
             className="mb-14 text-center"
           >
-            <h2 className="text-4xl font-bold mb-4 text-foreground">Manufacturing Process</h2>
+            <h2 className="text-4xl font-bold mb-4 text-foreground">
+              Manufacturing Process
+            </h2>
             <p className="text-lg text-muted-foreground">
-              A structured workflow that ensures repeatable quality at every stage.
+              A structured workflow that ensures repeatable quality at every
+              stage.
             </p>
           </motion.div>
 
@@ -288,17 +341,30 @@ export default function InfrastructurePage() {
                 >
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/25 to-transparent" />
 
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-border dark:ring-white/10 text-blue-700 dark:text-blue-200 font-semibold">
-                      {item.step}
+                  {/* Make the card a column so footer can be full-width & pinned */}
+                  <div className="flex h-full flex-col">
+                    {/* Top content row */}
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-border dark:ring-white/10 text-blue-700 dark:text-blue-200 font-semibold">
+                        {item.step}
+                      </div>
+
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-lg font-semibold text-foreground">
+                          {item.title}
+                        </h3>
+                        <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                          {item.desc}
+                        </p>
+                      </div>
                     </div>
 
-                    <div className="min-w-0">
-                      <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
-                      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-
-                      <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-slate-900/10 to-transparent dark:via-white/10" />
-                      <div className="mt-3 text-xs text-muted-foreground">Controlled execution</div>
+                    {/* Footer pinned + truly centered (full card width) */}
+                    <div className="mt-auto pt-5">
+                      <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-900/10 to-transparent dark:via-white/10" />
+                      <div className="mt-3 text-center text-xs text-muted-foreground">
+                        Controlled execution
+                      </div>
                     </div>
                   </div>
                 </Card>
@@ -322,14 +388,22 @@ export default function InfrastructurePage() {
             viewport={{ once: true, amount: 0.35 }}
             className="mx-auto max-w-3xl text-center"
           >
-            <h2 className="text-4xl font-bold mb-6 text-foreground">Quality Standards & Certifications</h2>
+            <h2 className="text-4xl font-bold mb-6 text-foreground">
+              Quality Standards & Certifications
+            </h2>
 
             <p className="text-lg text-muted-foreground mb-10 text-balance">
-              BMPL maintains strict adherence to industry standards and batch-level testing to ensure consistent outcomes.
+              BMPL maintains strict adherence to industry standards and
+              batch-level testing to ensure consistent outcomes.
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {["ISO 9001:2015", "IS 1875:2005", "IS 2062:2011", "IS 1365:2018"].map((cert) => (
+              {[
+                "ISO 9001:2015",
+                "IS 1875:2005",
+                "IS 2062:2011",
+                "IS 1365:2018",
+              ].map((cert) => (
                 <Card
                   key={cert}
                   variant="glass"
@@ -363,9 +437,12 @@ export default function InfrastructurePage() {
             viewport={{ once: true, amount: 0.35 }}
             className="mx-auto max-w-3xl text-center"
           >
-            <h2 className="text-4xl font-bold mb-4 text-foreground">Need a Quote for Your Requirement?</h2>
+            <h2 className="text-4xl font-bold mb-4 text-foreground">
+              Need a Quote for Your Requirement?
+            </h2>
             <p className="text-lg text-muted-foreground mb-8 text-balance">
-              Share your quantity, sizes, and delivery location. Our team will respond quickly with pricing and dispatch timelines.
+              Share your quantity, sizes, and delivery location. Our team will
+              respond quickly with pricing and dispatch timelines.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -373,7 +450,12 @@ export default function InfrastructurePage() {
                 <Link href="/quote">Request Quote</Link>
               </Button>
 
-              <Button size="lg" variant="secondary" className="h-12 rounded-2xl px-8" asChild>
+              <Button
+                size="lg"
+                variant="secondary"
+                className="h-12 rounded-2xl px-8"
+                asChild
+              >
                 <Link href="/products">Browse Products</Link>
               </Button>
             </div>
