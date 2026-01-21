@@ -27,17 +27,16 @@ export default function ProductCard({
       <Card
         variant="glass"
         className="
-          group h-full p-0 overflow-hidden transition-colors
-          border-slate-200/70 bg-white/70 hover:bg-white/90 hover:border-blue-500/25
-          dark:border-white/10 dark:bg-white/[0.03] dark:hover:bg-white/[0.05] dark:hover:border-blue-400/30
+          group h-full p-0 overflow-hidden smooth-transition
+          border border-border bg-card/65 hover:bg-card/80 hover:border-primary/20
+          dark:bg-card/45 dark:hover:bg-card/55 dark:hover:border-primary/25
         "
       >
         {/* Image */}
         <div
           className="
             relative h-56 overflow-hidden
-            bg-slate-200/60 ring-1 ring-slate-900/10
-            dark:bg-slate-900/60 dark:ring-white/10
+            bg-muted/40 ring-1 ring-border/60
           "
         >
           <Image
@@ -48,65 +47,55 @@ export default function ProductCard({
             className="object-cover transition-transform duration-300 group-hover:scale-[1.06]"
           />
 
-          {/* Overlay: stronger on light so text stays readable */}
+          {/* Overlay: token-driven so it matches both themes */}
           <div
             className="
               absolute inset-0
-              bg-gradient-to-t from-white/10 via-white/10 to-transparent
-              dark:from-black/55 dark:via-black/15
+              bg-gradient-to-t
+              from-background/35 via-background/10 to-transparent
+              dark:from-background/70 dark:via-background/15
             "
           />
 
           {/* Top chips */}
           <div className="absolute left-4 top-4 flex items-center gap-2">
-            <Badge variant="default" size="sm" className="capitalize">
+            <Badge
+              variant="default"
+              size="sm"
+              className="capitalize border border-border/60 bg-background/55 text-foreground backdrop-blur"
+            >
               {product.category}
             </Badge>
-
-            {/* {!!product.availability && (
-              <span
-                className="
-                  inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px]
-                  border-slate-900/10 bg-white/70 text-slate-700
-                  dark:border-white/10 dark:bg-black/25 dark:text-slate-200
-                "
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
-                {product.availability}
-              </span>
-            )} */}
           </div>
         </div>
 
         {/* Body */}
         <div className="px-6 pt-5 pb-6 flex flex-col">
           <div className="flex items-start justify-between gap-3">
-            <h3 className="text-xl font-semibold tracking-tight text-slate-900 dark:text-white">
+            <h3 className="text-xl font-semibold tracking-tight text-foreground">
               {product.name}
             </h3>
 
-            <span className="mt-1 inline-flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400">
-              <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-300" />
+            <span className="mt-1 inline-flex items-center gap-1 text-xs text-muted-foreground">
+              <Sparkles className="h-4 w-4 text-primary" />
               Premium
             </span>
           </div>
 
-          <p className="mt-2 text-sm leading-relaxed line-clamp-3 text-slate-600 dark:text-slate-400">
+          <p className="mt-2 text-sm leading-relaxed line-clamp-3 text-muted-foreground">
             {product.description}
           </p>
 
           <div
             className="
               mt-5 rounded-2xl border p-4
-              border-slate-200/80 bg-slate-50/80
-              dark:border-white/10 dark:bg-white/[0.02]
+              border-border/70 bg-background/50
+              dark:bg-background/35
             "
           >
             <div className="flex items-center justify-between text-sm">
-              <span className="text-slate-600 dark:text-slate-500">Min Order</span>
-              <span className="font-medium text-slate-900 dark:text-slate-200">
-                {product.minQty}
-              </span>
+              <span className="text-muted-foreground">Min Order</span>
+              <span className="font-medium text-foreground">{product.minQty}</span>
             </div>
           </div>
 
@@ -116,8 +105,8 @@ export default function ProductCard({
               size="sm"
               className="
                 w-full rounded-2xl border
-                bg-slate-900 text-white hover:bg-slate-800 border-slate-900/10
-                dark:bg-white/5 dark:text-slate-100 dark:hover:bg-white/10 dark:border-white/10
+                border-border bg-card/60 text-foreground hover:bg-card/80
+                dark:bg-card/45 dark:hover:bg-card/55
               "
               asChild
             >
@@ -126,11 +115,21 @@ export default function ProductCard({
                 className="flex items-center justify-center gap-2"
               >
                 View Details
-                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 text-primary" />
               </Link>
             </Button>
           </div>
         </div>
+
+        {/* Subtle hover glow (token-driven, optional but consistent with your new theme) */}
+        <div
+          className="
+            pointer-events-none absolute -inset-0.5 rounded-2xl opacity-0 blur-2xl transition-opacity duration-300
+            group-hover:opacity-100
+            bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10
+            dark:from-primary/14 dark:via-accent/12 dark:to-primary/14
+          "
+        />
       </Card>
     </motion.div>
   );

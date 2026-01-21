@@ -7,15 +7,38 @@ import { Users, CalendarDays, Factory, Headset } from "lucide-react";
 
 export default function StatsPanel() {
   const stats = [
-    { number: "500+", label: "Happy Clients", description: "Across India", icon: Users },
-    { number: "15+", label: "Years Experience", description: "In steel manufacturing", icon: CalendarDays },
-    { number: "10,000+", label: "MT/Year", description: "Production capacity", icon: Factory },
-    { number: "24/7", label: "Customer Support", description: "Always available", icon: Headset },
+    {
+      number: "500+",
+      label: "Happy Clients",
+      description: "Across India",
+      icon: Users,
+    },
+    {
+      number: "15+",
+      label: "Years Experience",
+      description: "In steel manufacturing",
+      icon: CalendarDays,
+    },
+    {
+      number: "10,000+",
+      label: "MT/Year",
+      description: "Production capacity",
+      icon: Factory,
+    },
+    {
+      number: "24/7",
+      label: "Customer Support",
+      description: "Always available",
+      icon: Headset,
+    },
   ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.12, delayChildren: 0.05 },
+    },
   };
 
   const itemVariants = {
@@ -24,16 +47,21 @@ export default function StatsPanel() {
   };
 
   return (
-    <section className="relative py-16 md:py-24">
-      {/* background: theme-aware */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-600/0 via-blue-600/5 to-transparent dark:via-blue-600/5" />
+    <section className="relative py-16 md:py-24 overflow-hidden">
+      {/* background wash (token-driven) */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/0 via-primary/7 to-transparent" />
 
-      {/* Dots: dark dots on light, white dots on dark */}
+      {/* optional soft blobs (token-driven, subtle) */}
+      <div className="pointer-events-none absolute -top-28 right-[-160px] h-[520px] w-[520px] rounded-full bg-primary/4 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-32 left-[-180px] h-[560px] w-[560px] rounded-full bg-accent/4 blur-3xl" />
+
+      {/* dot grid (token-driven) */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.07] dark:opacity-[0.10]
-        [background-image:radial-gradient(circle_at_1px_1px,rgba(15,23,42,0.18)_1px,transparent_0)]
-        dark:[background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.16)_1px,transparent_0)]
-        [background-size:28px_28px]"
+        className="
+          pointer-events-none absolute inset-0 opacity-[0.06] dark:opacity-[0.10]
+          [background-size:28px_28px]
+          [background-image:radial-gradient(circle_at_1px_1px,color-mix(in_oklch,var(--foreground)_16%,transparent)_1px,transparent_0)]
+        "
       />
 
       <Container className="relative">
@@ -64,26 +92,26 @@ export default function StatsPanel() {
                 <Card
                   variant="glass"
                   className="
-                    group relative h-full smooth-transition
-                    border border-border bg-card/70
-                    hover:bg-card/90 hover:border-blue-500/20
-                    dark:border-white/10 dark:bg-white/[0.03]
-                    dark:hover:bg-white/[0.05] dark:hover:border-blue-400/30
+                    group relative h-full smooth-transition overflow-hidden
+                    border border-border bg-card/60
+                    hover:bg-card/75 hover:border-primary/25
+                    dark:bg-card/35 dark:hover:bg-card/45
                   "
                 >
-                  {/* subtle top accent */}
-                  <div
-                    className="pointer-events-none absolute inset-x-0 top-0 h-px
-                    bg-gradient-to-r from-transparent via-blue-500/20 to-transparent
-                    dark:via-blue-400/30"
-                  />
-
-                  {/* hover glow ring (softer in light) */}
+                  {/* subtle top accent line (token-driven) */}
                   <div
                     className="
-                      pointer-events-none absolute -inset-0.5 rounded-2xl opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100
-                      bg-gradient-to-r from-blue-500/6 via-cyan-500/6 to-blue-500/6
-                      dark:from-blue-500/10 dark:via-cyan-500/10 dark:to-blue-500/10
+                      pointer-events-none absolute inset-x-0 top-0 h-px
+                      bg-gradient-to-r from-transparent via-primary/25 to-transparent
+                    "
+                  />
+
+                  {/* hover glow (token-driven, premium) */}
+                  <div
+                    className="
+                      pointer-events-none absolute -inset-1 rounded-2xl opacity-0 blur-2xl
+                      transition-opacity duration-300 group-hover:opacity-100
+                      bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10
                     "
                   />
 
@@ -92,19 +120,17 @@ export default function StatsPanel() {
                     <div className="flex items-start justify-between">
                       <div
                         className="
-                          flex h-11 w-11 items-center justify-center rounded-2xl
-                          bg-blue-500/10 ring-1 ring-blue-500/10
-                          dark:bg-blue-500/10 dark:ring-white/10
+                          flex h-11 w-11 items-center justify-center rounded-2xl ring-1
+                          bg-primary/10 ring-border/70
                         "
                       >
-                        <Icon className="h-5 w-5 text-blue-600 dark:text-blue-300" />
+                        <Icon className="h-5 w-5 text-primary" />
                       </div>
 
                       <span
                         className="
                           rounded-full px-3 py-1 text-[11px] font-semibold tracking-widest
-                          border border-slate-900/10 bg-slate-900/5 text-slate-700
-                          dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-300
+                          border border-border bg-background/40 text-muted-foreground
                         "
                       >
                         BMPL
@@ -122,14 +148,14 @@ export default function StatsPanel() {
                     </div>
 
                     {/* divider */}
-                    <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-900/10 to-transparent dark:via-white/10" />
+                    <div className="h-px w-full bg-gradient-to-r from-transparent via-border/70 to-transparent" />
 
                     {/* label pinned bottom */}
                     <div className="mt-auto">
-                      <h3 className="text-base font-semibold text-foreground tracking-tight dark:text-white">
+                      <h3 className="text-base font-semibold text-foreground tracking-tight">
                         {stat.label}
                       </h3>
-                      <p className="mt-1 text-xs text-slate-600 dark:text-slate-500">
+                      <p className="mt-1 text-xs text-muted-foreground">
                         Verified scale & operational capability
                       </p>
                     </div>

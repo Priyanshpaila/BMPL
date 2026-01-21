@@ -9,10 +9,22 @@ export default function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-border bg-background">
-      {/* subtle footer-only wash (theme-aware) */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-muted/20 via-transparent to-muted/30 dark:from-white/[0.02] dark:to-slate-950/60" />
-      <div className="pointer-events-none absolute inset-0 opacity-[0.06] [background-image:radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.12)_1px,transparent_0)] dark:[background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.12)_1px,transparent_0)] [background-size:32px_32px]" />
+    <footer className="relative border-t border-border bg-background overflow-hidden">
+      {/* theme-aware wash (token driven) */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-muted/18 via-transparent to-muted/28" />
+
+      {/* theme-aware dot grid (uses foreground mix, no hardcoded black/white) */}
+      <div
+        className="
+          pointer-events-none absolute inset-0 opacity-[0.05] dark:opacity-[0.09]
+          [background-size:32px_32px]
+          [background-image:radial-gradient(circle_at_1px_1px,color-mix(in_oklch,var(--foreground)_14%,transparent)_1px,transparent_0)]
+        "
+      />
+
+      {/* subtle blobs (token driven, complements your hero/sections) */}
+      <div className="pointer-events-none absolute -top-28 right-[-140px] h-[420px] w-[420px] rounded-full bg-primary/7 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-40 left-[-160px] h-[520px] w-[520px] rounded-full bg-accent/10 blur-3xl" />
 
       <Container className="relative py-10">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
@@ -22,14 +34,11 @@ export default function SiteFooter() {
               <Link
                 href="/"
                 className="flex items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                aria-label="BMPL Home"
+                aria-label={`${COMPANY_INFO.name} Home`}
               >
-                <BrandLogo
-                  className="h-12 w-auto object-contain"
-                  height={32}
-                  alt="BMPL"
-                />
+                <BrandLogo className="h-12 w-auto object-contain" height={32} alt="BMPL" />
               </Link>
+
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                 {COMPANY_INFO.description}
               </p>
@@ -53,7 +62,10 @@ export default function SiteFooter() {
             <h4 className="text-sm font-semibold text-foreground tracking-tight">
               Quick Links
             </h4>
-            <div className="mt-4 h-px w-full bg-border" />
+
+            {/* divider: token driven */}
+            <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
+
             <ul className="mt-4 space-y-2">
               {[
                 { href: "/products", label: "Products" },
@@ -78,7 +90,8 @@ export default function SiteFooter() {
             <h4 className="text-sm font-semibold text-foreground tracking-tight">
               Contact
             </h4>
-            <div className="mt-4 h-px w-full bg-border" />
+            <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
+
             <ul className="mt-4 space-y-3">
               <li className="flex items-start gap-2 text-sm text-muted-foreground">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
@@ -114,14 +127,14 @@ export default function SiteFooter() {
             <h4 className="text-sm font-semibold text-foreground tracking-tight">
               Hours
             </h4>
-            <div className="mt-4 h-px w-full bg-border" />
+            <div className="mt-4 h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
 
             <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
               <li>
                 <div className="text-xs font-semibold tracking-widest text-muted-foreground/80">
                   WEEKDAYS
                 </div>
-                <div className="mt-1 text-foreground/90 dark:text-slate-300">
+                <div className="mt-1 text-foreground/90">
                   {COMPANY_INFO.hours.weekday}
                 </div>
               </li>
@@ -130,7 +143,7 @@ export default function SiteFooter() {
                 <div className="text-xs font-semibold tracking-widest text-muted-foreground/80">
                   WEEKEND
                 </div>
-                <div className="mt-1 text-foreground/90 dark:text-slate-300">
+                <div className="mt-1 text-foreground/90">
                   {COMPANY_INFO.hours.weekend}
                 </div>
               </li>

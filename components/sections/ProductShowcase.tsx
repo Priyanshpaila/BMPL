@@ -23,9 +23,22 @@ export default function ProductShowcase() {
   };
 
   return (
-    <section className="relative py-20 md:py-32">
-      {/* subtle background wash (theme-aware) */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-600/0 via-blue-600/5 to-transparent dark:via-blue-600/5" />
+    <section className="relative overflow-hidden py-20 md:py-32">
+      {/* subtle background wash (theme-aware via tokens) */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/0 via-primary/6 to-transparent" />
+
+      {/* optional soft blob accents (theme-aware) */}
+      <div className="pointer-events-none absolute -top-24 right-[-140px] h-[420px] w-[420px] rounded-full bg-primary/2 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-28 left-[-160px] h-[520px] w-[520px] rounded-full bg-accent/8 blur-3xl" />
+
+      {/* dot grid (theme-aware) */}
+      <div
+        className="
+          pointer-events-none absolute inset-0 opacity-[0.06] dark:opacity-[0.12]
+          [background-size:28px_28px]
+          [background-image:radial-gradient(circle_at_1px_1px,color-mix(in_oklch,var(--foreground)_16%,transparent)_1px,transparent_0)]
+        "
+      />
 
       <Container className="relative">
         {/* Header */}
@@ -85,15 +98,15 @@ export default function ProductShowcase() {
             variant="secondary"
             size="lg"
             className="
-              rounded-2xl
-              border border-slate-900/10 bg-slate-900/5 hover:bg-slate-900/10
-              dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10
+              rounded-2xl border
+              border-border bg-card/40 hover:bg-card/60
+              text-foreground
             "
             asChild
           >
             <Link href="/products" className="inline-flex items-center gap-2">
               View All Products
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 text-primary" />
             </Link>
           </Button>
         </motion.div>

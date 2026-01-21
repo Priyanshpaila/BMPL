@@ -95,7 +95,7 @@ export default function FAQ() {
                   />
 
                   {/* subtle glow on hover */}
-                  <div className="pointer-events-none absolute -inset-0.5 rounded-2xl opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-blue-500/10" />
+                  <div className="pointer-events-none absolute -inset-0.5 rounded-2xl opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-r from-blue-500/10 via-cyan-500/5 to-blue-500/6" />
 
                   <button
                     type="button"

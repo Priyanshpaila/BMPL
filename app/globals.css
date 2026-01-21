@@ -3,92 +3,150 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* -------------------------------------------------------------------------- */
+/*  Theme tokens                                                               */
+/* -------------------------------------------------------------------------- */
+
 :root {
-  /* Light mode foundation (cool paper, less glare) */
-  --background: oklch(0.972 0.008 264);      /* soft cool off-white */
-  --foreground: oklch(0.215 0.025 264);      /* deep ink (slightly softened) */
+  /* Light foundation (cool paper, low glare) */
+  --background: oklch(100% 0.00011 271.152);
+  --foreground: oklch(0% 0 0);
 
-  /* Surfaces (avoid pure white on large areas) */
-  --card: oklch(0.982 0.006 264);
-  --card-foreground: oklch(0.215 0.025 264);
+  /* Surfaces */
+  --card: oklch(0.985 0.004 255);
+  --card-foreground: oklch(0.215 0.020 255);
 
-  --popover: oklch(0.982 0.006 264);
-  --popover-foreground: oklch(0.215 0.025 264);
+  --popover: oklch(0.985 0.004 255);
+  --popover-foreground: oklch(0.215 0.020 255);
 
-  /* Brand + UI accents */
-  --primary: rgb(46 54 144); /* BMPL Blue #2e3690 */
+  /* Brand (similar vibe to your reference palette; not identical) */
+  --primary: rgb(46, 54, 144); /* #343C9E */
   --primary-foreground: rgb(255 255 255);
 
-  /* Supporting neutrals (cool + softer) */
-  --secondary: oklch(0.946 0.010 264);
-  --secondary-foreground: oklch(0.255 0.020 264);
-
-  --muted: oklch(0.954 0.008 264);
-  --muted-foreground: oklch(0.495 0.020 264);
-
-  --accent: rgb(0 162 255);
+  --accent: rgba(0, 170, 255, 0.418); /* #1888FF */
   --accent-foreground: rgb(255 255 255);
 
-  --destructive: rgb(236 34 39);
+  --destructive: rgb(231 43 53); /* #E72B35 */
   --destructive-foreground: rgb(255 255 255);
 
-  /* Borders/inputs (reduce sharpness) */
-  --border: oklch(0.892 0.012 264);
-  --input: oklch(0.892 0.012 264);
-  --ring: rgb(46 54 144);
+  /* Neutrals */
+  --secondary: oklch(0.950 0.008 255);
+  --secondary-foreground: oklch(0.255 0.018 255);
+
+  --muted: oklch(0.956 0.006 255);
+  --muted-foreground: oklch(0.500 0.016 255);
+
+  /* Borders / inputs */
+  --border: oklch(0.892 0.010 255);
+  --input: oklch(0.892 0.010 255);
+  --ring: rgb(52, 114, 158);
 
   --radius: 0.5rem;
 
-  /* Keep your chart + sidebar, but align sidebar to new paper */
+  /* Gradient text endpoints (theme-driven) */
+  --brand-from: rgb(52 60 158);   /* royal indigo */
+  --brand-mid:  rgb(42 124 235);  /* strong azure */
+  --brand-to:   rgb(24 136 255);  /* crisp blue */
+
+  /* Page background (light stays clean) */
+  --page-gradient: none;
+
+  /* Theme-aware blobs (light) */
+  --blob-1: rgba(255, 60, 0, 0.041);
+  --blob-2: rgba(43, 92, 145, 0.1);
+
+  /* Dot grid color (light) */
+  --dot: rgba(15, 23, 42, 0.12);
+
+  /* Glass tokens (light) */
+  --glass-bg: rgba(248, 250, 255, 0.72);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --glass-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+
+  /* Charts (optional) */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
 
-  --sidebar: oklch(0.972 0.008 264);
-  --sidebar-foreground: oklch(0.215 0.025 264);
-  --sidebar-primary: rgb(46 54 144);
+  /* Sidebar */
+  --sidebar: oklch(0.975 0.006 255);
+  --sidebar-foreground: oklch(0.215 0.020 255);
+  --sidebar-primary: rgb(52 60 158);
   --sidebar-primary-foreground: rgb(255 255 255);
-  --sidebar-accent: oklch(0.954 0.008 264);
-  --sidebar-accent-foreground: oklch(0.255 0.020 264);
-  --sidebar-border: oklch(0.892 0.012 264);
-  --sidebar-ring: rgb(46 54 144);
+  --sidebar-accent: oklch(0.956 0.006 255);
+  --sidebar-accent-foreground: oklch(0.255 0.018 255);
+  --sidebar-border: oklch(0.892 0.010 255);
+  --sidebar-ring: rgb(52 60 158);
 }
 
 .dark {
-  --background: oklch(9.952% 0.05897 282.991);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  /* Dark foundation (graphite gunmetal, matches your screenshot vibe) */
+  --background: oklch(13.979% 0.00002 271.152);
+  --foreground: oklch(0.975 0.008 255);
+
+  --card: oklch(16.376% 0.00002 271.152);
+  --card-foreground: oklch(0.975 0.008 255);
+
+  --popover: oklch(0.155 0.012 255);
+  --popover-foreground: oklch(0.975 0.008 255);
+
+  /* Brand in dark: blue-forward (no green/purple cast) */
+  --primary: rgb(42, 190, 248); /* cool periwinkle-blue */
+  --primary-foreground: rgb(7 10 16);
+
+  --accent: rgb(0, 40, 43); /* bright but not neon */
+  --accent-foreground: rgb(7 10 16);
+
+  --destructive: rgb(241 70 74);
+  --destructive-foreground: rgb(7 10 16);
+
+  --secondary: oklch(0.205 0.010 255);
+  --secondary-foreground: oklch(0.975 0.008 255);
+
+  --muted: oklch(0.205 0.010 255);
+  --muted-foreground: oklch(0.720 0.012 255);
+
+  --border: oklch(26.021% 0.01149 237.201);
+  --input: oklch(0.255 0.012 255);
+  --ring: rgb(120 150 255);
+
+  /* Dark gradient text endpoints (clean blue → ice blue) */
+  --brand-from: rgba(140, 255, 249, 0.863);
+  --brand-mid: rgb(104, 169, 255);
+  --brand-to: rgb(90 230 255);
+
+  /*
+    Dark page gradient like your sample:
+    subtle steel-blue to near-black (diagonal) + soft radial depth
+  */
+  --page-gradient:
+    radial-gradient(900px 520px at 18% 28%, rgba(70, 110, 160, 0.18), transparent 60%),
+    radial-gradient(820px 520px at 86% 18%, rgba(40, 89, 120, 0.123), transparent 55%),
+    linear-gradient(135deg, rgba(48, 70, 96, 0.288), rgba(6, 8, 12, 1));
+
+  /* Theme-aware blobs (dark) */
+  --blob-1: rgba(45, 21, 77, 0.055);
+  --blob-2: rgba(29, 11, 94, 0.08);
+
+  /* Dot grid color (dark) */
+  --dot: rgba(255, 255, 255, 0.16);
+
+  /* Glass tokens (dark): your screenshot-style “steel gradient glass” */
+  --glass-bg: linear-gradient(135deg, rgba(52, 76, 104, 0.30), rgba(10, 12, 16, 0.70));
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-shadow: 0 18px 42px rgba(0, 0, 0, 0.35);
+
+  /* Sidebar */
+  --sidebar: oklch(0.135 0.012 255);
+  --sidebar-foreground: oklch(0.975 0.008 255);
+  --sidebar-primary: rgb(120 150 255);
+  --sidebar-primary-foreground: rgb(7 10 16);
+  --sidebar-accent: oklch(0.205 0.010 255);
+  --sidebar-accent-foreground: oklch(0.975 0.008 255);
+  --sidebar-border: oklch(0.255 0.012 255);
+  --sidebar-ring: rgb(120 150 255);
 }
 
 /* Optional local font wiring (safe if files do not exist; browser will fall back). */
@@ -108,37 +166,50 @@
   font-display: swap;
 }
 
+/* Tailwind v4 token wiring */
 @theme inline {
   --font-sans: "Geist", "Geist Fallback", system-ui, -apple-system, sans-serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -153,47 +224,107 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+    /* Theme-aware background gradient */
+    background-image: var(--page-gradient);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/*  Components                                                                 */
+/* -------------------------------------------------------------------------- */
 
 @layer components {
-  /* Glass effect using pure CSS to avoid @apply parsing issues */
-
-.glass-effect {
-  /* LIGHT mode glass (cool, softer, less glare) */
-  background-color: rgba(248, 250, 255, 0.72);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
-}
-  .dark .glass-effect {
-    background-color: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Theme-aware glass */
+  .glass-effect {
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
   }
 
-  /* Gradient text utility */
-.gradient-text {
-  @apply bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent;
-}
-.dark .gradient-text {
-  @apply from-blue-400 to-cyan-400;
-}
+  /*
+    Better gradient text:
+    - 3-stop gradient for depth
+    - subtle contrast boost in dark (drop shadow)
+  */
+  .gradient-text {
+    background-image: linear-gradient(90deg, var(--brand-from), var(--brand-mid), var(--brand-to));
+    background-size: 180% 100%;
+    background-position: 0% 50%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent; /* Safari */
+    color: transparent;
+    letter-spacing: -0.02em;
+  }
+  .dark .gradient-text {
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+  }
 
   /* Smooth transition helper */
   .smooth-transition {
     @apply transition-all duration-300 ease-out;
   }
 
-  /* Focus states */
-.focus-visible\:ring-2 {
-  @apply focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
-}
+  /* Focus states (theme driven ring) */
+  .focus-visible\:ring-2 {
+    @apply focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
 
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  /* Theme-aware dot grid (use on sections: className="dot-grid") */
+  .dot-grid {
+    background-image: radial-gradient(circle_at_1px_1px, var(--dot) 1px, transparent 0);
+    background-size: 28px 28px;
+  }
 
+  /*
+    Theme-aware blobs (use on a section wrapper: className="theme-blobs")
+    Works nicely behind hero/feature sections.
+  */
+  .theme-blobs {
+    position: relative;
+    overflow: hidden;
+  }
+  .theme-blobs::before,
+  .theme-blobs::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    filter: blur(48px);
+    transform: translateZ(0);
+    border-radius: 999px;
+    z-index: 0;
+  }
+  .theme-blobs::before {
+    width: 520px;
+    height: 520px;
+    top: -180px;
+    right: -220px;
+    background: radial-gradient(circle at 30% 30%, var(--blob-1), transparent 62%);
+  }
+  .theme-blobs::after {
+    width: 620px;
+    height: 620px;
+    bottom: -220px;
+    left: -260px;
+    background: radial-gradient(circle at 30% 30%, var(--blob-2), transparent 62%);
+  }
+  .theme-blobs > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
   ::-webkit-scrollbar-track {
     background: rgba(15, 23, 42, 0.06);
   }
@@ -205,21 +336,31 @@
     background: rgba(15, 23, 42, 0.32);
   }
 
-  .dark ::-webkit-scrollbar-track { background: rgb(15 23 42 / 0.9); }
-  .dark ::-webkit-scrollbar-thumb { background: rgb(71 85 105 / 0.9); }
-  .dark ::-webkit-scrollbar-thumb:hover { background: rgb(100 116 139 / 0.9); }
+  .dark ::-webkit-scrollbar-track {
+    background: rgba(6, 8, 12, 0.9);
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background: rgba(90, 102, 120, 0.85);
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(120, 132, 150, 0.9);
+  }
 
   /* Selection color */
   ::selection {
-    @apply bg-blue-600 text-white;
+    background: color-mix(in oklch, var(--primary) 35%, transparent);
+    color: var(--foreground);
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/*  Utilities                                                                  */
+/* -------------------------------------------------------------------------- */
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-
   .text-pretty {
     text-wrap: pretty;
   }
