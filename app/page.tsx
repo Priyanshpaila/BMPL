@@ -21,7 +21,6 @@ export default function Home() {
       <ProductShowcase />
       <CapabilityGrid />
       <StatsPanel />
-      <ProcessSteps />
       <FAQ />
       <CTA />
     </main>

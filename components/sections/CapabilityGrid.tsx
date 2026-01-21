@@ -61,15 +61,21 @@ export default function CapabilityGrid() {
 
   return (
     <section className="relative py-20 md:py-32 overflow-hidden">
-      {/* background: theme-aware so light mode stays crisp */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent dark:via-blue-600/5" />
+      {/* Background wash: token-driven (no hardcoded blue) */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary/6 to-transparent" />
 
-      {/* dot grid: lighter in light mode, your original feel in dark mode */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.07] dark:opacity-[0.12]
-        [background-image:radial-gradient(circle_at_1px_1px,rgba(15,23,42,0.18)_1px,transparent_0)]
-        dark:[background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.16)_1px,transparent_0)]
-        [background-size:28px_28px]"
+      {/* Dot grid: token-driven (foreground mix) */}
+      <div
+        className="
+          pointer-events-none absolute inset-0 opacity-[0.06] dark:opacity-[0.12]
+          [background-size:28px_28px]
+          [background-image:radial-gradient(circle_at_1px_1px,color-mix(in_oklch,var(--foreground)_16%,transparent)_1px,transparent_0)]
+        "
       />
+
+      {/* Soft blobs: theme-aware via primary/accent tokens */}
+      <div className="pointer-events-none absolute -top-24 right-[-140px] h-[480px] w-[480px] rounded-full bg-primary/2 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-28 left-[-160px] h-[560px] w-[560px] rounded-full bg-accent/10 blur-3xl" />
 
       <Container className="relative">
         {/* Header */}
@@ -108,37 +114,48 @@ export default function CapabilityGrid() {
             const Icon = cap.icon;
 
             return (
-              <motion.div key={cap.title} variants={itemVariants} className="h-full">
+              <motion.div
+                key={cap.title}
+                variants={itemVariants}
+                className="h-full"
+              >
                 <Card
                   variant="glass"
                   className="
                     group relative h-full smooth-transition
-                    border border-border bg-card/70
-                    hover:bg-card hover:border-blue-500/30
-                    dark:border-white/10 dark:bg-white/[0.03] dark:hover:bg-white/[0.05] dark:hover:border-blue-400/30
+                    hover:bg-card/80 hover:border-primary/25
+                    dark:hover:bg-card/55
                   "
                 >
-                  {/* top accent */}
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px
-                    bg-gradient-to-r from-transparent via-blue-500/20 to-transparent
-                    dark:via-blue-400/30"
+                  {/* Top accent: token gradient */}
+                  <div
+                    className="
+                      pointer-events-none absolute inset-x-0 top-0 h-px
+                      bg-gradient-to-r from-transparent via-primary/25 to-transparent
+                    "
                   />
 
-                  {/* hover glow (kept subtle on light, same vibe on dark) */}
-                  <div className="pointer-events-none absolute -inset-0.5 rounded-2xl opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100
-                    bg-gradient-to-r from-blue-500/8 via-cyan-500/8 to-blue-500/8
-                    dark:from-blue-500/10 dark:via-cyan-500/10 dark:to-blue-500/10"
+                  {/* Hover glow: token gradient (no green/purple) */}
+                  <div
+                    className="
+                      pointer-events-none absolute -inset-0.5 rounded-2xl opacity-0 blur-2xl
+                      transition-opacity duration-300 group-hover:opacity-100
+                      bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10
+                      dark:from-primary/14 dark:via-accent/12 dark:to-primary/14
+                    "
                   />
 
                   <div className="relative flex h-full flex-col">
                     {/* top row */}
                     <div className="flex items-start gap-4">
-                      <div className="
-                        flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl
-                        bg-blue-500/10 ring-1 ring-blue-500/10
-                        dark:bg-blue-500/10 dark:ring-white/10
-                      ">
-                        <Icon className="h-5 w-5 text-blue-600 dark:text-blue-300" />
+                      <div
+                        className="
+                          flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl
+                          bg-primary/10 ring-1 ring-border/70
+                          dark:bg-primary/10
+                        "
+                      >
+                        <Icon className="h-5 w-5 text-primary" />
                       </div>
 
                       <div className="min-w-0 flex-1">
@@ -147,11 +164,13 @@ export default function CapabilityGrid() {
                             {cap.title}
                           </h3>
 
-                          <span className="
-                            hidden sm:inline-flex shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-widest
-                            border border-slate-900/10 bg-slate-900/5 text-slate-700
-                            dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-300
-                          ">
+                          <span
+                            className="
+                              hidden sm:inline-flex shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold tracking-widest
+                              border border-border/70 bg-card/60 text-muted-foreground
+                              dark:bg-card/40
+                            "
+                          >
                             BMPL
                           </span>
                         </div>
@@ -164,8 +183,8 @@ export default function CapabilityGrid() {
 
                     {/* bottom baseline */}
                     <div className="mt-auto pt-5">
-                      <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent dark:via-white/10" />
-                      <div className="mt-4 text-xs flex justify-center text-slate-600 dark:text-slate-500">
+                      <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent dark:via-border" />
+                      <div className="mt-4 text-xs flex justify-center text-muted-foreground">
                         Operationally proven capability
                       </div>
                     </div>

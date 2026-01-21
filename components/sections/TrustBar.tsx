@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import Container from "@/components/layout/Container";
@@ -22,19 +23,19 @@ function MarqueeRow({
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
-      {/* Edge fades: match page background in light + dark */}
-      <div
+      {/* Edge fades: theme-aware (uses tokens only) */}
+      {/* <div
         className="
-          pointer-events-none absolute inset-y-0 left-0 w-20
+          pointer-events-none absolute inset-y-0 left-0 z-10 w-20
           bg-gradient-to-r from-background via-background/70 to-transparent
         "
-      />
-      <div
+      /> */}
+      {/* <div
         className="
-          pointer-events-none absolute inset-y-0 right-0 w-20
+          pointer-events-none absolute inset-y-0 right-0 z-10 w-20
           bg-gradient-to-l from-background via-background/70 to-transparent
         "
-      />
+      /> */}
 
       <motion.div
         className="flex w-max items-center gap-3 py-2"
@@ -66,18 +67,21 @@ export default function TrustBar() {
     <div
       key={item.text}
       className="
-        group flex items-center gap-2 whitespace-nowrap rounded-2xl border px-4 py-2 text-sm transition-colors
-        border-slate-200/70 bg-white/70 text-slate-700 hover:bg-white/90 hover:border-blue-500/25
-        dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-200 dark:hover:bg-white/[0.05] dark:hover:border-blue-400/30
+        group flex items-center gap-2 whitespace-nowrap rounded-2xl border px-4 py-2 text-sm
+        transition-colors
+        border-border/70 bg-card/40 backdrop-blur
+        text-foreground hover:bg-card/55 hover:border-primary/25
       "
     >
-      <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-blue-600 dark:text-blue-300" />
-      <span className="leading-snug">{item.text}</span>
+      <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-primary" />
+      <span className="leading-snug text-muted-foreground group-hover:text-foreground">
+        {item.text}
+      </span>
     </div>
   ));
 
   return (
-    // IMPORTANT: no background, no border band, minimal padding
+    // IMPORTANT: no background, no band; minimal padding
     <section className="relative py-6">
       <Container>
         <div className="space-y-3">

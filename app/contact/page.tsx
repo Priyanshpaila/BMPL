@@ -1,8 +1,18 @@
 "use client";
 
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { MapPin, Phone, Mail, Clock, MessageCircle, ArrowRight } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  MessageCircle,
+  ArrowRight,
+} from "lucide-react";
+
 import Container from "@/components/layout/Container";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,7 +21,7 @@ import { openWhatsAppChat } from "@/lib/whatsapp";
 
 type ContactMethod =
   | {
-      icon: any;
+      icon: LucideIcon;
       label: string;
       value: string;
       action: string;
@@ -20,7 +30,7 @@ type ContactMethod =
       onClick?: never;
     }
   | {
-      icon: any;
+      icon: LucideIcon;
       label: string;
       value: string;
       action: string;
@@ -29,14 +39,91 @@ type ContactMethod =
       external?: never;
     };
 
+function normalizeE164Like(input: string) {
+  const raw = (input || "").trim();
+  if (!raw) return "";
+  const digits = raw.replace(/[^\d]/g, "");
+  return digits ? `+${digits}` : "";
+}
+
+/** One-time background for the whole page (prevents section seams). */
+function PageBackdrop() {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      {/* soft top wash */}
+      <div
+        className="
+          absolute inset-0
+          bg-[radial-gradient(80%_55%_at_50%_0%,color-mix(in_oklch,var(--primary)_18%,transparent),transparent_60%)]
+          dark:bg-[radial-gradient(80%_55%_at_50%_0%,rgba(255,255,255,0.06),transparent_60%)]
+        "
+      />
+
+      {/* subtle bottom/side wash to avoid “dead flat” areas */}
+      <div
+        className="
+          absolute inset-0
+          bg-[radial-gradient(55%_45%_at_18%_82%,color-mix(in_oklch,var(--accent)_14%,transparent),transparent_62%)]
+        "
+      />
+
+      {/* dot grid derived from foreground (theme-safe) */}
+      <div
+        className="
+          absolute inset-0 opacity-[0.055] dark:opacity-[0.10]
+          [background-size:28px_28px]
+          [background-image:radial-gradient(circle_at_1px_1px,color-mix(in_oklch,var(--foreground)_16%,transparent)_1px,transparent_0)]
+        "
+      />
+
+      {/* extremely subtle vertical vignette to “stitch” long pages */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/[0.02] to-transparent dark:via-black/[0.06]" />
+    </div>
+  );
+}
+
+/**
+ * Section-local wash that *fades out on both edges* (no hard cut line).
+ * Also overhangs top/bottom so adjacent sections overlap naturally.
+ */
+function SectionWash({ tone = "mid" }: { tone?: "top" | "mid" | "bottom" }) {
+  const toneClass =
+    tone === "top"
+      ? "bg-gradient-to-b from-primary/14 via-transparent to-transparent dark:from-primary/10"
+      : tone === "bottom"
+      ? "bg-gradient-to-b from-transparent via-accent/10 to-transparent dark:via-accent/8"
+      : "bg-gradient-to-b from-transparent via-primary/7 to-transparent dark:via-primary/6";
+
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0">
+      <div
+        className={[
+          "absolute inset-x-0 -top-24 -bottom-24", // overhang removes seams
+          toneClass,
+          // fade the wash on both top and bottom edges
+          "[mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)]",
+          "[-webkit-mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)]",
+        ].join(" ")}
+      />
+    </div>
+  );
+}
+
 export default function ContactPage() {
-  const whatsappNumber =
+  const whatsappNumberRaw =
     process.env.NEXT_PUBLIC_WHATSAPP_BUSINESS_NUMBER ||
     (COMPANY_INFO.contact as any)?.whatsapp ||
     "";
 
+  const whatsappDisplay = useMemo(
+    () => normalizeE164Like(whatsappNumberRaw) || "Chat with us",
+    [whatsappNumberRaw]
+  );
+
   const handleWhatsApp = () => {
-    openWhatsAppChat("Hello BMPL, I would like to inquire about your products and services.");
+    openWhatsAppChat(
+      "Hello BMPL, I would like to inquire about your products and services."
+    );
   };
 
   const mapQuery = encodeURIComponent(
@@ -62,7 +149,7 @@ export default function ContactPage() {
     {
       icon: MessageCircle,
       label: "WhatsApp",
-      value: whatsappNumber ? `+${whatsappNumber}` : "Chat with us",
+      value: whatsappDisplay,
       action: "Chat Now",
       onClick: handleWhatsApp,
     },
@@ -81,30 +168,25 @@ export default function ContactPage() {
     show: { opacity: 1, y: 0, transition: { duration: 0.45 } },
   };
 
-  const bgDots =
-    "pointer-events-none absolute inset-0 opacity-[0.07] dark:opacity-[0.10]" +
-    " [background-image:radial-gradient(circle_at_1px_1px,rgba(15,23,42,0.14)_1px,transparent_0)]" +
-    " dark:[background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.14)_1px,transparent_0)]" +
-    " [background-size:28px_28px]";
-
-  const glass =
-    "border-border/60 bg-background/50 backdrop-blur supports-[backdrop-filter]:bg-background/40 shadow-sm";
-
-  const cardHover =
-    "transition-colors hover:bg-background/60 hover:border-blue-500/30";
+  const glassCard =
+    "border border-border bg-card/70 hover:bg-card/90 hover:border-primary/20 transition-colors " +
+    "dark:bg-card/40 dark:hover:bg-card/55 dark:hover:border-primary/25";
 
   const iconWrap =
-    "flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-border/60 dark:ring-white/10";
+    "flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl " +
+    "bg-primary/10 ring-1 ring-border/70 dark:ring-white/10";
 
   const actionBtn =
-    "w-full rounded-2xl border border-border/60 bg-secondary/60 hover:bg-secondary/80";
+    "w-full rounded-2xl border border-border bg-card/60 hover:bg-card/80 " +
+    "dark:bg-card/45 dark:hover:bg-card/60";
 
   return (
-    <main>
-      {/* Hero */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-600/10 via-transparent to-transparent dark:from-blue-600/12" />
-        <div className={bgDots} />
+    <main className="relative overflow-hidden">
+      <PageBackdrop />
+
+      {/* HERO */}
+      <section className="relative overflow-hidden py-20 md:py-32">
+        <SectionWash tone="top" />
         <Container className="relative">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
@@ -112,21 +194,20 @@ export default function ContactPage() {
             transition={{ duration: 0.55 }}
             className="mx-auto max-w-3xl text-center"
           >
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
+            <h1 className="mb-6 text-5xl font-bold text-foreground md:text-6xl">
               Get in <span className="gradient-text">Touch</span>
             </h1>
             <p className="text-xl text-muted-foreground text-balance">
-              Have questions? We’re here to help. Contact BMPL for quotations, inquiries, or partnerships.
+              Have questions? We’re here to help. Contact BMPL for quotations,
+              inquiries, or partnerships.
             </p>
           </motion.div>
         </Container>
       </section>
 
-      {/* Contact Methods */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
-        <div className={bgDots} />
-
+      {/* CONTACT METHODS */}
+      <section className="relative overflow-hidden py-20 md:py-32">
+        <SectionWash tone="mid" />
         <Container className="relative">
           <motion.div
             variants={sectionFade}
@@ -135,7 +216,7 @@ export default function ContactPage() {
             viewport={{ once: true, amount: 0.25 }}
             className="mb-14 text-center"
           >
-            <h2 className="text-4xl font-bold mb-4 text-foreground">
+            <h2 className="mb-4 text-4xl font-bold text-foreground">
               Contact <span className="gradient-text">Options</span>
             </h2>
             <p className="text-lg text-muted-foreground text-balance">
@@ -143,7 +224,7 @@ export default function ContactPage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 items-stretch">
+          <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-4">
             {contactMethods.map((method, idx) => {
               const Icon = method.icon;
               const isLink = "href" in method;
@@ -157,21 +238,20 @@ export default function ContactPage() {
                   transition={{ delay: idx * 0.06, duration: 0.45 }}
                   className="h-full"
                 >
-                  <Card variant="glass" className={`group h-full ${glass} ${cardHover}`}>
-                    <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/25 to-transparent" />
+                  <Card variant="glass" className={`group relative h-full ${glassCard}`}>
+                    <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/22 to-transparent" />
 
-                    {/* Header */}
                     <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-start gap-4 min-w-0">
+                      <div className="flex min-w-0 items-start gap-4">
                         <div className={iconWrap}>
-                          <Icon className="h-5 w-5 text-blue-700 dark:text-blue-300" />
+                          <Icon className="h-5 w-5 text-primary" />
                         </div>
 
                         <div className="min-w-0">
                           <h3 className="font-semibold leading-snug text-foreground">
                             {method.label}
                           </h3>
-                          <p className="mt-1 text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                          <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
                             {method.value}
                           </p>
                         </div>
@@ -180,9 +260,8 @@ export default function ContactPage() {
 
                     <div className="mt-3 flex-1" />
 
-                    {/* Footer */}
                     <div className="mt-auto pt-6">
-                      <div className="h-px w-full bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+                      <div className="h-px w-full bg-gradient-to-r from-transparent via-border/70 to-transparent dark:via-white/10" />
 
                       {isLink ? (
                         <Button variant="secondary" size="sm" className={`mt-3 ${actionBtn}`} asChild>
@@ -215,15 +294,16 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      {/* Hours & Location */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-600/10 via-transparent to-transparent dark:from-blue-600/12" />
-        <div className={bgDots} />
-        <div className="pointer-events-none absolute -top-24 right-0 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 left-0 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl" />
+      {/* HOURS & LOCATION */}
+      <section className="relative overflow-hidden py-20 md:py-32">
+        <SectionWash tone="top" />
+
+        {/* token-driven glows (kept subtle) */}
+        <div className="pointer-events-none absolute -top-24 right-[-60px] h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-28 left-[-80px] h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
 
         <Container className="relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+          <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2 lg:gap-12">
             {/* Hours */}
             <motion.div
               initial={{ opacity: 0, x: -14 }}
@@ -232,10 +312,10 @@ export default function ContactPage() {
               transition={{ duration: 0.45 }}
               className="h-full"
             >
-              <Card variant="glass" className={`h-full ${glass}`}>
+              <Card variant="glass" className={`h-full ${glassCard}`}>
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-border/60 dark:ring-white/10">
-                    <Clock className="h-5 w-5 text-blue-700 dark:text-blue-300" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-border/70 dark:ring-white/10">
+                    <Clock className="h-5 w-5 text-primary" />
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-foreground">Business Hours</h2>
@@ -244,14 +324,14 @@ export default function ContactPage() {
                 </div>
 
                 <div className="mt-6 space-y-5">
-                  <div className="rounded-2xl border border-border/60 bg-background/40 p-4">
+                  <div className="rounded-2xl border border-border/70 bg-background/40 p-4 dark:bg-card/30">
                     <div className="text-xs font-semibold tracking-widest text-muted-foreground">
                       MONDAY – FRIDAY
                     </div>
                     <div className="mt-1 text-foreground/90">{COMPANY_INFO.hours.weekday}</div>
                   </div>
 
-                  <div className="rounded-2xl border border-border/60 bg-background/40 p-4">
+                  <div className="rounded-2xl border border-border/70 bg-background/40 p-4 dark:bg-card/30">
                     <div className="text-xs font-semibold tracking-widest text-muted-foreground">
                       SATURDAY – SUNDAY
                     </div>
@@ -259,7 +339,7 @@ export default function ContactPage() {
                   </div>
 
                   <div className="mt-auto pt-2">
-                    <div className="h-px w-full bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+                    <div className="h-px w-full bg-gradient-to-r from-transparent via-border/70 to-transparent dark:via-white/10" />
                     <p className="mt-3 text-xs text-muted-foreground">
                       Timezone: {COMPANY_INFO.hours.timezone}
                     </p>
@@ -276,11 +356,11 @@ export default function ContactPage() {
               transition={{ duration: 0.45, delay: 0.05 }}
               className="h-full"
             >
-              <Card variant="glass" className={`h-full ${glass}`}>
+              <Card variant="glass" className={`h-full ${glassCard}`}>
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-border/60 dark:ring-white/10">
-                      <MapPin className="h-5 w-5 text-blue-700 dark:text-blue-300" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-border/70 dark:ring-white/10">
+                      <MapPin className="h-5 w-5 text-primary" />
                     </div>
                     <div>
                       <h2 className="text-2xl font-bold text-foreground">Our Location</h2>
@@ -288,7 +368,12 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <Button variant="secondary" size="sm" className="rounded-2xl" asChild>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="rounded-2xl border border-border bg-card/60 hover:bg-card/80 dark:bg-card/45 dark:hover:bg-card/60"
+                    asChild
+                  >
                     <a href={googleMapsUrl} target="_blank" rel="noreferrer">
                       Open Map <ArrowRight className="ml-1 h-4 w-4" />
                     </a>
@@ -306,12 +391,12 @@ export default function ContactPage() {
                 </div>
 
                 <div className="mt-6">
-                  <div className="relative w-full h-64 rounded-2xl overflow-hidden border border-border/60 bg-background/40">
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent" />
-                    <div className="h-full w-full flex items-center justify-center">
-                      <div className="text-center px-6">
-                        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 ring-1 ring-border/60 dark:ring-white/10">
-                          <MapPin className="h-6 w-6 text-blue-700 dark:text-blue-300" />
+                  <div className="relative h-64 w-full overflow-hidden rounded-2xl border border-border/70 bg-background/40 dark:bg-card/30">
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/6 to-transparent" />
+                    <div className="flex h-full w-full items-center justify-center">
+                      <div className="px-6 text-center">
+                        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-border/70 dark:ring-white/10">
+                          <MapPin className="h-6 w-6 text-primary" />
                         </div>
                         <p className="text-sm text-foreground/90">Map embed can be added later</p>
                         <p className="mt-1 text-xs text-muted-foreground">
@@ -323,7 +408,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="mt-auto pt-6">
-                  <div className="h-px w-full bg-gradient-to-r from-transparent via-border/60 to-transparent" />
+                  <div className="h-px w-full bg-gradient-to-r from-transparent via-border/70 to-transparent dark:via-white/10" />
                   <p className="mt-3 text-xs text-muted-foreground">
                     Share your delivery location and quantity for the fastest quotation.
                   </p>
@@ -334,11 +419,9 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      {/* Quick Links */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
-        <div className={bgDots} />
-
+      {/* QUICK LINKS */}
+      <section className="relative overflow-hidden py-20 md:py-32">
+        <SectionWash tone="mid" />
         <Container className="relative">
           <motion.div
             variants={sectionFade}
@@ -347,29 +430,39 @@ export default function ContactPage() {
             viewport={{ once: true, amount: 0.35 }}
             className="mx-auto max-w-2xl text-center"
           >
-            <h2 className="text-4xl font-bold mb-4 text-foreground">
+            <h2 className="mb-4 text-4xl font-bold text-foreground">
               Quick <span className="gradient-text">Actions</span>
             </h2>
-            <p className="text-lg text-muted-foreground mb-8 text-balance">
+            <p className="mb-8 text-lg text-muted-foreground text-balance">
               Ready to get started? Request a quotation or browse our product range.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
               <Button size="lg" className="rounded-2xl" asChild>
                 <Link href="/quote">Request Quote</Link>
               </Button>
 
-              <Button size="lg" variant="secondary" className="rounded-2xl" asChild>
+              <Button
+                size="lg"
+                variant="secondary"
+                className="rounded-2xl border border-border bg-card/60 hover:bg-card/80 dark:bg-card/45 dark:hover:bg-card/60"
+                asChild
+              >
                 <Link href="/products">View Products</Link>
               </Button>
 
-              <Button size="lg" variant="secondary" className="rounded-2xl" onClick={handleWhatsApp}>
+              <Button
+                size="lg"
+                variant="secondary"
+                className="rounded-2xl border border-border bg-card/60 hover:bg-card/80 dark:bg-card/45 dark:hover:bg-card/60"
+                onClick={handleWhatsApp}
+              >
                 Chat on WhatsApp
                 <ArrowRight className="ml-2 h-4 w-4 opacity-80" />
               </Button>
             </div>
 
-            <p className="text-sm text-muted-foreground mt-6">
+            <p className="mt-6 text-sm text-muted-foreground">
               Response within 24 hours. No commitment required.
             </p>
           </motion.div>
