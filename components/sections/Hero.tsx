@@ -3,32 +3,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  Download,
-  MessageCircle,
-  Phone,
-  MapPin,
-  ShieldCheck,
-} from "lucide-react";
+import { ArrowRight, Download, MapPin, ShieldCheck } from "lucide-react";
 
 import Container from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
 import { COMPANY_INFO } from "@/content/company";
-import { openWhatsAppChat } from "@/lib/whatsapp";
 
 const HERO_IMAGE = "/steel-manufacturing-facility.jpg";
 // Put your brochure PDF in /public and update name here.
 const BROCHURE_HREF = "/brochure.pdf";
 
 export default function Hero() {
-const headline = "Built for Fabrication. Trusted for Strength.";
-
-
-  const handleWhatsApp = () =>
-    openWhatsAppChat(
-      "Hello BMPL, I would like a quotation for MS Billets / Angles / Channels. Please share price and dispatch timeline.",
-    );
+  const headline = "Built for Fabrication. Trusted for Strength.";
 
   const wrap = {
     hidden: { opacity: 0 },
@@ -52,13 +38,12 @@ const headline = "Built for Fabrication. Trusted for Strength.";
         />
       </div>
 
-      {/* Readability overlays */}
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-black/55" />
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-black/75 via-black/35 to-black/80" />
+      {/* Readability overlays (slightly stronger on LIGHT theme only) */}
+      <div className="pointer-events-none absolute inset-0 -z-20 bg-black/65 dark:bg-black/55" />
+      <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-b from-black/80 via-black/40 to-black/85 dark:from-black/75 dark:via-black/35 dark:to-black/80" />
 
-      {/* Brand glow + subtle texture */}
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(60%_55%_at_18%_10%,color-mix(in_oklch,var(--primary)_26%,transparent),transparent_62%)]" />
-      <div className="pointer-events-none absolute inset-0 -z-20 dot-grid opacity-[0.045] dark:opacity-[0.06]" />
+      {/* Subtle texture */}
+      <div className="pointer-events-none absolute inset-0 -z-20 dot-grid opacity-[0.04] dark:opacity-[0.06]" />
 
       <Container className="relative">
         <motion.div
@@ -72,26 +57,30 @@ const headline = "Built for Fabrication. Trusted for Strength.";
             <div
               className="
                 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm
-                border-white/15 bg-white/5 backdrop-blur text-white
+                border-white/18 bg-black/25 backdrop-blur text-white
+                dark:border-white/15 dark:bg-white/5
               "
             >
-              <span className="inline-flex h-2 w-2 rounded-full bg-primary" />
+              <span className="inline-flex h-2 w-2 rounded-full bg-[#38BDF8] dark:bg-primary" />
               {COMPANY_INFO.tagline || "Precision in every Angle"}
             </div>
           </motion.div>
 
-          {/* Headline */}
+          {/* Headline (LIGHT: hard-coded gradient, DARK: your existing gradient-text) */}
           <motion.h1
             variants={item}
             className="mt-6 text-5xl font-bold leading-[1.05] text-white md:text-6xl lg:text-7xl"
           >
-            <span className="gradient-text">{headline}</span>
+            <span className="dark:hidden bg-gradient-to-r from-[#38BDF8] via-[#60A5FA] to-[#2563EB] bg-clip-text text-transparent drop-shadow-[0_10px_32px_rgba(0,0,0,0.55)]">
+              {headline}
+            </span>
+            <span className="hidden dark:inline gradient-text">{headline}</span>
           </motion.h1>
 
-          {/* Subtext (clean + short) */}
+          {/* Subtext */}
           <motion.p
             variants={item}
-            className="mx-auto mt-5 max-w-2xl text-lg text-white/75 md:text-xl text-balance"
+            className="mx-auto mt-5 max-w-2xl text-lg text-white/80 md:text-xl text-balance dark:text-white/75"
           >
             High-performance steel products for fabrication and structural
             applications. Get a fast quotation with reliable dispatch.
@@ -100,115 +89,62 @@ const headline = "Built for Fabrication. Trusted for Strength.";
           {/* Proof row */}
           <motion.div
             variants={item}
-            className="mx-auto mt-6 flex flex-col items-center justify-center gap-2 text-sm text-white/70 sm:flex-row sm:gap-6"
+            className="mx-auto mt-6 flex flex-col items-center justify-center gap-2 text-sm text-white/75 sm:flex-row sm:gap-6 dark:text-white/70"
           >
             <span className="inline-flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-white/55" />
+              <MapPin className="h-4 w-4 text-white/60" />
               {COMPANY_INFO.address.city}, {COMPANY_INFO.address.state}
             </span>
 
             <span className="hidden h-4 w-px bg-white/15 sm:block" />
 
             <span className="inline-flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 text-white/55" />
+              <ShieldCheck className="h-4 w-4 text-white/60" />
               Established 1987 • Urla Industrial Complex
             </span>
           </motion.div>
 
-          {/* CTA cluster (NO enquiry block) */}
+          {/* Clean CTA cluster */}
           <motion.div variants={item} className="mx-auto mt-10 max-w-3xl">
-            {/* <div
-              className="
-                rounded-3xl border border-white/12 bg-white/[0.04] backdrop-blur-md
-                px-5 py-5 sm:px-7 sm:py-6
-              "
-            > */}
-              {/* Primary row */}
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
-                <Button
-                  size="lg"
-                  className="rounded-2xl sm:min-w-[190px]"
-                  asChild
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+              <Button
+                size="lg"
+                className="
+                  rounded-2xl sm:min-w-[190px]
+                  bg-[#2563EB] text-white hover:bg-[#1D4ED8]
+                  shadow-[0_18px_45px_rgba(37,99,235,0.35)]
+                  dark:bg-primary dark:hover:bg-primary/90 dark:shadow-none
+                "
+                asChild
+              >
+                <Link
+                  href="/quote"
+                  className="inline-flex items-center justify-center gap-2"
                 >
-                  <Link
-                    href="/quote"
-                    className="inline-flex items-center justify-center gap-2"
-                  >
-                    Request Quote
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button>
+                  Request Quote
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
 
-                {/* <Button
-                  size="lg"
-                  variant="secondary"
-                  className="
-                    rounded-2xl sm:min-w-[190px]
-                    border border-white/15 bg-white/5 backdrop-blur
-                    text-white hover:bg-white/10
-                  "
-                  onClick={handleWhatsApp}
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  WhatsApp
-                </Button>
+              <a
+                href={BROCHURE_HREF}
+                download
+                className="
+                  inline-flex w-full items-center justify-center gap-2 rounded-2xl border px-4 py-3
+                  text-sm font-semibold text-white transition sm:w-auto
+                  border-white/18 bg-black/25 hover:bg-black/35
+                  dark:border-white/15 dark:bg-white/5 dark:hover:bg-white/10
+                "
+                aria-label="Download brochure"
+              >
+                <Download className="h-4 w-4 text-[#38BDF8] dark:text-primary" />
+                Download Brochure
+              </a>
+            </div>
 
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="
-                    rounded-2xl sm:min-w-[160px]
-                    border border-white/15 bg-transparent
-                    text-white hover:bg-white/10
-                  "
-                  asChild
-                >
-                  <a
-                    href={`tel:${COMPANY_INFO.contact.phone}`}
-                    className="inline-flex items-center justify-center gap-2"
-                  >
-                    <Phone className="h-4 w-4" />
-                    Call
-                  </a>
-                </Button> */}
-                                <a
-                  href={BROCHURE_HREF}
-                  download
-                  className="
-                    inline-flex w-full items-center justify-center gap-2 rounded-2xl border px-4 py-3
-                    text-sm font-semibold
-                    border-white/15 bg-white/5 text-white
-                    hover:bg-white/10 transition sm:w-auto
-                  "
-                >
-                  <Download className="h-4 w-4 text-primary" />
-                  Download Brochure
-                </a>
-              </div>
-
-              {/* Secondary row */}
-              {/* <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <a
-                  href={BROCHURE_HREF}
-                  download
-                  className="
-                    inline-flex w-full items-center justify-center gap-2 rounded-2xl border px-4 py-3
-                    text-sm font-semibold
-                    border-white/15 bg-white/5 text-white
-                    hover:bg-white/10 transition sm:w-auto
-                  "
-                >
-                  <Download className="h-4 w-4 text-primary" />
-                  Download Brochure
-                </a>
-              </div> */}
-              <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                {" "}
-                <p className="text-center text-[12px] text-white/55 sm:text-left">
-                  Typical response within 24 hours 
-                </p>
-              </div>
-            {/* </div> */}
+            <p className="mt-4 text-center text-[12px] text-white/60">
+              Typical response within 24 hours
+            </p>
           </motion.div>
 
           {/* Scroll cue */}
@@ -217,17 +153,19 @@ const headline = "Built for Fabrication. Trusted for Strength.";
               href="products"
               className="
                 group inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-colors
-                border-white/15 bg-white/5 backdrop-blur text-white hover:bg-white/10
+                border-white/18 bg-black/25 backdrop-blur text-white hover:bg-black/35
+                dark:border-white/15 dark:bg-white/5 dark:hover:bg-white/10
               "
             >
               Explore Products
               <span
                 className="
                   inline-flex h-6 w-6 items-center justify-center rounded-full transition-colors
-                  bg-primary/15 group-hover:bg-primary/20
+                  bg-[#38BDF8]/20 group-hover:bg-[#38BDF8]/28
+                  dark:bg-primary/15 dark:group-hover:bg-primary/20
                 "
               >
-                <ArrowRight className="h-4 w-4 text-primary" />
+                <ArrowRight className="h-4 w-4 text-[#38BDF8] dark:text-primary" />
               </span>
             </a>
           </motion.div>
