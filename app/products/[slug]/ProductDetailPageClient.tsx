@@ -65,7 +65,7 @@ export default function ProductDetailPageClient({
               className="flex flex-col justify-center"
             >
               <div className="mb-6">
-                <ProductBadges badges={[product.category, product.availability, "In Stock"]} />
+                <ProductBadges badges={[product.category, product.availability]} />
               </div>
 
               <h1 className="text-5xl font-bold mb-4 text-slate-900 dark:text-white">
