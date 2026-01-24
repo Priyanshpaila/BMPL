@@ -38,7 +38,7 @@ export default function InfrastructurePage() {
   const capacity = [
     {
       category: "Production Capacity",
-      value: "10,000+ MT/Year",
+      value: "10,000+ MT/month",
       detail: "Annual output",
     },
     {
