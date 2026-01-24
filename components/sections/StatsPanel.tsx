@@ -21,7 +21,7 @@ export default function StatsPanel() {
     },
     {
       number: "10,000+",
-      label: "MT/Year",
+      label: "MT/month",
       description: "Production capacity",
       icon: Factory,
     },
