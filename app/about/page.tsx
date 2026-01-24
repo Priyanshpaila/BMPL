@@ -22,31 +22,53 @@ export default function AboutPage() {
       icon: Award,
       title: "Quality First",
       description:
-        "Uncompromising commitment to manufacturing excellence and product standards.",
+        "Committed to consistent standards and dependable output across every batch and size.",
     },
     {
       icon: Target,
       title: "Customer Focus",
       description:
-        "Your success is our priority. We deliver solutions tailored to your needs.",
+        "Built around fabricators’ needs—right sections, right sizes, and clear communication.",
     },
     {
       icon: Users,
       title: "Reliability",
-      description: "Consistent supply, on-time delivery, and dependable partnerships.",
+      description:
+        "Trusted partnerships backed by consistent supply and process-controlled manufacturing.",
     },
     {
       icon: Leaf,
       title: "Responsibility",
-      description: "Sustainable practices and ethical manufacturing standards.",
+      description:
+        "Ethical manufacturing practices with a focus on long-term safety and performance.",
     },
   ];
 
   const milestones = [
-    { year: "2008", tag: "Foundation", event: "BMPL founded in Raipur", icon: Factory },
-    { year: "2012", tag: "Scale", event: "Expanded manufacturing capacity", icon: Target },
-    { year: "2016", tag: "Trust", event: "ISO certification achieved", icon: ShieldCheck },
-    { year: "2020", tag: "Modernize", event: "Upgraded equipment & processes", icon: Award },
+    {
+      year: "1987",
+      tag: "Established",
+      event: "Bhawani Moulders Pvt. Ltd. established in Raipur",
+      icon: Factory,
+    },
+    {
+      year: "1995",
+      tag: "Capability",
+      event: "Expanded product capability for light structural sections",
+      icon: Target,
+    },
+    {
+      year: "2008",
+      tag: "Range",
+      event: "Strengthened supply of long MS products for fabricators",
+      icon: ShieldCheck,
+    },
+    {
+      year: "2020",
+      tag: "Process",
+      event: "Upgraded process control to enhance consistency & reliability",
+      icon: Award,
+    },
   ];
 
   const containerStagger = {
@@ -126,7 +148,7 @@ export default function AboutPage() {
             <div className="mb-6 flex flex-wrap items-center justify-center gap-2">
               <span className={pill}>
                 <ShieldCheck className={pillIcon} />
-                SINCE 2008
+                SINCE 1987
               </span>
               <span className={pill}>
                 <MapPin className={pillIcon} />
@@ -134,17 +156,17 @@ export default function AboutPage() {
               </span>
               <span className={pill}>
                 <Factory className={pillIcon} />
-                STEEL MANUFACTURING
+                LIGHT STRUCTURAL STEEL
               </span>
             </div>
 
             <h1 className="mb-5 text-5xl font-bold text-foreground md:text-6xl">
-              About <span className="gradient-text">BMPL</span>
+              About <span className="gradient-text">Bhawani Moulders</span>
             </h1>
 
             <p className="text-xl text-muted-foreground text-balance">
-              A legacy of excellence in steel manufacturing—serving industries across India
-              with consistent quality and dependable supply.
+              Established in 1987, Bhawani Moulders manufactures and supplies light structural mild steel
+              products that reinforce fabricated structures—built for stability, safety, and long-term performance.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -187,20 +209,19 @@ export default function AboutPage() {
                 </div>
 
                 <p className="mt-4 text-lg leading-relaxed text-foreground/90">
-                  To be the most trusted supplier of premium quality steel products in India—manufacturing
-                  MS Billets, Angles, and Channels with unwavering commitment to quality, reliability,
-                  and customer satisfaction.
+                  To provide top-quality light structural mild steel products—Angles, Flats, Round, Square,
+                  and Gate Channel—so fabricators can build safe, reliable, and durable structures.
                 </p>
 
                 <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-                  We serve as a strategic partner for manufacturing, construction, and infrastructure
-                  sectors—delivering consistent supply at competitive pricing.
+                  We focus on consistency, process control, and dependable supply—supporting fabrication
+                  and construction requirements across varying sizes and applications.
                 </p>
 
                 <div className="mt-auto pt-6">
                   <div className={divider} />
                   <div className="mt-3 text-xs text-muted-foreground">
-                    Consistency, accountability, and long-term partnerships.
+                    Quality, precision, and reliability—every dispatch.
                   </div>
                 </div>
               </Card>
@@ -224,19 +245,19 @@ export default function AboutPage() {
                 </div>
 
                 <p className="mt-4 text-lg leading-relaxed text-foreground/90">
-                  To establish BMPL as a beacon of excellence in the steel manufacturing industry—known
-                  for quality, innovation, and sustainability.
+                  To strengthen the nation’s fabrication ecosystem by being a trusted manufacturer of
+                  light structural steel sections—known for long-term performance and dependable standards.
                 </p>
 
                 <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-                  We aim to be the preferred choice for customers seeking reliable, high-quality products backed
-                  by exceptional service and technical expertise.
+                  We aim to be the preferred partner for customers who value consistent quality, clear specifications,
+                  and materials that enhance stability and safety in fabricated structures.
                 </p>
 
                 <div className="mt-auto pt-6">
                   <div className={divider} />
                   <div className="mt-3 text-xs text-muted-foreground">
-                    Built to scale with customers across India.
+                    Built to support infrastructure and fabrication needs.
                   </div>
                 </div>
               </Card>
@@ -400,7 +421,8 @@ export default function AboutPage() {
                                 </div>
 
                                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                                  A key step in our growth—strengthening capacity, quality systems, and customer trust.
+                                  Focused on strengthening fabrication outcomes through reliable sections, consistent quality,
+                                  and disciplined manufacturing practices.
                                 </p>
                               </div>
 
@@ -452,7 +474,8 @@ export default function AboutPage() {
             <h2 className="mb-4 text-4xl font-bold text-foreground">Want to Learn More?</h2>
 
             <p className="mb-8 text-lg text-muted-foreground text-balance">
-              Connect with our team to discuss partnerships, supply requirements, and business opportunities.
+              Connect with our team to discuss fabrication requirements and supply needs for light structural MS products
+              including Angles, Flats, Round, Square, and Gate Channel.
             </p>
 
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
