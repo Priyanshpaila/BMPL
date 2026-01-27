@@ -24,19 +24,27 @@ export default function ProductShowcase() {
 
   return (
     <section className="relative overflow-hidden py-20 md:py-32">
-      {/* subtle background wash (theme-aware via tokens) */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/0 via-primary/6 to-transparent" />
+      {/* LIGHT: subtle background wash (ok to be gradient) */}
+      <div className="pointer-events-none absolute inset-0 dark:hidden bg-gradient-to-b from-primary/0 via-primary/6 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
 
-      {/* optional soft blob accents (theme-aware) */}
-      <div className="pointer-events-none absolute -top-24 right-[-140px] h-[420px] w-[420px] rounded-full bg-primary/2 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-28 left-[-160px] h-[520px] w-[520px] rounded-full bg-accent/8 blur-3xl" />
+      {/* DARK: NO gradients — use clean solid washes */}
+      <div className="pointer-events-none absolute inset-0 hidden dark:block bg-background" />
+      <div className="pointer-events-none absolute inset-0 hidden dark:block bg-primary/[0.06]" />
 
-      {/* dot grid (theme-aware) */}
+      {/* Soft blob accents (NOT gradients; just blurred solids) */}
+      {/* <div className="pointer-events-none absolute -top-24 right-[-140px] h-[420px] w-[420px] rounded-full bg-primary/[0.05] blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-28 left-[-160px] h-[520px] w-[520px] rounded-full bg-accent/[0.08] blur-3xl" /> */}
+
+      {/* Dot grid:
+          - LIGHT: keep pattern
+          - DARK: remove background-image completely (no gradients in dark) */}
       <div
         className="
-          pointer-events-none absolute inset-0 opacity-[0.06] dark:opacity-[0.12]
+          pointer-events-none absolute inset-0 opacity-[0.06]
           [background-size:28px_28px]
           [background-image:radial-gradient(circle_at_1px_1px,color-mix(in_oklch,var(--foreground)_16%,transparent)_1px,transparent_0)]
+          dark:opacity-0 dark:[background-image:none]
         "
       />
 
@@ -50,7 +58,10 @@ export default function ProductShowcase() {
             transition={{ duration: 0.45 }}
             className="text-4xl font-bold md:text-5xl text-foreground"
           >
-            Our <span className="gradient-text">Product Range</span>
+            Our{" "}
+            {/* LIGHT: gradient text, DARK: solid primary (no gradients) */}
+            <span className="gradient-text dark:hidden">Product Range</span>
+            <span className="hidden dark:inline text-foeground">Product Range</span>
           </motion.h2>
 
           <motion.p
@@ -101,6 +112,7 @@ export default function ProductShowcase() {
               rounded-2xl border
               border-border bg-card/40 hover:bg-card/60
               text-foreground
+              dark:bg-card/40 dark:hover:bg-card/55
             "
             asChild
           >

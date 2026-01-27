@@ -82,71 +82,66 @@
 }
 
 .dark {
-  /* Dark foundation (graphite gunmetal, matches your screenshot vibe) */
-  --background: oklch(13.979% 0.00002 271.152);
-  --foreground: oklch(0.975 0.008 255);
+  /* Dark foundation (clean, no gradient) */
+  --background: #0b0f16;
+  --foreground: #f3f6ff;
 
-  --card: oklch(16.376% 0.00002 271.152);
-  --card-foreground: oklch(0.975 0.008 255);
+  /* Surfaces */
+  --card: #0f1623;
+  --card-foreground: #f3f6ff;
 
-  --popover: oklch(0.155 0.012 255);
-  --popover-foreground: oklch(0.975 0.008 255);
+  --popover: #101a2a;
+  --popover-foreground: #f3f6ff;
 
-  /* Brand in dark: blue-forward (no green/purple cast) */
-  --primary: rgb(42, 190, 248); /* cool periwinkle-blue */
-  --primary-foreground: rgb(7 10 16);
+  /* Brand (your palette) */
+  --primary: #2e3690;            /* Brand Blue */
+  --primary-foreground: #ffffff;
 
-  --accent: rgb(0, 40, 43); /* bright but not neon */
-  --accent-foreground: rgb(7 10 16);
+  --accent: #ec2227;             /* Brand Red */
+  --accent-foreground: #ffffff;
 
-  --destructive: rgb(241 70 74);
-  --destructive-foreground: rgb(7 10 16);
+  --destructive: #ec2227;
+  --destructive-foreground: #ffffff;
 
-  --secondary: oklch(0.205 0.010 255);
-  --secondary-foreground: oklch(0.975 0.008 255);
+  /* Neutrals */
+  --secondary: rgba(255, 255, 255, 0.06);
+  --secondary-foreground: #f3f6ff;
 
-  --muted: oklch(0.205 0.010 255);
-  --muted-foreground: oklch(0.720 0.012 255);
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: rgba(243, 246, 255, 0.72);
 
-  --border: oklch(26.021% 0.01149 237.201);
-  --input: oklch(0.255 0.012 255);
-  --ring: rgb(120 150 255);
+  /* Borders / inputs */
+  --border: rgba(255, 255, 255, 0.10);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: rgba(46, 54, 144, 0.55);
 
-  /* Dark gradient text endpoints (clean blue → ice blue) */
-  --brand-from: rgba(140, 255, 249, 0.863);
-  --brand-mid: rgb(104, 169, 255);
-  --brand-to: rgb(90 230 255);
+  /* Kill gradients in dark */
+  --brand-from: var(--primary);
+  --brand-mid: var(--primary);
+  --brand-to: var(--primary);
+  --page-gradient: none;
 
-  /*
-    Dark page gradient like your sample:
-    subtle steel-blue to near-black (diagonal) + soft radial depth
-  */
-  --page-gradient:
-    radial-gradient(900px 520px at 18% 28%, rgba(70, 110, 160, 0.18), transparent 60%),
-    radial-gradient(820px 520px at 86% 18%, rgba(40, 89, 120, 0.123), transparent 55%),
-    linear-gradient(135deg, rgba(48, 70, 96, 0.288), rgba(6, 8, 12, 1));
+  /* Subtle “professional glow” as solids (NOT gradients) */
+  --blob-1: rgba(46, 54, 144, 0.18); /* blue glow */
+  --blob-2: rgba(236, 34, 39, 0.10); /* red glow */
 
-  /* Theme-aware blobs (dark) */
-  --blob-1: rgba(45, 21, 77, 0.055);
-  --blob-2: rgba(29, 11, 94, 0.08);
+  /* Dot grid disabled in dark by override below */
+  --dot: rgba(255, 255, 255, 0.12);
 
-  /* Dot grid color (dark) */
-  --dot: rgba(255, 255, 255, 0.16);
-
-  /* Glass tokens (dark): your screenshot-style “steel gradient glass” */
-  --glass-bg: linear-gradient(135deg, rgba(52, 76, 104, 0.30), rgba(10, 12, 16, 0.70));
+  /* Glass (solid, no gradient) */
+  --glass-bg: rgba(15, 22, 35, 0.72);
   --glass-border: rgba(255, 255, 255, 0.10);
-  --glass-shadow: 0 18px 42px rgba(0, 0, 0, 0.35);
+  --glass-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
 
   /* Sidebar */
-  --sidebar: oklch(0.135 0.012 255);
-  --sidebar-foreground: oklch(0.975 0.008 255);
-  --sidebar-primary: rgb(120 150 255);
-  --sidebar-primary-foreground: rgb(7 10 16);
-  --sidebar-accent: oklch(0.205 0.010 255);
-  --sidebar-accent-foreground: oklch(0.975 0.008 255);
-  --sidebar-border: oklch(0.255 0.012 255);
-  --sidebar-ring: rgb(120 150 255);
+  --sidebar: #0f1623;
+  --sidebar-foreground: #f3f6ff;
+  --sidebar-primary: #2e3690;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(255, 255, 255, 0.06);
+  --sidebar-accent-foreground: #f3f6ff;
+  --sidebar-border: rgba(255, 255, 255, 0.10);
+  --sidebar-ring: rgba(46, 54, 144, 0.55);
 }
 
 /* Optional local font wiring (safe if files do not exist; browser will fall back). */
@@ -240,7 +235,7 @@
 /* -------------------------------------------------------------------------- */
 
 @layer components {
-  /* Theme-aware glass */
+  /* Glass stays solid in dark (no gradients) */
   .glass-effect {
     background: var(--glass-bg);
     backdrop-filter: blur(14px);
@@ -248,108 +243,45 @@
     box-shadow: var(--glass-shadow);
   }
 
-  /*
-    Better gradient text:
-    - 3-stop gradient for depth
-    - subtle contrast boost in dark (drop shadow)
-  */
+  /* Gradient text allowed in light, DISABLED in dark */
   .gradient-text {
-    background-image: linear-gradient(90deg, var(--brand-from), var(--brand-mid), var(--brand-to));
+    background-image: linear-gradient(
+      90deg,
+      var(--brand-from),
+      var(--brand-mid),
+      var(--brand-to)
+    );
     background-size: 180% 100%;
     background-position: 0% 50%;
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent; /* Safari */
+    -webkit-text-fill-color: transparent;
     color: transparent;
     letter-spacing: -0.02em;
   }
+
   .dark .gradient-text {
-    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+    background-image: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: var(--foreground) !important;
+    filter: none !important;
   }
 
-  /* Smooth transition helper */
-  .smooth-transition {
-    @apply transition-all duration-300 ease-out;
-  }
-
-  /* Focus states (theme driven ring) */
-  .focus-visible\:ring-2 {
-    @apply focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-background;
-  }
-
-  /* Theme-aware dot grid (use on sections: className="dot-grid") */
+  /* Dot grid uses radial-gradient → disable in dark */
   .dot-grid {
     background-image: radial-gradient(circle_at_1px_1px, var(--dot) 1px, transparent 0);
     background-size: 28px 28px;
   }
+  .dark .dot-grid {
+    background-image: none !important;
+  }
 
-  /*
-    Theme-aware blobs (use on a section wrapper: className="theme-blobs")
-    Works nicely behind hero/feature sections.
-  */
-  .theme-blobs {
-    position: relative;
-    overflow: hidden;
-  }
-  .theme-blobs::before,
-  .theme-blobs::after {
-    content: "";
-    position: absolute;
-    pointer-events: none;
-    filter: blur(48px);
-    transform: translateZ(0);
-    border-radius: 999px;
-    z-index: 0;
-  }
+  /* Theme blobs: switch to solid glows (no radial gradients) */
   .theme-blobs::before {
-    width: 520px;
-    height: 520px;
-    top: -180px;
-    right: -220px;
-    background: radial-gradient(circle at 30% 30%, var(--blob-1), transparent 62%);
+    background: var(--blob-1) !important;
   }
   .theme-blobs::after {
-    width: 620px;
-    height: 620px;
-    bottom: -220px;
-    left: -260px;
-    background: radial-gradient(circle at 30% 30%, var(--blob-2), transparent 62%);
-  }
-  .theme-blobs > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: rgba(15, 23, 42, 0.06);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgba(15, 23, 42, 0.22);
-    border-radius: 999px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(15, 23, 42, 0.32);
-  }
-
-  .dark ::-webkit-scrollbar-track {
-    background: rgba(6, 8, 12, 0.9);
-  }
-  .dark ::-webkit-scrollbar-thumb {
-    background: rgba(90, 102, 120, 0.85);
-  }
-  .dark ::-webkit-scrollbar-thumb:hover {
-    background: rgba(120, 132, 150, 0.9);
-  }
-
-  /* Selection color */
-  ::selection {
-    background: color-mix(in oklch, var(--primary) 35%, transparent);
-    color: var(--foreground);
+    background: var(--blob-2) !important;
   }
 }
 

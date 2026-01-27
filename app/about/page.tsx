@@ -73,7 +73,10 @@ export default function AboutPage() {
 
   const containerStagger = {
     hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.06 } },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08, delayChildren: 0.06 },
+    },
   };
 
   const fadeUp = {
@@ -83,36 +86,16 @@ export default function AboutPage() {
 
   const sectionWrap = "relative overflow-hidden py-20 md:py-32";
 
-  /**
-   * About page was getting “too dark” because multiple sections were stacking
-   * heavy blue/cyan washes + blobs. This version:
-   * - Uses your theme tokens (primary/accent/foreground) everywhere
-   * - Adds a subtle “ambient lift” in dark mode (white tint) so the page feels less black
-   * - Removes cyan/green/purple dependencies entirely
-   */
+  // ✅ SAME BACKGROUND PATTERN AS PRODUCTS PAGE:
+  // LIGHT: subtle gradient wash
+  // DARK: flat wash (no gradient)
+  const lightWash =
+    "pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent";
+  const darkWash =
+    "pointer-events-none absolute inset-0 -z-10 hidden dark:block bg-primary/6";
 
-  const dots = `
-    pointer-events-none absolute inset-0 opacity-[0.06] dark:opacity-[0.10]
-    [background-size:28px_28px]
-    [background-image:radial-gradient(circle_at_1px_1px,color-mix(in_oklch,var(--foreground)_16%,transparent)_1px,transparent_0)]
-  `;
-
-  const wash = `
-    pointer-events-none absolute inset-0
-    bg-gradient-to-b from-transparent via-primary/7 to-transparent
-    dark:via-primary/6
-  `;
-
-  // Slight “lift” only in dark so the page doesn’t feel crushed/over-black.
-  const darkLift = `
-    pointer-events-none absolute inset-0
-    dark:bg-[radial-gradient(70%_60%_at_50%_0%,rgba(255,255,255,0.06),transparent_60%)]
-  `;
-
-  const glowPrimary =
-    "pointer-events-none absolute -top-28 right-[-90px] h-[420px] w-[420px] rounded-full bg-primary/10 blur-3xl";
-  const glowAccent =
-    "pointer-events-none absolute -bottom-32 left-[-110px] h-[520px] w-[520px] rounded-full bg-accent/10 blur-3xl";
+  // Optional texture (no blobs)
+  const dots = "pointer-events-none absolute inset-0 -z-10 opacity-[0.06] dark:opacity-[0.10] dot-grid";
 
   const glassCard =
     "border border-border bg-card/70 hover:bg-card/90 hover:border-primary/20 transition-colors " +
@@ -132,11 +115,9 @@ export default function AboutPage() {
     <main>
       {/* HERO */}
       <section className={sectionWrap}>
-        <div className={wash} />
+        <div className={lightWash} />
+        <div className={darkWash} />
         <div className={dots} />
-        <div className={darkLift} />
-        <div className={glowPrimary} />
-        <div className={glowAccent} />
 
         <Container className="relative">
           <motion.div
@@ -165,8 +146,9 @@ export default function AboutPage() {
             </h1>
 
             <p className="text-xl text-muted-foreground text-balance">
-              Established in 1987, Bhawani Moulders manufactures and supplies light structural mild steel
-              products that reinforce fabricated structures—built for stability, safety, and long-term performance.
+              Established in 1987, Bhawani Moulders manufactures and supplies
+              light structural mild steel products that reinforce fabricated
+              structures—built for stability, safety, and long-term performance.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -185,9 +167,10 @@ export default function AboutPage() {
       </section>
 
       {/* MISSION & VISION */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
-        <div className={darkLift} />
+      <section className="relative overflow-hidden py-20 md:py-32">
+        <div className={lightWash} />
+        <div className={darkWash} />
+        <div className={dots} />
 
         <Container className="relative">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
@@ -202,20 +185,23 @@ export default function AboutPage() {
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
 
                 <div className="flex items-center justify-between">
-                  <h2 className="text-3xl font-bold text-foreground md:text-4xl">Our Mission</h2>
+                  <h2 className="text-3xl font-bold text-foreground md:text-4xl">
+                    Our Mission
+                  </h2>
                   <span className="hidden sm:inline-flex rounded-full border border-border bg-background/30 px-2.5 py-1 text-[10px] font-semibold tracking-widest text-muted-foreground dark:bg-card/35">
                     BMPL
                   </span>
                 </div>
 
                 <p className="mt-4 text-lg leading-relaxed text-foreground/90">
-                  To provide top-quality light structural mild steel products—Angles, Flats, Round, Square,
-                  and Gate Channel—so fabricators can build safe, reliable, and durable structures.
+                  To provide top-quality light structural mild steel products—Angles,
+                  Flats, Round, Square, and Gate Channel—so fabricators can build safe,
+                  reliable, and durable structures.
                 </p>
 
                 <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-                  We focus on consistency, process control, and dependable supply—supporting fabrication
-                  and construction requirements across varying sizes and applications.
+                  We focus on consistency, process control, and dependable supply—supporting
+                  fabrication and construction requirements across varying sizes and applications.
                 </p>
 
                 <div className="mt-auto pt-6">
@@ -238,20 +224,22 @@ export default function AboutPage() {
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/22 to-transparent" />
 
                 <div className="flex items-center justify-between">
-                  <h2 className="text-3xl font-bold text-foreground md:text-4xl">Our Vision</h2>
+                  <h2 className="text-3xl font-bold text-foreground md:text-4xl">
+                    Our Vision
+                  </h2>
                   <span className="hidden sm:inline-flex rounded-full border border-border bg-background/30 px-2.5 py-1 text-[10px] font-semibold tracking-widest text-muted-foreground dark:bg-card/35">
                     BMPL
                   </span>
                 </div>
 
                 <p className="mt-4 text-lg leading-relaxed text-foreground/90">
-                  To strengthen the nation’s fabrication ecosystem by being a trusted manufacturer of
-                  light structural steel sections—known for long-term performance and dependable standards.
+                  To strengthen the nation’s fabrication ecosystem by being a trusted manufacturer
+                  of light structural steel sections—known for long-term performance and dependable standards.
                 </p>
 
                 <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-                  We aim to be the preferred partner for customers who value consistent quality, clear specifications,
-                  and materials that enhance stability and safety in fabricated structures.
+                  We aim to be the preferred partner for customers who value consistent quality,
+                  clear specifications, and materials that enhance stability and safety in fabricated structures.
                 </p>
 
                 <div className="mt-auto pt-6">
@@ -268,9 +256,9 @@ export default function AboutPage() {
 
       {/* CORE VALUES */}
       <section className={sectionWrap}>
-        <div className={wash} />
+        <div className={lightWash} />
+        <div className={darkWash} />
         <div className={dots} />
-        <div className={darkLift} />
 
         <Container className="relative">
           <motion.div
@@ -334,10 +322,9 @@ export default function AboutPage() {
 
       {/* TIMELINE */}
       <section className={sectionWrap}>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+        <div className={lightWash} />
+        <div className={darkWash} />
         <div className={dots} />
-        <div className={darkLift} />
-        <div className="pointer-events-none absolute -top-28 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
 
         <Container className="relative">
           <motion.div
@@ -360,7 +347,7 @@ export default function AboutPage() {
               <div className="relative px-5 py-10 sm:px-10">
                 {/* Track */}
                 <div className="absolute left-6 top-10 bottom-10 w-px bg-gradient-to-b from-transparent via-border/70 to-transparent dark:via-white/10 sm:left-8" />
-                <div className="pointer-events-none absolute left-6 top-10 bottom-10 w-px blur-[2px] bg-gradient-to-b from-transparent via-primary/20 to-transparent sm:left-8" />
+                <div className="pointer-events-none absolute left-6 top-10 bottom-10 w-px blur-[2px] bg-primary/15 sm:left-8" />
 
                 <div className="space-y-8">
                   {milestones.map((m, idx) => {
@@ -379,7 +366,8 @@ export default function AboutPage() {
                         <div className="absolute left-6 top-6 -translate-x-1/2 sm:left-8">
                           <div className="relative grid place-items-center">
                             <div className="h-10 w-10 rounded-full bg-background/70 border border-border shadow-sm dark:bg-card/40 dark:border-white/10" />
-                            <div className="pointer-events-none absolute -inset-2 rounded-full opacity-60 blur-xl bg-gradient-to-r from-primary/18 via-accent/18 to-primary/18" />
+                            {/* ✅ no blob glow / no gradient glow */}
+                            <div className="pointer-events-none absolute -inset-2 rounded-full opacity-50 blur-xl bg-primary/10" />
                             <div className="absolute grid h-10 w-10 place-items-center">
                               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 ring-1 ring-border/70 dark:ring-white/10">
                                 <Icon className="h-4 w-4 text-primary" />
@@ -421,8 +409,8 @@ export default function AboutPage() {
                                 </div>
 
                                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                                  Focused on strengthening fabrication outcomes through reliable sections, consistent quality,
-                                  and disciplined manufacturing practices.
+                                  Focused on strengthening fabrication outcomes through reliable sections,
+                                  consistent quality, and disciplined manufacturing practices.
                                 </p>
                               </div>
 
@@ -457,11 +445,9 @@ export default function AboutPage() {
 
       {/* CTA */}
       <section className={sectionWrap}>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary/6 to-transparent" />
+        <div className={lightWash} />
+        <div className={darkWash} />
         <div className={dots} />
-        <div className={darkLift} />
-        <div className="pointer-events-none absolute -top-24 right-[-60px] h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border/70 to-transparent dark:via-white/10" />
 
         <Container className="relative">
           <motion.div
@@ -474,8 +460,8 @@ export default function AboutPage() {
             <h2 className="mb-4 text-4xl font-bold text-foreground">Want to Learn More?</h2>
 
             <p className="mb-8 text-lg text-muted-foreground text-balance">
-              Connect with our team to discuss fabrication requirements and supply needs for light structural MS products
-              including Angles, Flats, Round, Square, and Gate Channel.
+              Connect with our team to discuss fabrication requirements and supply needs for
+              light structural MS products including Angles, Flats, Round, Square, and Gate Channel.
             </p>
 
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">

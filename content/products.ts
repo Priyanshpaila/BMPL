@@ -95,7 +95,7 @@ export const PRODUCTS: Product[] = [
     ],
     minQty: "MOQ: 5 MT total / 1 MT per size",
     availability: "Available for bulk dispatch",
-    image: "/steel-rounds.jpg",
+    image: "/steel-rounds.png",
   },
   {
     id: "5",
@@ -113,7 +113,7 @@ export const PRODUCTS: Product[] = [
     ],
     minQty: "MOQ: 5 MT total / 1 MT per size",
     availability: "Available for bulk dispatch",
-    image: "/steel-squares.jpg",
+    image: "/steel-squares.png",
   },
   {
     id: "6",
@@ -131,7 +131,7 @@ export const PRODUCTS: Product[] = [
     ],
     minQty: "MOQ: 5 MT total / 1 MT per size",
     availability: "Available for bulk dispatch",
-    image: "/steel-flats.jpg",
+    image: "/steel-flats.png",
   },
   {
     id: "7",
@@ -149,6 +149,6 @@ export const PRODUCTS: Product[] = [
     ],
     minQty: "MOQ: 5 MT total / 1 MT per size",
     availability: "Available for bulk dispatch",
-    image: "/steel-gate-channels.jpg",
+    image: "/steel-gate-channels.png",
   },
 ]

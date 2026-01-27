@@ -46,69 +46,38 @@ function normalizeE164Like(input: string) {
   return digits ? `+${digits}` : "";
 }
 
-/** One-time background for the whole page (prevents section seams). */
-function PageBackdrop() {
+/**
+ * ✅ SAME AS YOUR PRODUCTS/ABOUT FIX:
+ * - No “global” page backdrop (removes seams / unexpected stacking)
+ * - Each section gets:
+ *   LIGHT: subtle gradient wash
+ *   DARK : flat wash (no gradient)
+ *   Optional dots (token driven)
+ */
+function LightWash() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-    >
-      {/* soft top wash */}
-      <div
-        className="
-          absolute inset-0
-          bg-[radial-gradient(80%_55%_at_50%_0%,color-mix(in_oklch,var(--primary)_18%,transparent),transparent_60%)]
-          dark:bg-[radial-gradient(80%_55%_at_50%_0%,rgba(255,255,255,0.06),transparent_60%)]
-        "
-      />
-
-      {/* subtle bottom/side wash to avoid “dead flat” areas */}
-      <div
-        className="
-          absolute inset-0
-          bg-[radial-gradient(55%_45%_at_18%_82%,color-mix(in_oklch,var(--accent)_14%,transparent),transparent_62%)]
-        "
-      />
-
-      {/* dot grid derived from foreground (theme-safe) */}
-      <div
-        className="
-          absolute inset-0 opacity-[0.055] dark:opacity-[0.10]
-          [background-size:28px_28px]
-          [background-image:radial-gradient(circle_at_1px_1px,color-mix(in_oklch,var(--foreground)_16%,transparent)_1px,transparent_0)]
-        "
-      />
-
-      {/* extremely subtle vertical vignette to “stitch” long pages */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/[0.02] to-transparent dark:via-black/[0.06]" />
-    </div>
+      className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent"
+    />
   );
 }
 
-/**
- * Section-local wash that *fades out on both edges* (no hard cut line).
- * Also overhangs top/bottom so adjacent sections overlap naturally.
- */
-function SectionWash({ tone = "mid" }: { tone?: "top" | "mid" | "bottom" }) {
-  const toneClass =
-    tone === "top"
-      ? "bg-gradient-to-b from-primary/14 via-transparent to-transparent dark:from-primary/10"
-      : tone === "bottom"
-        ? "bg-gradient-to-b from-transparent via-accent/6 to-transparent dark:via-accent/8"
-        : "bg-gradient-to-b from-transparent via-primary/7 to-transparent dark:via-primary/6";
-
+function DarkWash() {
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0">
-      <div
-        className={[
-          "absolute inset-x-0 -top-32 -bottom-32", // overhang removes seams
-          toneClass,
-          // fade the wash on both top and bottom edges
-          "[mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)]",
-          "[-webkit-mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)]",
-        ].join(" ")}
-      />
-    </div>
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 -z-10 hidden dark:block bg-primary/6"
+    />
+  );
+}
+
+function Dots() {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 -z-10 opacity-[0.055] dark:opacity-[0.10] dot-grid"
+    />
   );
 }
 
@@ -175,21 +144,14 @@ export default function ContactPage() {
     "border border-border bg-card/70 hover:bg-card/90 hover:border-primary/20 transition-colors " +
     "dark:bg-card/40 dark:hover:bg-card/55 dark:hover:border-primary/25";
 
-  const iconWrap =
-    "flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl " +
-    "bg-primary/10 ring-1 ring-border/70 dark:ring-white/10";
-
-  const actionBtn =
-    "w-full rounded-2xl border border-border bg-card/60 hover:bg-card/80 " +
-    "dark:bg-card/45 dark:hover:bg-card/60";
-
   return (
     <main className="relative overflow-hidden">
-      <PageBackdrop />
-
       {/* HERO */}
       <section className="relative overflow-hidden py-20 md:py-32">
-        <SectionWash tone="mid" />
+        <LightWash />
+        <DarkWash />
+        <Dots />
+
         <Container className="relative">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
@@ -210,7 +172,9 @@ export default function ContactPage() {
 
       {/* CONTACT METHODS */}
       <section className="relative overflow-hidden py-20 md:py-32">
-        <SectionWash tone="mid" />
+        <LightWash />
+        <DarkWash />
+        <Dots />
 
         <Container className="relative">
           <motion.div
@@ -233,21 +197,13 @@ export default function ContactPage() {
           <div className="mx-auto max-w-6xl">
             <div
               className="
-          relative overflow-hidden rounded-3xl
-          border border-border/70 bg-card/60 backdrop-blur-xl
-          dark:bg-white/[0.03]
-        "
+                relative overflow-hidden rounded-3xl
+                border border-border/70 bg-card/60 backdrop-blur-xl
+                dark:bg-card/35
+              "
             >
               {/* top hairline */}
               <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
-
-              {/* subtle inner glow */}
-              <div
-                className="
-            pointer-events-none absolute -inset-1 opacity-60 blur-2xl
-            bg-[radial-gradient(70%_55%_at_50%_0%,color-mix(in_oklch,var(--primary)_18%,transparent),transparent_60%)]
-          "
-              />
 
               <div className="relative flex flex-col lg:flex-row">
                 {contactMethods.map((method, idx) => {
@@ -256,24 +212,12 @@ export default function ContactPage() {
 
                   const meta =
                     method.label === "Phone"
-                      ? {
-                          badge: "DIRECT",
-                          hint: "Fastest for urgent requirements",
-                        }
+                      ? { badge: "DIRECT", hint: "Fastest for urgent requirements" }
                       : method.label === "Email"
-                        ? {
-                            badge: "OFFICIAL",
-                            hint: "Best for quotations & documents",
-                          }
+                        ? { badge: "OFFICIAL", hint: "Best for quotations & documents" }
                         : method.label === "WhatsApp"
-                          ? {
-                              badge: "FAST",
-                              hint: "Quick chat for sizes & availability",
-                            }
-                          : {
-                              badge: "MAP",
-                              hint: "Open directions in Google Maps",
-                            };
+                          ? { badge: "FAST", hint: "Quick chat for sizes & availability" }
+                          : { badge: "MAP", hint: "Open directions in Google Maps" };
 
                   const segmentBorder =
                     idx === 0
@@ -294,21 +238,12 @@ export default function ContactPage() {
                     "group-hover/seg:border-primary/25 group-hover/seg:bg-background/45 " +
                     "dark:border-white/10 dark:bg-white/[0.02] dark:group-hover/seg:bg-white/[0.04]";
 
-                  const valueClass =
-                    "mt-2 text-[15px] font-semibold text-foreground/90 leading-snug " +
-                    "line-clamp-2 [word-break:break-word]";
-
                   const SegmentInner = (
                     <div className="flex h-full flex-col">
-                      {/* ROW 1: icon + label + badge */}
+                      {/* ROW 1 */}
                       <div className="flex items-center justify-between gap-4">
                         <div className="flex items-center gap-4 min-w-0">
-                          <div
-                            className="
-            flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl
-            bg-primary/10 ring-1 ring-border/70 dark:ring-white/10
-          "
-                          >
+                          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-border/70 dark:ring-white/10">
                             <Icon className="h-5 w-5 text-primary" />
                           </div>
 
@@ -319,26 +254,14 @@ export default function ContactPage() {
                           </div>
                         </div>
 
-                        <span
-                          className="
-          inline-flex shrink-0 items-center rounded-full
-          border border-border/70 bg-background/30
-          px-2.5 py-1 text-[10px] font-semibold tracking-widest
-          text-muted-foreground dark:border-white/10 dark:bg-white/[0.02]
-        "
-                        >
+                        <span className="inline-flex shrink-0 items-center rounded-full border border-border/70 bg-background/30 px-2.5 py-1 text-[10px] font-semibold tracking-widest text-muted-foreground dark:border-white/10 dark:bg-white/[0.02]">
                           {meta.badge}
                         </span>
                       </div>
 
-                      {/* ROW 2: value + hint (stacked) */}
+                      {/* ROW 2 */}
                       <div className="mt-5 min-w-0">
-                        <div
-                          className="
-          text-[15px] font-semibold text-foreground/90 leading-snug
-          break-words
-        "
-                        >
+                        <div className="text-[15px] font-semibold text-foreground/90 leading-snug break-words">
                           {method.value}
                         </div>
 
@@ -347,10 +270,9 @@ export default function ContactPage() {
                         </p>
                       </div>
 
-                      {/* Spacer */}
                       <div className="flex-1" />
 
-                      {/* ROW 3: action */}
+                      {/* ROW 3 */}
                       <div className={actionPill}>
                         <span>{method.action}</span>
                         <ArrowRight className="h-4 w-4 opacity-80 transition-transform duration-200 group-hover/seg:translate-x-0.5" />
@@ -359,10 +281,7 @@ export default function ContactPage() {
                   );
 
                   return (
-                    <div
-                      key={method.label}
-                      className={`flex-1 ${segmentBorder}`}
-                    >
+                    <div key={method.label} className={`flex-1 ${segmentBorder}`}>
                       {isLink ? (
                         <a
                           href={method.href}
@@ -394,11 +313,9 @@ export default function ContactPage() {
 
       {/* HOURS & LOCATION */}
       <section className="relative overflow-hidden py-20 md:py-32">
-        <SectionWash tone="top" />
-
-        {/* token-driven glows (kept subtle) */}
-        <div className="pointer-events-none absolute -top-24 right-[-60px] h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-28 left-[-80px] h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
+        <LightWash />
+        <DarkWash />
+        <Dots />
 
         <Container className="relative">
           <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2 lg:gap-12">
@@ -491,15 +408,12 @@ export default function ContactPage() {
                 </div>
 
                 <div className="mt-6 space-y-1">
-                  <p className="text-foreground/90">
-                    {COMPANY_INFO.address.street}
-                  </p>
+                  <p className="text-foreground/90">{COMPANY_INFO.address.street}</p>
                   <p className="text-muted-foreground">
                     {COMPANY_INFO.address.city}, {COMPANY_INFO.address.state}
                   </p>
                   <p className="text-muted-foreground/80">
-                    {COMPANY_INFO.address.country} -{" "}
-                    {COMPANY_INFO.address.postal}
+                    {COMPANY_INFO.address.country} - {COMPANY_INFO.address.postal}
                   </p>
                 </div>
 
@@ -519,8 +433,7 @@ export default function ContactPage() {
                 <div className="mt-auto pt-6">
                   <div className="h-px w-full bg-gradient-to-r from-transparent via-border/70 to-transparent dark:via-white/10" />
                   <p className="mt-3 text-center text-xs text-muted-foreground">
-                    Share your delivery location and quantity for the fastest
-                    quotation.
+                    Share your delivery location and quantity for the fastest quotation.
                   </p>
                 </div>
               </Card>
@@ -531,7 +444,10 @@ export default function ContactPage() {
 
       {/* QUICK LINKS */}
       <section className="relative overflow-hidden py-20 md:py-32">
-        <SectionWash tone="mid" />
+        <LightWash />
+        <DarkWash />
+        <Dots />
+
         <Container className="relative">
           <motion.div
             variants={sectionFade}
@@ -544,8 +460,7 @@ export default function ContactPage() {
               Quick <span className="gradient-text">Actions</span>
             </h2>
             <p className="mb-8 text-lg text-muted-foreground text-balance">
-              Ready to get started? Request a quotation or browse our product
-              range.
+              Ready to get started? Request a quotation or browse our product range.
             </p>
 
             <div className="flex flex-col justify-center gap-4 sm:flex-row">

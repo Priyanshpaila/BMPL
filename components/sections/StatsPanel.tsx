@@ -49,11 +49,10 @@ export default function StatsPanel() {
   return (
     <section className="relative py-16 md:py-24 overflow-hidden">
       {/* background wash (token-driven) */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/0 via-primary/7 to-transparent" />
+      <div className="pointer-events-none absolute h-full inset-0 hidden dark:block bg-primary/6" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
 
-      {/* optional soft blobs (token-driven, subtle) */}
-      <div className="pointer-events-none absolute -top-28 right-[-160px] h-[520px] w-[520px] rounded-full bg-primary/4 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-32 left-[-180px] h-[560px] w-[560px] rounded-full bg-accent/4 blur-3xl" />
+
 
       {/* dot grid (token-driven) */}
       <div

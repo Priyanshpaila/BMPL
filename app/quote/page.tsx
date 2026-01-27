@@ -90,8 +90,7 @@ export default function QuotePage() {
       <section className="relative py-20 md:py-32 overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-600/10 via-transparent to-transparent" />
         <div className={gridPattern} />
-        <div className="pointer-events-none absolute -top-24 right-0 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 left-0 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl" />
+
 
         <Container className="relative">
           <motion.div

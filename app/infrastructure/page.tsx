@@ -97,7 +97,8 @@ export default function InfrastructurePage() {
   // Theme-aware shared background (dots + wash + glows)
   const bgShared = (
     <>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
+      <div className="pointer-events-none absolute h-full inset-0 hidden dark:block bg-primary/6" />
 
       {/* Dots: dark in light mode, light in dark mode */}
       <div
@@ -107,9 +108,7 @@ export default function InfrastructurePage() {
         [background-size:28px_28px]"
       />
 
-      {/* Soft glows (work well in both themes) */}
-      <div className="pointer-events-none absolute -top-24 right-[-80px] h-80 w-80 rounded-full bg-blue-500/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-28 left-[-80px] h-80 w-80 rounded-full bg-cyan-500/10 blur-3xl" />
+
     </>
   );
 
@@ -427,7 +426,7 @@ export default function InfrastructurePage() {
       {/* CTA */}
       <section className={gridWrap}>
         {bgShared}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-900/10 to-transparent dark:via-white/10" />
+
 
         <Container className="relative">
           <motion.div
