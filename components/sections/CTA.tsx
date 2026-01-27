@@ -58,7 +58,7 @@ export default function CTA() {
             <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
 
             {/* inner glow (token driven, no green/purple) */}
-            <div className="pointer-events-none absolute -inset-0.5 rounded-2xl opacity-45 dark:opacity-60 blur-2xl bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10" />
+            {/* <div className="pointer-events-none absolute -inset-0.5 rounded-2xl opacity-45 dark:opacity-60 blur-2xl bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10" /> */}
 
             <div className="relative mx-auto max-w-3xl text-center">
               {/* badge (token driven) */}

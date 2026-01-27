@@ -27,7 +27,7 @@ export default function ProductCard({
       <Card
         variant="glass"
         className="
-          group h-full p-0 overflow-hidden smooth-transition
+          group relative h-full p-0 overflow-hidden smooth-transition
           border border-border bg-card/65 hover:bg-card/80 hover:border-primary/20
           dark:bg-card/45 dark:hover:bg-card/55 dark:hover:border-primary/25
         "
@@ -95,7 +95,9 @@ export default function ProductCard({
           >
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Min Order</span>
-              <span className="font-medium text-foreground">{product.minQty}</span>
+              <span className="font-medium text-foreground">
+                {product.minQty}
+              </span>
             </div>
           </div>
 
@@ -121,13 +123,13 @@ export default function ProductCard({
           </div>
         </div>
 
-        {/* Subtle hover glow (token-driven, optional but consistent with your new theme) */}
+        {/* ✅ Subtle hover glow (reduced intensity + smaller blur) */}
         <div
           className="
-            pointer-events-none absolute -inset-0.5 rounded-2xl opacity-0 blur-2xl transition-opacity duration-300
-            group-hover:opacity-100
-            bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10
-            dark:from-primary/14 dark:via-accent/12 dark:to-primary/14
+            pointer-events-none absolute -inset-0.5 rounded-2xl opacity-0 blur-xl transition-opacity duration-300
+            group-hover:opacity-60
+            bg-gradient-to-r from-primary/6  to-primary/6
+            dark:from-primary/10  dark:to-primary/10
           "
         />
       </Card>
