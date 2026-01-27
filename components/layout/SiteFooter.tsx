@@ -11,7 +11,8 @@ export default function SiteFooter() {
   return (
     <footer className="relative border-t border-border bg-background overflow-hidden">
       {/* theme-aware wash (token driven) */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-muted/18 via-transparent to-muted/28" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
+      <div className="pointer-events-none absolute h-full inset-0 hidden dark:block bg-primary/6" />
 
       {/* theme-aware dot grid (uses foreground mix, no hardcoded black/white) */}
       <div
@@ -22,9 +23,7 @@ export default function SiteFooter() {
         "
       />
 
-      {/* subtle blobs (token driven, complements your hero/sections) */}
-      <div className="pointer-events-none absolute -top-28 right-[-140px] h-[420px] w-[420px] rounded-full bg-primary/7 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-40 left-[-160px] h-[520px] w-[520px] rounded-full bg-accent/10 blur-3xl" />
+
 
       <Container className="relative py-10">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
@@ -36,7 +35,11 @@ export default function SiteFooter() {
                 className="flex items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 aria-label={`${COMPANY_INFO.name} Home`}
               >
-                <BrandLogo className="h-12 w-auto object-contain" height={32} alt="BMPL" />
+                <BrandLogo
+                  className="h-12 w-auto object-contain"
+                  height={32}
+                  alt="BMPL"
+                />
               </Link>
 
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">

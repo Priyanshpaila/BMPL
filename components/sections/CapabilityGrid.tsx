@@ -62,7 +62,8 @@ export default function CapabilityGrid() {
   return (
     <section className="relative py-20 md:py-32 overflow-hidden">
       {/* Background wash: token-driven (no hardcoded blue) */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary/6 to-transparent" />
+      <div className="pointer-events-none absolute h-full inset-0 hidden dark:block bg-primary/6" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
 
       {/* Dot grid: token-driven (foreground mix) */}
       <div
@@ -73,9 +74,7 @@ export default function CapabilityGrid() {
         "
       />
 
-      {/* Soft blobs: theme-aware via primary/accent tokens */}
-      <div className="pointer-events-none absolute -top-24 right-[-140px] h-[480px] w-[480px] rounded-full bg-primary/2 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-28 left-[-160px] h-[560px] w-[560px] rounded-full bg-accent/10 blur-3xl" />
+
 
       <Container className="relative">
         {/* Header */}

@@ -10,7 +10,9 @@ import { Card } from "@/components/ui/card";
 
 export default function CTA() {
   const handleWhatsApp = () => {
-    openWhatsAppChat("Hello BMPL, I would like to know more about your services.");
+    openWhatsAppChat(
+      "Hello BMPL, I would like to know more about your services.",
+    );
   };
 
   const trust = [
@@ -22,8 +24,8 @@ export default function CTA() {
   return (
     <section className="relative overflow-hidden py-20 md:py-32">
       {/* Background wash (token driven) */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary/8 to-transparent" />
-
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
+      <div className="pointer-events-none absolute h-full inset-0 hidden dark:block bg-primary/6" />
       {/* Dot grid (token driven foreground mix) */}
       <div
         className="
@@ -34,8 +36,8 @@ export default function CTA() {
       />
 
       {/* Glows (token driven, complements your palette) */}
-      <div className="pointer-events-none absolute -top-24 right-[-80px] h-[360px] w-[360px] rounded-full bg-primary/5 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-28 left-[-90px] h-[420px] w-[420px] rounded-full bg-accent/7 blur-3xl" />
+      {/* <div className="pointer-events-none absolute -top-24 right-[-80px] h-[360px] w-[360px] rounded-full bg-primary/5 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-28 left-[-90px] h-[420px] w-[420px] rounded-full bg-accent/7 blur-3xl" /> */}
 
       <Container className="relative">
         <motion.div
@@ -75,8 +77,8 @@ export default function CTA() {
               </h2>
 
               <p className="mt-4 text-lg text-muted-foreground text-balance">
-                Get a quick quotation or chat with our team to discuss sizes, quantities, and dispatch
-                timelines.
+                Get a quick quotation or chat with our team to discuss sizes,
+                quantities, and dispatch timelines.
               </p>
 
               {/* Trust row */}
@@ -102,7 +104,10 @@ export default function CTA() {
               {/* CTAs */}
               <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Button size="lg" className="rounded-2xl" asChild>
-                  <Link href="/quote" className="inline-flex items-center justify-center">
+                  <Link
+                    href="/quote"
+                    className="inline-flex items-center justify-center"
+                  >
                     Request Quote
                   </Link>
                 </Button>
@@ -122,7 +127,8 @@ export default function CTA() {
               </div>
 
               <p className="mt-6 text-sm text-muted-foreground">
-                No commitment required. Share your specs and we’ll respond with pricing and timelines.
+                No commitment required. Share your specs and we’ll respond with
+                pricing and timelines.
               </p>
             </div>
           </Card>

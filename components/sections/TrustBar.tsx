@@ -22,7 +22,7 @@ function MarqueeRow({
   const loopItems = [...items, ...items];
 
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative  overflow-hidden ${className}`}>
       {/* Edge fades: theme-aware (uses tokens only) */}
       {/* <div
         className="
@@ -36,6 +36,7 @@ function MarqueeRow({
           bg-gradient-to-l from-background via-background/70 to-transparent
         "
       /> */}
+      
 
       <motion.div
         className="flex w-max items-center gap-3 py-2"
@@ -64,6 +65,7 @@ export default function TrustBar() {
   ];
 
   const trustNodes = trustItems.map((item) => (
+    
     <div
       key={item.text}
       className="
@@ -78,6 +80,7 @@ export default function TrustBar() {
         {item.text}
       </span>
     </div>
+    
   ));
 
   return (
@@ -85,6 +88,7 @@ export default function TrustBar() {
     <section className="relative py-6">
       <Container>
         <div className="space-y-3">
+          <div className="pointer-events-none absolute h-full inset-0 hidden dark:block bg-primary/6" />
           <MarqueeRow items={trustNodes} speed={22} className="rounded-2xl" />
         </div>
       </Container>

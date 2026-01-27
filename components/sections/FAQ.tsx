@@ -30,12 +30,7 @@ export default function FAQ() {
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
 
       {/* dots: dark in light mode, white in dark mode */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.07] dark:opacity-[0.10]
-        [background-image:radial-gradient(circle_at_1px_1px,rgba(15,23,42,0.18)_1px,transparent_0)]
-        dark:[background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.16)_1px,transparent_0)]
-        [background-size:28px_28px]"
-      />
+      <div className="pointer-events-none absolute h-full inset-0 hidden dark:block bg-primary/6" />
 
       <Container className="relative">
         {/* Header */}
@@ -81,7 +76,7 @@ export default function FAQ() {
                     // light mode: readable card, dark mode: your existing glass
                     "group relative p-0 border border-border bg-card/70 hover:bg-card/90 hover:border-blue-500/20",
                     "dark:border-white/10 dark:bg-white/[0.03] dark:hover:bg-white/[0.05] dark:hover:border-blue-400/30",
-                    "smooth-transition"
+                    "smooth-transition",
                   )}
                 >
                   {/* left accent */}
@@ -121,13 +116,13 @@ export default function FAQ() {
                           // light mode button surface
                           "border border-slate-900/10 bg-white/70",
                           // dark mode original
-                          "dark:border-white/10 dark:bg-white/[0.03]"
+                          "dark:border-white/10 dark:bg-white/[0.03]",
                         )}
                       >
                         <ChevronDown
                           className={cn(
                             "h-5 w-5 text-blue-700 dark:text-blue-300 transition-transform duration-200",
-                            isOpen && "rotate-180"
+                            isOpen && "rotate-180",
                           )}
                         />
                       </span>

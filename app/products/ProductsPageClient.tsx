@@ -23,11 +23,17 @@ export default function ProductsPageClient() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-blue-600/5 to-transparent">
-        <Container>
+      <section className="relative overflow-hidden py-20 md:py-32 bg-gradient-to-b from-blue-600/5 to-transparent">
+        {/* LIGHT: subtle wash */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
+        {/* DARK: flat wash (no gradient) */}
+        <div className="pointer-events-none absolute inset-0 hidden dark:block bg-primary/6" />
+
+        <Container className="relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.45 }}
             transition={{ duration: 0.8 }}
             className="text-center max-w-3xl mx-auto"
           >
@@ -43,21 +49,33 @@ export default function ProductsPageClient() {
         </Container>
       </section>
 
-      {/* Products Grid */}
-      <section className="py-20 md:py-32">
-        <Container>
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="show"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {PRODUCTS.map((product, idx) => (
-              <ProductCard key={product.id ?? product.slug} product={product} index={idx} />
-            ))}
-          </motion.div>
-        </Container>
-      </section>
+{/* Products Grid */}
+<section className="relative overflow-hidden py-20 md:py-32">
+  {/* LIGHT: subtle wash */}
+  <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
+  {/* DARK: flat wash (no gradient) */}
+  <div className="pointer-events-none absolute inset-0 -z-10 hidden dark:block bg-primary/6" />
+
+  {/* Optional dot texture (theme aware) */}
+  <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] dark:opacity-[0.10] dot-grid" />
+
+  <Container className="relative">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      {PRODUCTS.map((product, idx) => (
+        <ProductCard
+          key={product.id ?? product.slug}
+          product={product}
+          index={idx}
+        />
+      ))}
+    </motion.div>
+  </Container>
+</section>
 
       {/* CTA Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
@@ -72,13 +90,9 @@ export default function ProductsPageClient() {
           [background-size:28px_28px]"
         />
 
-        {/* Soft glows (safe on light + dark) */}
-        <div className="pointer-events-none absolute -top-24 right-[-80px] h-80 w-80 rounded-full bg-blue-500/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-28 left-[-80px] h-80 w-80 rounded-full bg-cyan-500/10 blur-3xl" />
-
         {/* Subtle separators theme-aware */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-900/10 to-transparent dark:via-white/10" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-900/10 to-transparent dark:via-white/10" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
+        <div className="pointer-events-none absolute h-full inset-0 hidden dark:block bg-primary/6" />
 
         <Container className="relative">
           <motion.div
@@ -112,7 +126,7 @@ export default function ProductsPageClient() {
                 variant="secondary"
                 onClick={() =>
                   openWhatsAppChat(
-                    "Hello BMPL, I need a quotation. Please share pricing and dispatch timelines for the required sizes and quantity."
+                    "Hello BMPL, I need a quotation. Please share pricing and dispatch timelines for the required sizes and quantity.",
                   )
                 }
                 className="h-12 rounded-2xl px-8"
