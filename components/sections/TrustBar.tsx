@@ -85,10 +85,10 @@ export default function TrustBar() {
 
   return (
     // IMPORTANT: no background, no band; minimal padding
-    <section className="relative py-6">
+    <section className="relative py-9">
       <Container>
         <div className="space-y-3">
-          <div className="pointer-events-none absolute h-full inset-0 hidden dark:block bg-primary/6" />
+          <div className="pointer-events-none absolute h-full inset-0 hidden dark:block  bg-primary/6" />
           <MarqueeRow items={trustNodes} speed={22} className="rounded-2xl" />
         </div>
       </Container>

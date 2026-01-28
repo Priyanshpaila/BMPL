@@ -23,7 +23,7 @@ export default function ProductShowcase() {
   };
 
   return (
-    <section className="relative overflow-hidden py-20 md:py-32">
+    <section className="relative overflow-hidden py-20 md:py-20">
       {/* LIGHT: subtle background wash (ok to be gradient) */}
       <div className="pointer-events-none absolute inset-0 dark:hidden bg-gradient-to-b from-primary/0 via-primary/6 to-transparent" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
