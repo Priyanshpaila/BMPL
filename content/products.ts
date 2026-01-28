@@ -52,7 +52,7 @@ export const PRODUCTS: Product[] = [
     specs: [
       { label: "Material", value: "Mild Steel (MS)" },
       { label: "Grade", value: "IS 2062" },
-      { label: "Size Range", value: "25x25 to 200x200 mm" },
+      { label: "Size Range", value: "25 to 50 mm" },
       { label: "Finish", value: "Hot Rolled" },
     ],
     minQty: "3 MT",
@@ -126,7 +126,7 @@ export const PRODUCTS: Product[] = [
     specs: [
       { label: "Material", value: "Mild Steel (MS)" },
       { label: "Standard", value: "As per applicable IS specifications / customer requirement" },
-      { label: "Size Range", value: "Custom sizes available" },
+      { label: "Size Range", value: "25 to 35 mm" },
       { label: "Finish", value: "Hot Rolled" },
     ],
     minQty: "MOQ: 5 MT total / 1 MT per size",
