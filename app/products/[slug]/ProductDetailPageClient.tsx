@@ -6,10 +6,12 @@ import { CheckCircle2 } from "lucide-react";
 import Container from "@/components/layout/Container";
 import { Card } from "@/components/ui/card";
 import ProductSpecTable from "@/components/products/ProductSpecTable";
+import GroupedSizeTable from "@/components/products/GroupedSizeTable";
 import ProductCTA from "@/components/products/ProductCTA";
 import ProductBadges from "@/components/products/ProductBadges";
 import Link from "next/link";
 import type { Product } from "@/content/products";
+import { ANGLE_SIZE_TABLE, FLAT_SIZE_TABLE } from "@/content/productSizes";
 
 export default function ProductDetailPageClient({
   product,
@@ -91,7 +93,9 @@ export default function ProductDetailPageClient({
               className="flex flex-col justify-center"
             >
               <div className="mb-6">
-                <ProductBadges badges={[product.category, product.availability]} />
+                <ProductBadges
+                  badges={[product.category, product.availability]}
+                />
               </div>
 
               <h1 className="text-5xl font-bold mb-4 text-foreground">
@@ -131,7 +135,10 @@ export default function ProductDetailPageClient({
                 ))}
               </div>
 
-              <ProductCTA productName={product.name} quantity={product.minQty} />
+              <ProductCTA
+                productName={product.name}
+                quantity={product.minQty}
+              />
             </motion.div>
           </div>
         </Container>
@@ -165,6 +172,29 @@ export default function ProductDetailPageClient({
             transition={{ delay: 0.1 }}
           >
             <ProductSpecTable specs={product.specs} />
+
+            {/* Sizes table like your image */}
+            {product.category === "angles" && (
+              <div className="mt-10">
+                <GroupedSizeTable
+                  title="Angles"
+                  leftHeader="Leg (mm)"
+                  rightHeader="Section (mm)"
+                  groups={ANGLE_SIZE_TABLE}
+                />
+              </div>
+            )}
+
+            {product.category === "flats" && (
+              <div className="mt-10">
+                <GroupedSizeTable
+                  title="Flats"
+                  leftHeader="Width (mm)"
+                  rightHeader="Thickness (mm)"
+                  groups={FLAT_SIZE_TABLE}
+                />
+              </div>
+            )}
           </motion.div>
         </Container>
       </section>
