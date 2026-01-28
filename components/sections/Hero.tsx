@@ -81,12 +81,12 @@ export default function Hero() {
       {/* Dark-only wash */}
       {/* <div className="pointer-events-none absolute inset-0 -z-20 hidden dark:block bg-primary/6" /> */}
 
-      <Container className="relative ">
+      <Container className="relative">
         <motion.div
           variants={wrap}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-12 gap-14 lg:gap-16"
+          className="grid grid-cols-12 gap-8 lg:gap-12"
         >
           {/* LEFT */}
           <motion.div variants={item} className="col-span-12 lg:col-span-8">
