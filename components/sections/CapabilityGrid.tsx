@@ -60,7 +60,7 @@ export default function CapabilityGrid() {
   };
 
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden">
+    <section className="relative py-20 md:py-20 overflow-hidden">
       {/* Background wash: token-driven (no hardcoded blue) */}
       <div className="pointer-events-none absolute h-full inset-0 hidden dark:block bg-primary/6" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />

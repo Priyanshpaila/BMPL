@@ -47,7 +47,7 @@ export default function StatsPanel() {
   };
 
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden">
+    <section className="relative py-16 md:py-20 overflow-hidden">
       {/* background wash (token-driven) */}
       <div className="pointer-events-none absolute h-full inset-0 hidden dark:block bg-primary/6" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />

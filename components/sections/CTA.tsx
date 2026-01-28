@@ -22,7 +22,7 @@ export default function CTA() {
   ];
 
   return (
-    <section className="relative overflow-hidden py-20 md:py-32">
+    <section className="relative overflow-hidden py-20 md:py-20">
       {/* Background wash (token driven) */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
       <div className="pointer-events-none absolute h-full inset-0 hidden dark:block bg-primary/6" />

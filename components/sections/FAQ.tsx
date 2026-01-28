@@ -25,7 +25,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden">
+    <section className="relative py-20 md:py-20 overflow-hidden">
       {/* background wash (soft, no harsh break) */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-blue-600/5 to-transparent" />
 
