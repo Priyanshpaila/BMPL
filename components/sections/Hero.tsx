@@ -45,7 +45,7 @@ export default function Hero() {
     "pointer-events-none absolute inset-x-0 top-0 hidden h-px bg-white/10 dark:block";
 
   return (
-    <section className="dark relative overflow-hidden pt-28 pb-20 md:pt-32 md:pb-28">
+    <section className="dark relative overflow-hidden pt-28 pb-20 md:pt-20 md:pb-28">
       {/* Background image */}
       <div
         className="pointer-events-none absolute inset-0 -z-40 bg-cover bg-center bg-no-repeat"
@@ -81,12 +81,12 @@ export default function Hero() {
       {/* Dark-only wash */}
       {/* <div className="pointer-events-none absolute inset-0 -z-20 hidden dark:block bg-primary/6" /> */}
 
-      <Container className="relative">
+      <Container className="relative ">
         <motion.div
           variants={wrap}
           initial="hidden"
           animate="show"
-          className="grid grid-cols-12 gap-8 lg:gap-10"
+          className="grid grid-cols-12 gap-14 lg:gap-16"
         >
           {/* LEFT */}
           <motion.div variants={item} className="col-span-12 lg:col-span-8">
@@ -109,7 +109,7 @@ export default function Hero() {
             </div>
 
             {/* Headline */}
-            <h1 className="max-w-[18ch] text-5xl font-extrabold leading-[1.02] tracking-[-0.03em] text-foreground md:text-6xl lg:text-7xl">
+            <h1 className="max-w-[18ch] text-6xl font-extrabold leading-[1.02] tracking-[-0.03em] text-foreground md:text-4xl lg:text-6xl">
               BUILDING SUPERIOR{" "}
               <span className="block mt-2">
                 STEEL{" "}
@@ -218,14 +218,14 @@ export default function Hero() {
                       <Building2 className="h-5 w-5 text-primary" />
                     </div>
                   </div>
-
+{/* 
                   <p className="mt-4 text-[15px] leading-relaxed text-foreground/70 dark:text-muted-foreground">
                     Angles, flats, rounds, squares, billets, channels & gate channels —
                     built for fabricators who need consistent sizes and reliable supply.
-                  </p>
+                  </p> */}
 
                   {/* Tags */}
-                  <div className="mt-6 flex flex-wrap gap-2">
+                  <div className="mt-4 flex flex-wrap gap-2">
                     {["Angles", "Flats", "Rounds", "Squares", "Channels", "Gate Channels"].map((t) => (
                       <span
                         key={t}
