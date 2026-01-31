@@ -289,7 +289,7 @@ export default function QuoteForm() {
                 <option value="">Select a product</option>
                 {PRODUCTS.map((product) => (
                   <option key={product.slug} value={product.slug}>
-                    {product.name} — {product.minQty}
+                    {product.name}
                   </option>
                 ))}
               </select>
