@@ -3,7 +3,7 @@ import TrustBar from "@/components/sections/TrustBar"
 import ProductShowcase from "@/components/sections/ProductShowcase"
 import CapabilityGrid from "@/components/sections/CapabilityGrid"
 import StatsPanel from "@/components/sections/StatsPanel"
-import ProcessSteps from "@/components/sections/ProcessSteps"
+import Testimonials from "@/components/sections/Testimonials";
 import FAQ from "@/components/sections/FAQ"
 import CTA from "@/components/sections/CTA"
 
@@ -22,6 +22,7 @@ export default function Home() {
       <CapabilityGrid />
       <StatsPanel />
       <FAQ />
+      <Testimonials />
       <CTA />
     </main>
   )

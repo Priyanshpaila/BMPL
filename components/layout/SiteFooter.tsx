@@ -163,7 +163,7 @@ export default function SiteFooter() {
         {/* Bottom Bar */}
         <div className="mt-10 border-t border-border pt-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} {COMPANY_INFO.name}. All rights reserved.
+            Copyright © {currentYear} {COMPANY_INFO.name}. All rights reserved.
           </p>
 
           <p className="text-sm text-muted-foreground">
