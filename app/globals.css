@@ -20,13 +20,16 @@
   --popover-foreground: oklch(0.215 0.020 255);
 
   /* Brand (similar vibe to your reference palette; not identical) */
-  --primary: rgb(46, 54, 144); /* #343C9E */
+  --primary: rgb(46, 54, 144);
+  /* #343C9E */
   --primary-foreground: rgb(255 255 255);
 
-  --accent: rgba(0, 170, 255, 0.418); /* #1888FF */
+  --accent: rgba(0, 170, 255, 0.418);
+  /* #1888FF */
   --accent-foreground: rgb(255 255 255);
 
-  --destructive: rgb(231 43 53); /* #E72B35 */
+  --destructive: rgb(231 43 53);
+  /* #E72B35 */
   --destructive-foreground: rgb(255 255 255);
 
   /* Neutrals */
@@ -44,9 +47,12 @@
   --radius: 0.5rem;
 
   /* Gradient text endpoints (theme-driven) */
-  --brand-from: rgb(52 60 158);   /* royal indigo */
-  --brand-mid:  rgb(42 124 235);  /* strong azure */
-  --brand-to:   rgb(24 136 255);  /* crisp blue */
+  --brand-from: rgb(52 60 158);
+  /* royal indigo */
+  --brand-mid: rgb(42 124 235);
+  /* strong azure */
+  --brand-to: rgb(24 136 255);
+  /* crisp blue */
 
   /* Page background (light stays clean) */
   --page-gradient: none;
@@ -94,10 +100,12 @@
   --popover-foreground: #f3f6ff;
 
   /* Brand (your palette) */
-  --primary: #2e3690;            /* Brand Blue */
+  --primary: #2e3690;
+  /* Brand Blue */
   --primary-foreground: #ffffff;
 
-  --accent: #ec2227;             /* Brand Red */
+  --accent: #ec2227;
+  /* Brand Red */
   --accent-foreground: #ffffff;
 
   --destructive: #ec2227;
@@ -122,8 +130,10 @@
   --page-gradient: none;
 
   /* Subtle “professional glow” as solids (NOT gradients) */
-  --blob-1: rgba(46, 54, 144, 0.18); /* blue glow */
-  --blob-2: rgba(236, 34, 39, 0.10); /* red glow */
+  --blob-1: rgba(46, 54, 144, 0.18);
+  /* blue glow */
+  --blob-2: rgba(236, 34, 39, 0.10);
+  /* red glow */
 
   /* Dot grid disabled in dark by override below */
   --dot: rgba(255, 255, 255, 0.12);
@@ -235,6 +245,7 @@
 /* -------------------------------------------------------------------------- */
 
 @layer components {
+
   /* Glass stays solid in dark (no gradients) */
   .glass-effect {
     background: var(--glass-bg);
@@ -245,12 +256,10 @@
 
   /* Gradient text allowed in light, DISABLED in dark */
   .gradient-text {
-    background-image: linear-gradient(
-      90deg,
-      var(--brand-from),
-      var(--brand-mid),
-      var(--brand-to)
-    );
+    background-image: linear-gradient(90deg,
+        var(--brand-from),
+        var(--brand-mid),
+        var(--brand-to));
     background-size: 180% 100%;
     background-position: 0% 50%;
     -webkit-background-clip: text;
@@ -272,6 +281,7 @@
     background-image: radial-gradient(circle_at_1px_1px, var(--dot) 1px, transparent 0);
     background-size: 28px 28px;
   }
+
   .dark .dot-grid {
     background-image: none !important;
   }
@@ -280,6 +290,7 @@
   .theme-blobs::before {
     background: var(--blob-1) !important;
   }
+
   .theme-blobs::after {
     background: var(--blob-2) !important;
   }
@@ -293,7 +304,44 @@
   .text-balance {
     text-wrap: balance;
   }
+
   .text-pretty {
     text-wrap: pretty;
+  }
+}
+
+@keyframes underline-sweep {
+  0% {
+    transform: translateX(-130%);
+  }
+
+  100% {
+    transform: translateX(130%);
+  }
+}
+
+/* Base underline */
+.hero-underline {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to right, rgba(236, 34, 39, 0.95), rgba(236, 34, 39, 0.25));
+}
+
+/* Moving highlight */
+.hero-underline::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.55) 35%,
+      transparent 70%);
+  transform: translateX(-130%);
+  animation: underline-sweep 1.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-underline::after {
+    animation: none;
   }
 }
